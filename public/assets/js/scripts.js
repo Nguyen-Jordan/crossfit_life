@@ -1,4 +1,4 @@
-// Transition d'apparition du formulaire
+// Transition d'apparition du formulaire login
 const bodyLogin = document.querySelector('#bodyLogin');
 bodyLogin.classList.remove('opacity0');
 bodyLogin.classList.add('opacity1');
@@ -97,3 +97,4 @@ function fntEmailValidate(email){
         return true;
     }
 }
+
