@@ -1,12 +1,60 @@
-
-<aside class="col-12 col-md-2 p-0 bg-dark">
-    <nav class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-item s-start">
-        <div class="collapse navbar-collapse">
-            <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
-                <li class="nav-item">
-                    <a href="#" class="nav-link pl-0">menu 1</a>
-                </li>
-            </ul>
+<div class="sidebar">
+    <div class="logo_content">
+        <div class="logo">
+            <i class='bx bx-dumbbell'></i>
+            <div class="logo_name">Crossfit Life</div>
         </div>
-    </nav>
-</aside>
+        <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul class="nav_list">
+        <li>
+            <a href="#">
+                <i class='bx bx-grid-alt' ></i>
+                <span class="links_bame">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-search-alt-2' ></i>
+                <input type="text" placeholder="Search...">
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-user' ></i>
+                <span class="links_bame">Profil</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-sitemap'></i>
+                <span class="links_name">Franchises</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bxs-home-heart' ></i>
+                <span class="links_name">Structures</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-cog' ></i>
+                <span class="links_name">admin</span>
+            </a>
+        </li>
+    </ul>
+    <div class="profile_content">
+        <div class="profile">
+            <div class="profile_details">
+                <img src="../{{ asset('assets/img/logo_registration.jpg') }}" alt="">
+                <div class="rol_email">
+                    <div class="email">partner_01@crossfitlife.com</div>
+                    <div class="rol">Franchise</div>
+                </div>
+            </div>
+            <i class='bx bxs-log-out' id="log_out"></i>
+        </div>
+    </div>
+</div>
+div.home_content

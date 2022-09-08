@@ -9,6 +9,7 @@
 
         <! -- Feuilles de styles -->
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+        <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
         {% block stylesheets %}{% endblock %}
 
@@ -23,7 +24,7 @@
     </head>
     <body>
     <div class="container-fluid h-100">
-        <div class="row h-100">
+        <div class="row ">
         {% include "_partials/_nav.html.twig" %}
 
         {% block body %}{% endblock %}
