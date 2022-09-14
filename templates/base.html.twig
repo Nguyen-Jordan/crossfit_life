@@ -26,10 +26,12 @@
     <div class="container-fluid h-100">
         <div class="row ">
         {% include "_partials/_nav.html.twig" %}
+            <div class="home_content">
+                <div class="text">Home Content</div>
+                {% block body %}{% endblock %}
 
-        {% block body %}{% endblock %}
-
-        {% include "_partials/_footer.html.twig" %}
+                {% include "_partials/_footer.html.twig" %}
+            </div>
         </div>
     </div>
     </body>

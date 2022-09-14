@@ -2,46 +2,50 @@
     <div class="logo_content">
         <div class="logo">
             <i class='bx bx-dumbbell'></i>
-            <div class="logo_name">Crossfit Life</div>
+            <div class="logo_name fw-bold">Crossfit Life</div>
         </div>
         <i class='bx bx-menu' id="btn"></i>
     </div>
     <ul class="nav_list">
         <li>
-            <a href="#">
-                <i class='bx bx-grid-alt' ></i>
-                <span class="links_bame">Dashboard</span>
-            </a>
+            <i class='bx bx-search-alt-2' ></i>
+            <input type="text" placeholder="Search...">
+            <span class="tooltip fw-bold">Search...</span>
         </li>
         <li>
             <a href="#">
-                <i class='bx bx-search-alt-2' ></i>
-                <input type="text" placeholder="Search...">
+                <i class='bx bx-grid-alt' ></i>
+                <span class="links_name">Dashboard</span>
             </a>
+            <span class="tooltip fw-bold">Dashboard</span>
         </li>
         <li>
             <a href="#">
                 <i class='bx bx-user' ></i>
-                <span class="links_bame">Profil</span>
+                <span class="links_name">Profil</span>
             </a>
+            <span class="tooltip fw-bold">Profil</span>
         </li>
         <li>
             <a href="#">
                 <i class='bx bx-sitemap'></i>
                 <span class="links_name">Franchises</span>
             </a>
+            <span class="tooltip fw-bold">Franchises</span>
         </li>
         <li>
             <a href="#">
                 <i class='bx bxs-home-heart' ></i>
                 <span class="links_name">Structures</span>
             </a>
+            <span class="tooltip fw-bold">Structures</span>
         </li>
         <li>
             <a href="#">
                 <i class='bx bx-cog' ></i>
                 <span class="links_name">admin</span>
             </a>
+            <span class="tooltip fw-bold">admin</span>
         </li>
     </ul>
     <div class="profile_content">
@@ -53,8 +57,26 @@
                     <div class="rol">Franchise</div>
                 </div>
             </div>
-            <i class='bx bxs-log-out' id="log_out"></i>
+            <a href="{{ path('app_logout') }}">
+                <i class='bx bx-log-out' id="log_out"></i>
+                <span class="tooltip fw-bold">Déconnecter</span>
+            </a>
+
         </div>
     </div>
 </div>
-div.home_content
+
+<script>
+    // extension et retraction du menu et recherche
+    let btn = document.querySelector("#btn");
+    let sidebar = document.querySelector(".sidebar");
+    let searchBtn = document.querySelector(".bx-search-alt-2");
+
+    btn.onclick = function() {
+        sidebar.classList.toggle("active");
+    }
+
+    searchBtn.onclick = function() {
+        sidebar.classList.toggle("active");
+    }
+</script>
