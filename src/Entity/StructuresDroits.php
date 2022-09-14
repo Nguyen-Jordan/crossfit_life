@@ -10,12 +10,12 @@ class StructuresDroits
 {
     #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'structuresDroits')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Structures $structures = null;
   
     #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'structuresDroits')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Droits $droits = null;
 
     #[ORM\Column]
