@@ -31,6 +31,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
   
   #[ORM\Column(type: 'boolean')]
   private $isVerified = false;
+  
+  #[ORM\Column]
+  private ?bool $status = null;
 
   #[ORM\OneToOne(mappedBy: 'partner', cascade: ['persist', 'remove'])]
   private ?Franchises $franchise = null;
@@ -117,6 +120,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
   public function setIsVerified(bool $isVerified): self
   {
     $this->isVerified = $isVerified;
+    
+    return $this;
+  }
+  
+  public function isStatus(): ?bool
+  {
+    return $this->status;
+  }
+  
+  public function setStatus(bool $status): self
+  {
+    $this->status = $status;
     
     return $this;
   }

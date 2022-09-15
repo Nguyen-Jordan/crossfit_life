@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Users;
 use App\Form\RegistrationFormType;
@@ -35,7 +35,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            // encoder le mot de passe en clair
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -46,7 +46,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
+            // générer une URL signée et l'envoyer par e-mail à l'utilisateur
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('big_boss@crossfitlife.com', 'Crossfit Life'))
