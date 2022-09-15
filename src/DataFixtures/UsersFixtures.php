@@ -12,8 +12,8 @@ class UsersFixtures extends Fixture
 {
     public function __construct(
       private UserPasswordHasherInterface $passwordEncoder,
-      private SluggerInterface $slugger
     ){}
+  
     public function load(ObjectManager $manager): void
     {
         $admin = new Users();
@@ -27,21 +27,21 @@ class UsersFixtures extends Fixture
         $manager->persist($admin);
         
         $user = $this->createUser('partenaire_01@crossfitlife.com', 1, 'Nervermind', $manager);
-        $user = $this->createUser('partenaire_02@crossfitlife.com', 1, 'Nervermind', $manager);
-        $user = $this->createUser('partenaire_03@crossfitlife.com', 1, 'Nervermind', $manager);
-        $user = $this->createUser('partenaire_04@crossfitlife.com', 1, 'Nervermind', $manager);
-        $user = $this->createUser('partenaire_05@crossfitlife.com', 1, 'Nervermind', $manager);
+        $this->createUser('partenaire_02@crossfitlife.com', 1, 'Nervermind', $manager);
+        $this->createUser('partenaire_03@crossfitlife.com', 1, 'Nervermind', $manager);
+        $this->createUser('partenaire_04@crossfitlife.com', 1, 'Nervermind', $manager);
+        $this->createUser('partenaire_05@crossfitlife.com', 1, 'Nervermind', $manager);
   
-        $user = $this->createUser('manager_01@crossfitlife.com', 1, 'DemonDays', $manager);
-        $user = $this->createUser('manager_02@crossfitlife.com', 1, 'DemonDays', $manager);
-        $user = $this->createUser('manager_03@crossfitlife.com', 1, 'DemonDays', $manager);
-        $user = $this->createUser('manager_04@crossfitlife.com', 1, 'DemonDays', $manager);
-        $user = $this->createUser('manager_05@crossfitlife.com', 1, 'DemonDays', $manager);
-        $user = $this->createUser('manager_06@crossfitlife.com', 1, 'DemonDays', $manager);
-        $user = $this->createUser('manager_07@crossfitlife.com', 1, 'DemonDays', $manager);
-        $user = $this->createUser('manager_08@crossfitlife.com', 1, 'DemonDays', $manager);
-        $user = $this->createUser('manager_09@crossfitlife.com', 1, 'DemonDays', $manager);
-        $user = $this->createUser('manager_10@crossfitlife.com', 1, 'DemonDays', $manager);
+        $this->createUser('manager_01@crossfitlife.com', 1, 'DemonDays', $manager);
+        $this->createUser('manager_02@crossfitlife.com', 1, 'DemonDays', $manager);
+        $this->createUser('manager_03@crossfitlife.com', 1, 'DemonDays', $manager);
+        $this->createUser('manager_04@crossfitlife.com', 1, 'DemonDays', $manager);
+        $this->createUser('manager_05@crossfitlife.com', 1, 'DemonDays', $manager);
+        $this->createUser('manager_06@crossfitlife.com', 1, 'DemonDays', $manager);
+        $this->createUser('manager_07@crossfitlife.com', 1, 'DemonDays', $manager);
+        $this->createUser('manager_08@crossfitlife.com', 1, 'DemonDays', $manager);
+        $this->createUser('manager_09@crossfitlife.com', 1, 'DemonDays', $manager);
+        $this->createUser('manager_10@crossfitlife.com', 1, 'DemonDays', $manager);
   
         $manager->flush();
     }
@@ -56,5 +56,7 @@ class UsersFixtures extends Fixture
       );
   
       $manager->persist($user);
+      
+      return $user;
     }
 }

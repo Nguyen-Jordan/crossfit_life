@@ -28,7 +28,7 @@ class Structures
     private ?Users $manager = null;
 
     #[ORM\ManyToOne(targetEntity: Franchises::class, inversedBy: 'structures')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Franchises $franchise = null;
 
     #[ORM\Column]
