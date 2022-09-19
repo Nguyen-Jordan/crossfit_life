@@ -50,16 +50,17 @@ document.querySelector("#btnPrev").onclick = function(){
 // On crée un message alert si le password n'est pas valide
 document.querySelector("#btnLogin").onclick = function(){
     const strEmailUser = document.querySelector("#emailUser").value;
-    const strPassUser = document.querySelector("#passUser").value;
+    const strPassUser = document.querySelector("#password").value;
 
     const alertPass = document.querySelector("#alertPass");
 
-    if(strPassUser === "")
+    if(strPassUser === "" || strEmailUser === "")
     {
         alertPass.innerHTML = '<p style="color:red;">Entrez votre mot de passe.</p>';
         alertPass.style.display = 'block';
     } else{
         alertPass.style.display = "none";
+
     }
 
 }

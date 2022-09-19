@@ -24,6 +24,7 @@
 <body>
 
 {% block body %}
+    <form action="{{ path('app_login') }}" method="post">
     <section class="containerLogin">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -31,43 +32,43 @@
 
         {% if app.user %}
             <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                Vous êtes connecté(e) comme {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Me déconnecter</a>
             </div>
         {% endif %}
+            <div id="bodyLogin" class="opacity0">
+                <div class="divLogo">
+                    <img src="{{ asset('assets/img/logo.jpg') }}" class="logoLogin" alt="Logo">
+                </div>
+                <div class="containerLayout">
+                    <div id="divEmail" class="">
+                        <h1>Connexion</h1>
+                        <div id="alertEmailLogin" style="display: none;"></div>
+                        <input type="email" value="{{ last_username }}" id="emailUser" name="emailUser" placeholder="Adresse e-mail">
+                        <div class="divButton divBtnLogin">
+                            <button type="button" id="btnNextPass" class="btn btn-warning btn-outline-dark font-weight-bold">Suivant</button>
+                        </div>
+                    </div>
 
-        <div id="bodyLogin" class="opacity0">
-            <div class="divLogo">
-                <img src="{{ asset('assets/img/logo.jpg') }}" class="logoLogin" alt="Logo">
-            </div>
-            <div class="containerLayout">
-                <div id="divEmail" class="">
-                    <h1>Connexion</h1>
-                    <div id="alertEmailLogin" style="display: none;"></div>
-                    <input type="email" value="{{ last_username }}" id="emailUser" name="emailUser" placeholder="Adresse e-mail">
-                    <div class="divButton divBtnLogin">
-                        <button type="button" id="btnNextPass" class="btn btn-warning btn-outline-dark font-weight-bold">Suivant</button>
+                    <div id="divPassword">
+                        <div class="divEmailUser">
+                            <p><button type="button" id="btnPrev"><i class="fas fa-arrow-left"></i></button><span id="spanEmail"></span></p>
+                        </div>
+                        <h2>Entrez le mot de passe</h2>
+                        <div id="alertPass" style="display: none;"></div>
+                        <input type="password" name="password" id="password" placeholder="mot de passe">
+
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}"
+                        >
+
+                        <div class="divButton divBtnLogin">
+                            <button type="submit" id="btnLogin" class="btn btn-warning btn-outline-dark font-weight-bold">Se connecter</button>
+                        </div>
                     </div>
                 </div>
-
-                <div id="divPassword">
-                    <div class="divEmailUser">
-                        <p><button type="button" id="btnPrev"><i class="fas fa-arrow-left"></i></button><span id="spanEmail"></span></p>
-                    </div>
-                    <h2>Entrez le mot de passe</h2>
-                    <div id="alertPass" style="display: none;"></div>
-                    <input type="password" name="passUser" id="passUser" placeholder="mot de passe">
-
-                    <input type="hidden" name="_csrf_token"
-                           value="{{ csrf_token('authenticate') }}"
-                    >
-
-                    <div class="divButton divBtnLogin">
-                        <button type="submit" id="btnLogin" class="btn btn-warning btn-outline-dark font-weight-bold">Se connecter</button>
-                    </div>
-                </div>
             </div>
-        </div>
     </section>
+    </form>
 
     <script src="https://kit.fontawesome.com/657bdac4ef.js" crossorigin="anonymous"></script>
 

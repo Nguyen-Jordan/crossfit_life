@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Structures;
 use App\Entity\StructuresDroits;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -38,7 +39,11 @@ class StructuresDroitsRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+    
+    
+    
+    
+    
 //    /**
 //     * @return StructuresDroits[] Returns an array of StructuresDroits objects
 //     */

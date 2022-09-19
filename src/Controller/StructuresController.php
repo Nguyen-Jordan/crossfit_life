@@ -14,18 +14,24 @@ class StructuresController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(StructuresRepository $structuresRepository): Response
     {
-        return $this->render('structures/index.html.twig', [
+        return $this->render('pages/structures/index.html.twig', [
             'structures' => $structuresRepository->findBy([],
               ['id' => 'asc'])
         ]);
     }
-  
+    
     #[Route('/{slug}', name: 'details')]
-    public function details(Structures $structure): Response
+    public function details(
+      StructuresRepository $structure,
+      Structures $structures
+    ): Response
     {
       //On va chercher la liste des droits
-      $rights = $structure->getStructuresDroits();
+      $result = $structure->findRights([$structures],['id' => 'asc']);
       
-      return $this->render('structures/details.html.twig', compact('structure', 'rights'));
+      return $this->render('pages/structures/details.html.twig', [
+        'result' => $result,
+        'structure' => $structures
+      ]);
     }
 }

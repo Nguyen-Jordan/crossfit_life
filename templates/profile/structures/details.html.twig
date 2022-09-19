@@ -1,0 +1,39 @@
+{% extends '../../base.html.twig' %}
+
+
+{% block title %}{{ structure.address }}- Crossfit_life{% endblock %}
+
+{% block body %}
+
+    <div class="text">{{ structure.address }}</div>
+    <main class="container">
+    <section class="row">
+        <div class="col-12">
+                <div class="col-3">
+                    <article class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ structure.address }}</h2>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Droits</th>
+                                    <th>status</th>
+                                </tr>
+                                </thead>
+                                {% for droits in result %}
+                                    <tbody>
+                                    <tr>
+                                        <td>{{ droits.name }}</td>
+                                        <td>{{ droits.status }}</td>
+                                    </tr>
+
+                                    </tbody>
+                                {% endfor %}
+
+                            </table>
+                        </div>
+                    </article>
+                </div>
+        </div>
+    </section>
+{% endblock %}

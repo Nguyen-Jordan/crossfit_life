@@ -16,36 +16,55 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class StructuresRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Structures::class);
+  public function __construct(ManagerRegistry $registry)
+  {
+    parent::__construct($registry, Structures::class);
+  }
+  
+  public function add(Structures $entity, bool $flush = false): void
+  {
+    $this->getEntityManager()->persist($entity);
+    
+    if ($flush) {
+      $this->getEntityManager()->flush();
     }
-
-    public function add(Structures $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+  }
+  
+  public function remove(Structures $entity, bool $flush = false): void
+  {
+    $this->getEntityManager()->remove($entity);
+    
+    if ($flush) {
+      $this->getEntityManager()->flush();
     }
-
-    public function remove(Structures $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
+  }
+  
+  public function findRights($value)
+  {
+    return $this
+      ->createQueryBuilder('s')
+      ->select('sd.status, d.name')
+      ->leftJoin("s.structuresDroits", "sd")
+      ->andWhere('sd.structures in (:value)')
+      ->leftJoin("sd.droits", "d")
+      ->andWhere('d.id = sd.droits')
+      ->setParameter('value', $value)
+      ->getQuery()
+      ->getArrayResult();
+  }
+}
+  
+      //select name, sd.status from structures s
+  //    LEFT JOIN structures_droits sd on s.id = sd.structures_id
+  //    LEFT JOIN droits d on sd.droits_id = d.id
+  //;
 //    /**
 //     * @return Structures[] Returns an array of Structures objects
 //     */
-//    public function findByExampleField($value): array
+//    public function findBydroits(Structures $value): array
 //    {
 //        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
+//            ->andWhere('s.structureDroits = s.id')
 //            ->setParameter('val', $value)
 //            ->orderBy('s.id', 'ASC')
 //            ->setMaxResults(10)
@@ -63,4 +82,4 @@ class StructuresRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-}
+

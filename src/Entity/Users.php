@@ -8,8 +8,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: UsersRepository::class)]
+
 #[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet email')]
+#[ORM\Entity(repositoryClass: UsersRepository::class)]
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
   #[ORM\Id]
@@ -76,7 +77,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
   {
     $roles = $this->roles;
     // guarantee every user at least has ROLE_USER
-    $roles[] = 'ROLE_USER';
+    $roles[] = 'ROLE_MANAGER';
     
     return array_unique($roles);
   }

@@ -38,7 +38,25 @@ class FranchisesRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+  
+    public function findRights($value)
+    {
+      $test = $this
+      ->createQueryBuilder('f')
+      ->select('sd.status, d.name')
+      ->join("f.structures", "s")
+      ->andWhere('s.franchise in (:value)')
+      ->join("s.structuresDroits", "sd")
+      //->andWhere('sd.structures = s.id')
+      ->join("sd.droits", "d")
+      //->andWhere('d.id = sd.droits')
+      ->setParameter('value', $value)
+      ->getQuery()
+      ->getArrayResult();
+      
+      return $test;
+      
+    }
 //    /**
 //     * @return Franchises[] Returns an array of Franchises objects
 //     */

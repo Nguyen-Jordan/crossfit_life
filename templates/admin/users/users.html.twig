@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+   <h1></h1>
+    <table class="table">
+        <thead>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Rôles</th>
+        <th>Structure</th>
+        <th>Franchise</th>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles }}</td>
+                <td>{{ user.structure }}</td>
+                <td>{{ user.franchise }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Il n'y a pas d'utilisateur inscrit</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
