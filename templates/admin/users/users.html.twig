@@ -3,29 +3,64 @@
 {% block title %}Liste des utilisateurs{% endblock %}
 
 {% block body %}
+    <div class="text">Franchises</div>
+    <main class="container text-center">
+        <section class="row justify-content-md-center">
+            <div class="col-10">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Rôles</th>
+                            <th scope="col">Structure</th>
+                            <th scope="col">Franchise</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {% for role in user.roles %}
+                                    {% if role == "ROLE_MANAGER"  %}
+                                        Manager
+                                    {% elseif role == "ROLE_PARTNER" %}
+                                        Partenaire
+                                    {% elseif role == "ROLE_ADMIN" %}
+                                        Admin
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>{{ user.structure|length }}</td>
+                            <td>{{ user.franchise|length }}</td>
+                            <td>
+                                {% for statut in user.status %}
+                                     {% if statut == 1 %}
+                                    <input type="checkbox"><i class="bi bi-toggle-on"></i><input>
+                                {% else statut == 0 %}
+                                    <input type="checkbox"><i class="bi bi-toggle-off"></i><input>
+                                {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td><a href="{{ path('admin_modifier_utilisateur', {'id': user.id}) }}" class="btn btn-warning">Modifier</a></td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">Il n'y a pas d'utilisateur inscrit</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+
+
    <h1></h1>
-    <table class="table">
-        <thead>
-        <th>ID</th>
-        <th>Email</th>
-        <th>Rôles</th>
-        <th>Structure</th>
-        <th>Franchise</th>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles }}</td>
-                <td>{{ user.structure }}</td>
-                <td>{{ user.franchise }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">Il n'y a pas d'utilisateur inscrit</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+
 {% endblock %}

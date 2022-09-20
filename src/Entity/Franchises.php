@@ -33,9 +33,13 @@ class Franchises
     #[ORM\Column]
     private ?bool $status = null;
 
+    #[ORM\OneToMany(mappedBy: 'franchise_id', targetEntity: FranchisesDroits::class, orphanRemoval: true)]
+    private Collection $franchisesDroits;
+
     public function __construct()
     {
         $this->structures = new ArrayCollection();
+        $this->franchisesDroits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,6 +121,36 @@ class Franchises
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FranchisesDroits>
+     */
+    public function getFranchisesDroits(): Collection
+    {
+        return $this->franchisesDroits;
+    }
+
+    public function addFranchisesDroit(FranchisesDroits $franchisesDroit): self
+    {
+        if (!$this->franchisesDroits->contains($franchisesDroit)) {
+            $this->franchisesDroits->add($franchisesDroit);
+            $franchisesDroit->setFranchiseId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFranchisesDroit(FranchisesDroits $franchisesDroit): self
+    {
+        if ($this->franchisesDroits->removeElement($franchisesDroit)) {
+            // set the owning side to null (unless already changed)
+            if ($franchisesDroit->getFranchiseId() === $this) {
+                $franchisesDroit->setFranchiseId(null);
+            }
+        }
 
         return $this;
     }

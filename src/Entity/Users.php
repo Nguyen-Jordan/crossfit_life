@@ -42,7 +42,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
   #[ORM\OneToOne(mappedBy: 'manager', cascade: ['persist', 'remove'])]
   private ?Structures $structure = null;
   
-  
   public function getId(): ?int
   {
     return $this->id;
