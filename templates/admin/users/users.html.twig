@@ -37,14 +37,13 @@
                             </td>
                             <td>{{ user.structure|length }}</td>
                             <td>{{ user.franchise|length }}</td>
-                            <td>
+                            <td>{#
                                 {% for statut in user.status %}
-                                     {% if statut == 1 %}
-                                    <input type="checkbox"><i class="bi bi-toggle-on"></i><input>
-                                {% else statut == 0 %}
+                                    {% if statut == 1 %}
+ input type="checkbox"><i class="bi bi-toggle-on"></i><input>
                                     <input type="checkbox"><i class="bi bi-toggle-off"></i><input>
                                 {% endif %}
-                                {% endfor %}
+                                {% endfor %} #}
                             </td>
                             <td><a href="{{ path('admin_modifier_utilisateur', {'id': user.id}) }}" class="btn btn-warning">Modifier</a></td>
                         </tr>

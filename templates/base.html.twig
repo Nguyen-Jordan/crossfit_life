@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Accueil{% endblock %} - Crossfit life</title>
@@ -8,19 +8,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <! -- Feuilles de styles -->
-        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+
         <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
-        {% block stylesheets %}{% endblock %}
-
+        {% block stylesheets %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
         <! -- Fichiers JS -->
-        <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
 
-        {% block javascripts %}{% endblock %}
-
-        <script src="{{ asset('assets/js/scripts.js') }}" defer></script>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     </head>
     <body>
     <div class="container-fluid h-100">

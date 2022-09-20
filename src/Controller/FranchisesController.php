@@ -14,7 +14,7 @@ class FranchisesController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(FranchisesRepository $franchisesRepository): Response
     {
-        return $this->render('pages/franchises/index.html.twig', [
+        return $this->render('partner/franchises/index.html.twig', [
             'franchises' => $franchisesRepository->findBy([],
               ['id' => 'asc'])
         ]);
@@ -27,7 +27,7 @@ class FranchisesController extends AbstractController
       //On va chercher la liste des structures de la franchise et les droits
       $result = $franchises->findRights([$franchise],['id' => 'asc']);
   
-      return $this->render('pages/franchises/details.html.twig', [
+      return $this->render('partner/franchises/details.html.twig', [
         'franchise' => $franchise,
         'result' => $result
       ]);
