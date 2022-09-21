@@ -21,12 +21,6 @@ class Structures
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
-
-    #[ORM\OneToOne(inversedBy: 'structure', cascade: ['persist', 'remove'])]
-    private ?Users $manager = null;
-
     #[ORM\ManyToOne(targetEntity: Franchises::class, inversedBy: 'structures')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Franchises $franchise = null;
@@ -36,6 +30,9 @@ class Structures
 
     #[ORM\OneToMany(mappedBy: 'structures', targetEntity: StructuresDroits::class)]
     private Collection $structuresDroits;
+
+    #[ORM\OneToOne(mappedBy: 'structure_id', cascade: ['persist', 'remove'])]
+    private ?Users $user_id = null;
 
     public function __construct()
     {
@@ -55,30 +52,6 @@ class Structures
     public function setAddress(string $address): self
     {
         $this->address = $address;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getManager(): ?Users
-    {
-        return $this->manager;
-    }
-
-    public function setManager(?Users $manager): self
-    {
-        $this->manager = $manager;
 
         return $this;
     }
@@ -133,6 +106,28 @@ class Structures
                 $structuresDroit->setStructures(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserId(): ?Users
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?Users $user_id): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($user_id === null && $this->user_id !== null) {
+            $this->user_id->setStructureId(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user_id !== null && $user_id->getStructureId() !== $this) {
+            $user_id->setStructureId($this);
+        }
+
+        $this->user_id = $user_id;
 
         return $this;
     }

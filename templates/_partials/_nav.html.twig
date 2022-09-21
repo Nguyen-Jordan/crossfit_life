@@ -8,11 +8,6 @@
     </div>
     <ul class="nav_list">
         <li>
-            <i class='bx bx-search-alt-2' ></i>
-            <input type="text" placeholder="Search...">
-            <span class="tooltip fw-bold">Search...</span>
-        </li>
-        <li>
             <a href="#">
                 <i class='bx bx-grid-alt' ></i>
                 <span class="links_name">Dashboard</span>
@@ -51,11 +46,13 @@
     <div class="profile_content">
         <div class="profile">
             <div class="profile_details">
-                <img src="../{{ asset('assets/img/logo_registration.jpg') }}" alt="">
-                <div class="rol_email">
-                    <div class="email">email</div>
-                    <div class="rol">Franchise</div>
-                </div>
+                    <img src="../{{ asset('assets/img/logo_registration.jpg') }}" alt="">
+                {% for user in users %}
+                    <div class="rol_email">
+                        <div class="email">{{ user.email }}</div>
+                        <div class="rol">{{ user. }}</div>
+                    </div>
+                {% endfor %}
             </div>
             <a href="{{ path('app_logout') }}">
                 <i class='bx bx-log-out' id="log_out"></i>

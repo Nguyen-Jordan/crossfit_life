@@ -44,10 +44,9 @@ class StructuresRepository extends ServiceEntityRepository
     return $this
       ->createQueryBuilder('s')
       ->select('sd.status, d.name')
-      ->leftJoin("s.structuresDroits", "sd")
+      ->join("s.structuresDroits", "sd")
       ->andWhere('sd.structures in (:value)')
-      ->leftJoin("sd.droits", "d")
-      ->andWhere('d.id = sd.droits')
+      ->join("sd.droits", "d")
       ->setParameter('value', $value)
       ->getQuery()
       ->getArrayResult();

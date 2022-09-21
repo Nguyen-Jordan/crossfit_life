@@ -1,4 +1,4 @@
-{% extends '../../base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 
 {% block title %}{{ structure.address }}- Crossfit_life{% endblock %}
@@ -7,33 +7,35 @@
 
     <div class="text">{{ structure.address }}</div>
     <main class="container">
-    <section class="row">
-        <div class="col-12">
-                <div class="col-3">
-                    <article class="card">
-                        <div class="card-body">
-                            <h2 class="card-title">{{ structure.address }}</h2>
-                            <table class="table">
-                                <thead>
+    <section class="row justify-content-md-center">
+        <div class="col-3 mt-5 align-middle">
+            <div class="card text-bg-success mb-3" style="max-width: 18rem;">
+                <div class="card-header">{{ structure.address }}</div>
+                <div class="card-body">
+                        <table class="table table-borderless">
+                            <thead class="card-title">
+                            <tr>
+                                <th>Droits</th>
+                                <th>status</th>
+                            </tr>
+                            </thead>
+                            {% for droits in result %}
+                                <tbody class="card-text">
                                 <tr>
-                                    <th>Droits</th>
-                                    <th>status</th>
+                                    <td style="color: white">{{ droits.name }}</td>
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                        </div>
+                                    </td>
                                 </tr>
-                                </thead>
-                                {% for droits in result %}
-                                    <tbody>
-                                    <tr>
-                                        <td>{{ droits.name }}</td>
-                                        <td>{{ droits.status }}</td>
-                                    </tr>
 
-                                    </tbody>
-                                {% endfor %}
+                                </tbody>
+                            {% endfor %}
 
-                            </table>
-                        </div>
-                    </article>
+                        </table>
                 </div>
+            </div>
         </div>
     </section>
 {% endblock %}

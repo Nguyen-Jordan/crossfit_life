@@ -41,6 +41,12 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
   #[ORM\OneToOne(mappedBy: 'manager', cascade: ['persist', 'remove'])]
   private ?Structures $structure = null;
+
+  #[ORM\OneToOne(inversedBy: 'user_id', cascade: ['persist', 'remove'])]
+  private ?Franchises $franchise_id = null;
+
+  #[ORM\OneToOne(inversedBy: 'user_id', cascade: ['persist', 'remove'])]
+  private ?Structures $structure_id = null;
   
   public function getId(): ?int
   {
@@ -176,6 +182,30 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
       }
 
       $this->structure = $structure;
+
+      return $this;
+  }
+
+  public function getFranchiseId(): ?Franchises
+  {
+      return $this->franchise_id;
+  }
+
+  public function setFranchiseId(?Franchises $franchise_id): self
+  {
+      $this->franchise_id = $franchise_id;
+
+      return $this;
+  }
+
+  public function getStructureId(): ?Structures
+  {
+      return $this->structure_id;
+  }
+
+  public function setStructureId(?Structures $structure_id): self
+  {
+      $this->structure_id = $structure_id;
 
       return $this;
   }

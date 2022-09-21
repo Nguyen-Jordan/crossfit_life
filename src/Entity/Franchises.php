@@ -21,12 +21,6 @@ class Franchises
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
-
-    #[ORM\OneToOne(inversedBy: 'franchise', cascade: ['persist', 'remove'])]
-    private ?Users $partner = null;
-
     #[ORM\OneToMany(mappedBy: 'franchise', targetEntity: Structures::class, orphanRemoval: true)]
     private Collection $structures;
 
@@ -35,6 +29,9 @@ class Franchises
 
     #[ORM\OneToMany(mappedBy: 'franchise_id', targetEntity: FranchisesDroits::class, orphanRemoval: true)]
     private Collection $franchisesDroits;
+
+    #[ORM\OneToOne(mappedBy: 'franchise_id', cascade: ['persist', 'remove'])]
+    private ?Users $user_id = null;
 
     public function __construct()
     {
@@ -58,31 +55,7 @@ class Franchises
 
         return $this;
     }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPartner(): ?Users
-    {
-        return $this->partner;
-    }
-
-    public function setPartner(?Users $partner): self
-    {
-        $this->partner = $partner;
-
-        return $this;
-    }
-
+    
     /**
      * @return Collection<int, Structures>
      */
@@ -151,6 +124,28 @@ class Franchises
                 $franchisesDroit->setFranchiseId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserId(): ?Users
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?Users $user_id): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($user_id === null && $this->user_id !== null) {
+            $this->user_id->setFranchiseId(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user_id !== null && $user_id->getFranchiseId() !== $this) {
+            $user_id->setFranchiseId($this);
+        }
+
+        $this->user_id = $user_id;
 
         return $this;
     }

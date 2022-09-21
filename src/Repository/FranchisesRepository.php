@@ -47,9 +47,7 @@ class FranchisesRepository extends ServiceEntityRepository
       ->join("f.structures", "s")
       ->andWhere('s.franchise in (:value)')
       ->join("s.structuresDroits", "sd")
-      //->andWhere('sd.structures = s.id')
       ->join("sd.droits", "d")
-      //->andWhere('d.id = sd.droits')
       ->setParameter('value', $value)
       ->getQuery()
       ->getArrayResult();
