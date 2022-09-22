@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Franchises;
+use App\Entity\Structures;
 use App\Repository\FranchisesRepository;
+use App\Repository\StructuresDroitsRepository;
+use App\Repository\StructuresRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +17,7 @@ class FranchisesController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(FranchisesRepository $franchisesRepository): Response
     {
-        return $this->render('partner/franchises/index.html.twig', [
+        return $this->render('admin/franchises/index.html.twig', [
             'franchises' => $franchisesRepository->findBy([],
               ['id' => 'asc'])
         ]);
@@ -22,14 +25,14 @@ class FranchisesController extends AbstractController
   
   
     #[Route('/{slug}', name: 'details')]
-    public function details(FranchisesRepository $franchises, Franchises $franchise): Response
+    public function details(StructuresDroitsRepository $repository, Franchises $franchises): Response
     {
       //On va chercher la liste des structures de la franchise et les droits
-      $result = $franchises->findRights([$franchise],['id' => 'asc']);
+      
   
-      return $this->render('partner/franchises/details.html.twig', [
-        'franchise' => $franchise,
-        'result' => $result
+      return $this->render('admin/franchises/details.html.twig', [
+        'result' => $repository->findAll(),
+        'franchise' => $franchises
       ]);
     }
 }

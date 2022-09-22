@@ -43,9 +43,9 @@ class FranchisesRepository extends ServiceEntityRepository
     {
       $test = $this
       ->createQueryBuilder('f')
-      ->select('sd.status, d.name')
+      ->select('d.name')
       ->join("f.structures", "s")
-      ->andWhere('s.franchise in (:value)')
+      ->andWhere('s.address in (:value)')
       ->join("s.structuresDroits", "sd")
       ->join("sd.droits", "d")
       ->setParameter('value', $value)

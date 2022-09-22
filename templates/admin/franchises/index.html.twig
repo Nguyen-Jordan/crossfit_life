@@ -20,7 +20,15 @@
                     {% for franchise in franchises %}
                         <tr>
                             <th scope="row" class="align-middle">{{ franchise.id }}</th>
-                            <td class="align-middle">{{ franchise.status }}</td>
+                            <td>
+                                <div class="form-switch text-center">
+                                    <input class="form-check-input" type="checkbox"
+                                            {{ (franchise.status) ? 'checked' : ''}}
+                                           id="flexSwitchCheckDefault">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                                </div>
+
+                            </td>
                             <td class="align-middle">{{ franchise.name }}</td>
                             <td class="align-middle"><a href="{{ path('franchises_details', {slug: franchise.slug}) }}" class="btn btn-warning">Voir les structures</a></td>
                         </tr>

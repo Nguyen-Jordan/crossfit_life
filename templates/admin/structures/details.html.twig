@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends '../../base.html.twig' %}
 
 
 {% block title %}{{ structure.address }}- Crossfit_life{% endblock %}
@@ -19,14 +19,18 @@
                                 <th>status</th>
                             </tr>
                             </thead>
-                            {% for droits in result %}
+                            {% for droit in result %}
                                 <tbody class="card-text">
                                 <tr>
-                                    <td style="color: white">{{ droits.name }}</td>
+                                    <td style="color: white">{{ droit.name }}</td>
                                     <td>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                        <div class="form-switch text-center">
+                                            <input class="form-check-input" type="checkbox"
+                                                    {{ (droit.status) ? 'checked' : ''}}
+                                                   id="flexSwitchCheckDefault">
+                                            <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                                         </div>
+
                                     </td>
                                 </tr>
 

@@ -31,7 +31,7 @@ class Structures
     #[ORM\OneToMany(mappedBy: 'structures', targetEntity: StructuresDroits::class)]
     private Collection $structuresDroits;
 
-    #[ORM\OneToOne(mappedBy: 'structure_id', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'structure', cascade: ['persist', 'remove'])]
     private ?Users $user_id = null;
 
     public function __construct()

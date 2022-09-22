@@ -10,11 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
   #[Route('/', name: 'main')]
-  public function index(UsersRepository $user): Response
+  public function index(): Response
   {
       
-      return $this->render('_partials/_nav.html.twig', [
-          'user' => $user->findAll()
-      ]);
+      return $this->render('_partials/_nav.html.twig');
   }
 }

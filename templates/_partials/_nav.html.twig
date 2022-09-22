@@ -47,12 +47,9 @@
         <div class="profile">
             <div class="profile_details">
                     <img src="../{{ asset('assets/img/logo_registration.jpg') }}" alt="">
-                {% for user in users %}
                     <div class="rol_email">
-                        <div class="email">{{ user.email }}</div>
-                        <div class="rol">{{ user. }}</div>
+                        <div class="email">{{ app.user.email }}</div>
                     </div>
-                {% endfor %}
             </div>
             <a href="{{ path('app_logout') }}">
                 <i class='bx bx-log-out' id="log_out"></i>

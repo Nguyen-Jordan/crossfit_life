@@ -36,17 +36,11 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
   #[ORM\Column]
   private ?bool $status = null;
 
-  #[ORM\OneToOne(mappedBy: 'partner', cascade: ['persist', 'remove'])]
+  #[ORM\OneToOne(inversedBy: 'user_id', cascade: ['persist', 'remove'])]
   private ?Franchises $franchise = null;
 
-  #[ORM\OneToOne(mappedBy: 'manager', cascade: ['persist', 'remove'])]
+  #[ORM\OneToOne(inversedBy: 'user_id', cascade: ['persist', 'remove'])]
   private ?Structures $structure = null;
-
-  #[ORM\OneToOne(inversedBy: 'user_id', cascade: ['persist', 'remove'])]
-  private ?Franchises $franchise_id = null;
-
-  #[ORM\OneToOne(inversedBy: 'user_id', cascade: ['persist', 'remove'])]
-  private ?Structures $structure_id = null;
   
   public function getId(): ?int
   {
@@ -151,12 +145,12 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
   {
       // unset the owning side of the relation if necessary
       if ($franchise === null && $this->franchise !== null) {
-          $this->franchise->setPartner(null);
+          $this->franchise->setUserId(null);
       }
 
       // set the owning side of the relation if necessary
-      if ($franchise !== null && $franchise->getPartner() !== $this) {
-          $franchise->setPartner($this);
+      if ($franchise !== null && $franchise->getUserId() !== $this) {
+          $franchise->setUserId($this);
       }
 
       $this->franchise = $franchise;
@@ -173,12 +167,12 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
   {
       // unset the owning side of the relation if necessary
       if ($structure === null && $this->structure !== null) {
-          $this->structure->setManager(null);
+          $this->structure->setUserId(null);
       }
 
       // set the owning side of the relation if necessary
-      if ($structure !== null && $structure->getManager() !== $this) {
-          $structure->setManager($this);
+      if ($structure !== null && $structure->getUserId() !== $this) {
+          $structure->setUserId($this);
       }
 
       $this->structure = $structure;
@@ -188,24 +182,24 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
   public function getFranchiseId(): ?Franchises
   {
-      return $this->franchise_id;
+      return $this->franchise;
   }
 
-  public function setFranchiseId(?Franchises $franchise_id): self
+  public function setFranchiseId(?Franchises $franchise): self
   {
-      $this->franchise_id = $franchise_id;
+      $this->franchise = $franchise;
 
       return $this;
   }
 
   public function getStructureId(): ?Structures
   {
-      return $this->structure_id;
+      return $this->structure;
   }
 
-  public function setStructureId(?Structures $structure_id): self
+  public function setStructureId(?Structures $structure): self
   {
-      $this->structure_id = $structure_id;
+      $this->structure = $structure;
 
       return $this;
   }

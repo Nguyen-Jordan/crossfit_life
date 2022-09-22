@@ -30,7 +30,7 @@ class Franchises
     #[ORM\OneToMany(mappedBy: 'franchise_id', targetEntity: FranchisesDroits::class, orphanRemoval: true)]
     private Collection $franchisesDroits;
 
-    #[ORM\OneToOne(mappedBy: 'franchise_id', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'franchise', cascade: ['persist', 'remove'])]
     private ?Users $user_id = null;
 
     public function __construct()

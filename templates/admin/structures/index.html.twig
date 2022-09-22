@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends '../../base.html.twig' %}
 
 {% block title %}Structures-Crossfit_life{% endblock %}
 
@@ -20,7 +20,15 @@
                     {% for structure in structures %}
                         <tr>
                             <th scope="row" class="align-middle">{{ structure.id }}</th>
-                            <td class="align-middle">{{ structure.status }}</td>
+                            <td>
+                                <div class="form-switch text-center">
+                                    <input class="form-check-input" type="checkbox"
+                                            {{ (structure.status) ? 'checked' : ''}}
+                                           id="flexSwitchCheckDefault">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                                </div>
+
+                            </td>
                             <td class="align-middle">{{ structure.address }}</td>
                             <td class="align-middle"><a href="{{ path('structures_details', {slug: structure.slug}) }}" class="btn btn-warning">Voir la structures</a></td>
                         </tr>
