@@ -11,27 +11,98 @@
 
         <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="{{ asset('assets/css/card/styleCard.css') }}">
         {% endblock %}
-        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+
 
         <! -- Fichiers JS -->
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+
     </head>
     <body>
-    <div class="container-fluid h-100">
-        <div class="row">
-        {% include "_partials/_nav.html.twig" %}
-            <div class="home_content">
-                {% block body %}{% endblock %}
-
-                {% include "_partials/_footer.html.twig" %}
+    <div class="contain">
+        <div class="sidebar">
+            <ul >
+                <li>
+                    <a href="#" class="logo">
+                        <span class="icon"><i class='bx bx-dumbbell'></i></span>
+                        <span class="links_name fw-bold">Crossfit Life</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><i class='bx bx-grid-alt' ></i></span>
+                        <span class="links_name">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('profile_index') }}">
+                        <span class="icon"><i class='bx bx-user' ></i></span>
+                        <span class="links_name">Profil</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('franchises_index') }}">
+                        <span class="icon"><i class='bx bx-sitemap'></i></span>
+                        <span class="links_name">Franchises</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('structures_index') }}">
+                        <span class="icon"><i class='bx bxs-home-heart' ></i></span>
+                        <span class="links_name">Structures</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><i class='bx bx-cog' ></i></span>
+                        <span class="links_name">Admin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('app_logout') }}">
+                        <span class="icon"><i class='bx bx-log-out' id="log_out"></i></span>
+                        <span class="links_name">Déconnecter</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="profile_content">
+                <div class="profile">
+                    <div class="profile_details">
+                        <img src="../{{ asset('assets/img/logo_registration.jpg') }}" alt="">
+                        <div class="rol_email">
+                            <div class="email">{{ app.user.email }}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <i class='bx bx-menu' id="btn"></i>
+                </div>
+            </div>
+            {% block body %}{% endblock %}
         </div>
     </div>
     </body>
+    <script>
+        let toggle = document.querySelector('.toggle');
+        let navigation = document.querySelector('.sidebar');
+        let main = document.querySelector('.main');
+
+        toggle.onclick = function() {
+            navigation.classList.toggle('active');
+            main.classList.toggle('active')
+        }
+    </script>
 </html>

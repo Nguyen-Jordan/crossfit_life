@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\FranchisesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,11 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ManagerController extends AbstractController
 {
   #[Route('/', name: 'index')]
-  public function index(FranchisesRepository $franchisesRepository): Response
+  public function index(): Response
   {
-    return $this->render('profile/index.html.twig', [
-      'franchises' => $franchisesRepository->findBy([],
-        ['id' => 'asc'])
-    ]);
+    return $this->render('manager/index.html.twig');
   }
 }

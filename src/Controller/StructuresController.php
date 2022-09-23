@@ -29,7 +29,7 @@ class StructuresController extends AbstractController
       //On va chercher la liste des droits
       $result = $structure->findRights([$structures],['id' => 'asc']);
       
-      return $this->render('profile/structures/details.html.twig', [
+      return $this->render('profile/structures/index.html.twig', [
         'result' => $result,
         'structure' => $structures
       ]);
