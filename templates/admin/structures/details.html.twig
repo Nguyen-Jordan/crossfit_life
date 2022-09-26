@@ -1,45 +1,41 @@
-{% extends '../../base.html.twig' %}
+{% extends '/base.html.twig' %}
 
 
 {% block title %}{{ structure.address }}- Crossfit_life{% endblock %}
 
 {% block body %}
-
-    <div class="text">{{ structure.address }}</div>
-    <main class="container">
-    <section class="row justify-content-md-center">
-        <div class="col-3 mt-5 align-middle">
-            <div class="card text-bg-success mb-3" style="max-width: 18rem;">
-                <div class="card-header">{{ structure.address }}</div>
-                <div class="card-body">
-                        <table class="table table-borderless">
-                            <thead class="card-title">
-                            <tr>
-                                <th>Droits</th>
-                                <th>status</th>
-                            </tr>
-                            </thead>
-                            {% for droit in result %}
-                                <tbody class="card-text">
-                                <tr>
-                                    <td style="color: white">{{ droit.name }}</td>
-                                    <td>
-                                        <div class="form-switch text-center">
-                                            <input class="form-check-input" type="checkbox"
-                                                    {{ (droit.status) ? 'checked' : ''}}
-                                                   id="flexSwitchCheckDefault">
-                                            <label class="form-check-label" for="flexSwitchCheckDefault"></label>
-                                        </div>
-
-                                    </td>
-                                </tr>
-
-                                </tbody>
-                            {% endfor %}
-
-                        </table>
-                </div>
+    <div class="texte">{{ structure.address }}</div>
+    <main class="conteneur">
+    <section class="rang">
+        <article class="carte">
+            <div class="en-têteCarte">
+                <h1>{{ structure.address }}</h1>
             </div>
-        </div>
+            <div class="titre">
+                <h2>Les droits</h2>
+            </div>
+            <div class="corpsCarte">
+                <table class="table table-borderless">
+                    <tbody>
+                    {% for droit in result %}
+                        <tr>
+                            <td>
+                                {{ droit.name }}
+                            </td>
+                            <td>
+                                <div class="form-switch text-center">
+                                    <input class="form-check-input" type="checkbox"
+                                            {{ (droit.status) ? 'checked' : ''}}
+                                           id="flexSwitchCheckDefault">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                                </div>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </article>
     </section>
 {% endblock %}

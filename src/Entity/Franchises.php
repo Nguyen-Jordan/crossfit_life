@@ -33,8 +33,10 @@ class Franchises
     #[ORM\OneToOne(mappedBy: 'franchise', cascade: ['persist', 'remove'])]
     private ?Users $user_id = null;
 
-    public function __construct()
+    public function __construct($name = null, $status = null)
     {
+        $this->name = $name;
+        $this->status = $status;
         $this->structures = new ArrayCollection();
         $this->franchisesDroits = new ArrayCollection();
     }

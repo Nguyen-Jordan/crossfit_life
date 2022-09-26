@@ -3,11 +3,12 @@
 {% block title %}Franchises-Crossfit_life{% endblock %}
 
 {% block body %}
-    <div class="text">Franchises</div>
+    <div class="texte">Franchises</div>
     <main class="container text-center">
         <section class="row justify-content-md-center">
             <div class="col-10">
-                <table class="table table-bordered">
+                <a href="{{ path("franchises_ajout") }}" class="btn btn-warning">Ajouter une franchise</a>
+                <table id="datatable" class="table">
                     <thead class="table-dark">
                         <tr>
                             <th scope="col">ID</th>
@@ -23,14 +24,17 @@
                             <td>
                                 <div class="form-switch text-center">
                                     <input class="form-check-input" type="checkbox"
-                                            {{ (franchise.status) ? 'checked' : ''}}
+                                            {{ (franchise.status) ? 'checked' : ''}} data-id="{{ franchise.id }}"
                                            id="flexSwitchCheckDefault">
                                     <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                                 </div>
 
                             </td>
                             <td class="align-middle">{{ franchise.name }}</td>
-                            <td class="align-middle"><a href="{{ path('franchises_details', {slug: franchise.slug}) }}" class="btn btn-warning">Voir les structures</a></td>
+                            <td class="align-middle">
+                                <a href="{{ path('franchises_details', {slug: franchise.slug}) }}" class="btn btn-warning">Voir les structures</a>
+                                <a href="{{ path('franchises_modifier', {'id': franchise.id}) }}" class="btn btn-warning">Modifier</a>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

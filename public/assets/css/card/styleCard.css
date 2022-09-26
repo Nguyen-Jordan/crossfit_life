@@ -4,15 +4,15 @@
   box-sizing: border-box;
 }
 
-h1{
+.en-tête{
   font-size: 27px;
 }
 
-h2{
+.les-droits{
   font-size: 25px;
 }
 
-td{
+.detail{
   font-size: 20px;
   color: #fff;
 }

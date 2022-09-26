@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout de franchise{% endblock %}
+
+{% block body %}
+  <div class="container my-4 p-3">
+    <h1 class="texte"> Ajout de structure</h1>
+    {{ form_start(form_add_franchise) }}
+    <div class="row">
+      <div class="col-md-12 my-2">
+        {{ form_label(form_add_franchise.name, 'Ville: ') }}<br>
+        {{ form_widget(form_add_franchise.name, {attr:{'class':'form-control'}}) }}
+      </div>
+      <div class="col-md-12 my-2">
+        {{ form_label(form_add_franchise.slug, 'Adresse dans onglet: ') }}<br>
+        {{ form_widget(form_add_franchise.slug, {attr:{'class':'form-control'}} ) }}
+      </div>
+      <div class="col-md-12 my-2">
+        {{ form_label(form_add_franchise.status, 'Status: ') }}<br>
+        {{ form_widget(form_add_franchise.status, {attr:{'class':'form-select'}}) }}
+      </div>
+      <div class="col-md-12 my-2">
+        {{ form_widget(form_add_franchise.submit, {attr:{'class':'btn btn-warning btn-lg'}}) }}
+      </div>
+
+      {{ form_end(form_add_franchise) }}
+    </div>
+  </div>
+{% endblock %}

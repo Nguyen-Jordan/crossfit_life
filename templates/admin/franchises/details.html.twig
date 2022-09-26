@@ -4,42 +4,39 @@
 
 {% block body %}
 
-    <div class="text">{{ franchise.name }}</div>
-    <main class="container">
-        <section class="row row-cols-1 row-cols-md-2">
+    <div class="texte">{{ franchise.name }}</div>
+    <main class="conteneur">
+        <section class="rang">
             {% for structure in franchise.structures %}
-                <div class="col-lg-6 my-4">
-                    <article class="card col-lg-6 mx-auto" style="width: 18rem;">
-                        <div class="card-body">
-                            <h2 class="card-title">{{ structure.address }}</h2>
-                            <table class="table">
-                                <thead>
+                <article class="carte">
+                    <div class="en-têteCarte">
+                        <h1 class="en-tête">{{ structure.address }}</h1>
+                    </div>
+                    <div class="titre">
+                        <h2 class="les-droits">Les droits</h2>
+                    </div>
+                    <div class="corpsCarte">
+                        <table class="table table-borderless">
+                            <tbody>
+                            {% for droit in structure.structuresDroits %}
                                 <tr>
-                                    <th>Droits</th>
-                                    <th>status</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for droit in structure.structuresDroits %}
-                                <tr>
-                                    <td>
+                                    <td class="detail">
                                         {{ droit.droits.name }}
                                     </td>
-                                    <td>
+                                    <td class="detail">
                                         <div class="form-switch text-center">
                                             <input class="form-check-input" type="checkbox"
-                                                    {{ (droit.status) ? 'checked' : ''}}
+                                                    {{ (droit.status) ? 'checked' : ''}} data-id="{{ franchise.id }}"
                                                    id="flexSwitchCheckDefault">
                                             <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                                         </div>
                                     </td>
                                 </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </article>
-                </div>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
             {% endfor %}
         </section>
     </main>

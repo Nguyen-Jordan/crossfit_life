@@ -1,13 +1,14 @@
-{% extends '../../base.html.twig' %}
+{% extends '/base.html.twig' %}
 
 {% block title %}Structures-Crossfit_life{% endblock %}
 
 {% block body %}
-    <div class="text">Structures</div>
+    <div class="texte">Structures</div>
     <main class="container text-center">
         <section class="row justify-content-md-center">
             <div class="col-10">
-                <table id="datatable" class="table table-bordered">
+                <a href="{{ path("structures_ajout") }}" class="btn btn-warning">Ajouter une structure</a>
+                <table id="datatable" class="table">
                     <thead class="table-dark">
                     <tr>
                         <th scope="col">ID</th>
@@ -27,10 +28,12 @@
                                            id="flexSwitchCheckDefault">
                                     <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                                 </div>
-
                             </td>
                             <td class="align-middle">{{ structure.address }}</td>
-                            <td class="align-middle"><a href="{{ path('structures_details', {slug: structure.slug}) }}" class="btn btn-warning">Voir la structures</a></td>
+                            <td class="align-middle">
+                                <a href="{{ path('structures_details', {slug: structure.slug}) }}" class="btn btn-warning">Voir la structures</a>
+                                <a href="{{ path('structures_modifier', {'id': structure.id}) }}" class="btn btn-warning">Modifier</a>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

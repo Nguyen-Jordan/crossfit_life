@@ -1,0 +1,12 @@
+<h1>Votre compte est actif</h1>
+<p>Bonjour Madame/Monsieur,</p>
+<p>Votre inscription sur le site Crossfit Life est actif. </p>
+<p>Vous pouvez vous enregistrer avec l'e-mail et le mot de passe fournis par l'entreprise. </p>
+
+<h1>Veuillez confirmer votre email!</h1>
+
+<p>
+  Veuillez confirmer votre adresse e-mail en cliquant sur le lien suivant: <br><br>
+  <a href="{{ absolute_url(path('verify_user', {token: token})) }}">Confirmer mon e-mail</a>.
+  Ce lien expirera dans 1 heure.
+</p>

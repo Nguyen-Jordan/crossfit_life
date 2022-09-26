@@ -37,12 +37,30 @@
                         <span class="links_name fw-bold">Crossfit Life</span>
                     </a>
                 </li>
+                {% if is_granted('ROLE_ADMIN') %}
                 <li>
-                    <a href="#">
+                    <a href="{{ path('admin_index') }}">
                         <span class="icon"><i class='bx bx-grid-alt' ></i></span>
                         <span class="links_name">Dashboard</span>
                     </a>
                 </li>
+                {% elseif is_granted('ROLE_PARTNER') %}
+                <li>
+                    <a href="{{ path('partenaire_index') }}">
+                        <span class="icon"><i class='bx bx-grid-alt' ></i></span>
+                        <span class="links_name">Dashboard</span>
+                    </a>
+                </li>
+                {% elseif is_granted('ROLE_MANAGER') %}
+                <li>
+                    <a href="{{ path('manager_index') }}">
+                        <span class="icon"><i class='bx bx-grid-alt' ></i></span>
+                        <span class="links_name">Dashboard</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                {% if is_granted('ROLE_ADMIN') %}
                 <li>
                     <a href="{{ path('profile_index') }}">
                         <span class="icon"><i class='bx bx-user' ></i></span>
@@ -62,11 +80,12 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        <span class="icon"><i class='bx bx-cog' ></i></span>
-                        <span class="links_name">Admin</span>
+                    <a href="{{ path('admin_utilisateurs') }}">
+                        <span class="icon"><i class='bx bx-user' ></i></span>
+                        <span class="links_name">Utilisateurs</span>
                     </a>
                 </li>
+                {% endif %}
                 <li>
                     <a href="{{ path('app_logout') }}">
                         <span class="icon"><i class='bx bx-log-out' id="log_out"></i></span>
@@ -91,6 +110,19 @@
                     <i class='bx bx-menu' id="btn"></i>
                 </div>
             </div>
+
+            {% if app.user and app.user.isVerified == false %}
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+                    <div class="alert-message">
+                        <strong>Votre compte n'est pas activé</strong>,<a href="{{ path('resend_verif') }}">renvoyer le lien d'activation</a>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% include "_partials/_flash.html.twig" %}
+
             {% block body %}{% endblock %}
         </div>
     </div>

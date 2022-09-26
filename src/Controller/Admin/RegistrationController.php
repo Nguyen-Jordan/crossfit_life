@@ -4,8 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Entity\Users;
 use App\Form\RegistrationFormType;
+use App\Repository\UsersRepository;
 use App\Security\EmailVerifier;
 use App\Security\UserAuthentificatorAuthenticator;
+use App\Service\JWTService;
+use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,17 +23,10 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
-    private EmailVerifier $emailVerifier;
-
-    public function __construct(EmailVerifier $emailVerifier)
-    {
-        $this->emailVerifier = $emailVerifier;
-    }
-
     #[Route('/inscription', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher,
      UserAuthenticatorInterface $userAuthenticator, UserAuthentificatorAuthenticator $authenticator,
-     EntityManagerInterface $entityManager): Response
+     EntityManagerInterface $entityManager, SendMailService $mail, JWTService $jwt): Response
     {
         $user = new Users();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -48,15 +44,30 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // générer une URL signée et l'envoyer par e-mail à l'utilisateur
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('big_boss@crossfitlife.com', 'Crossfit Life'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+
+            // On génère le JWT de l'utilisateur
+            // On crée le Header
+            $header = [
+              'typ' => 'JWT',
+              'alg' => 'HS256'
+            ];
+
+            // On crée le Payload
+            $payload = [
+              'user_id' => $user->getId()
+            ];
+
+            // On crée le Payload
+            $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
+
+            // On envoie un mail de confirmation
+            $mail->send(
+              'no-reply@crossfit.net',
+              $user->getEmail(),
+              'Activation de votre compte',
+              'register',
+              compact('user', 'token')
             );
-            // do anything else you need here, like send an email
 
             return $userAuthenticator->authenticateUser(
                 $user,
@@ -65,28 +76,73 @@ class RegistrationController extends AbstractController
             );
         }
 
-        return $this->render('pages/registration/register.html.twig', [
+        return $this->render('admin/registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
 
-    #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+    #[Route('/Verif/{token}', name: 'verify_user')]
+    public function verifyUser($token, JWTService $jwt, UsersRepository $usersRepository, EntityManagerInterface $em): Response {
+      // On vérifie si le token est valide, n'a pas expiré et n'a pas été modifié
+      if ($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))){
+        // On récupère le payload
+        $payload = $jwt->getPayload($token);
 
-        // validate email confirmation link, sets User::isVerified=true and persists
-        try {
-            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
-        } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
+        // On récupère le user du token
+        $user = $usersRepository->find($payload['user_id']);
 
-            return $this->redirectToRoute('app_register');
+        // On vérifie que l'utilisateur existe et n'a pas encore activé son compte
+        if ($user && !$user->getIsVerified()){
+          $user->setIsVerified(true);
+          $em->flush($user);
+          $this->addFlash('success', 'Utilisateur activé');
+          return $this->redirectToRoute('profile_index');
         }
+      }
+      // Ici un problème se pose dans le token
+      $this->addFlash('danger', 'Le token est invalide ou expiré');
+      return $this->redirectToRoute('app_login');
+    }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+    #[Route('/renvoiverif', name: 'resend_verif')]
+    public function resendVerif(JWTService $jwt, SendMailService $mail, UsersRepository $usersRepository): Response {
+      $user = $this->getUser();
 
-        return $this->redirectToRoute('app_home');
+      if (!$user){
+        $this->addFlash('danger', 'Vous devez être connecté pour accéder à cette page');
+        return $this->redirectToRoute('app_login');
+      }
+
+      if ($user->getIsVerified()){
+        $this->addFlash('warning', 'Cet utilisateur est déjà activé');
+        return $this->redirectToRoute('profile_index');
+      }
+
+      // On génère le JWT de l'utilisateur
+      // On crée le Header
+      $header = [
+        'typ' => 'JWT',
+        'alg' => 'HS256'
+      ];
+
+      // On crée le Payload
+      $payload = [
+        'user_id' => $user->getId()
+      ];
+
+      // On crée le Payload
+      $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
+
+      // On envoie un mail de confirmation
+      $mail->send(
+        'no-reply@crossfit.net',
+        $user->getEmail(),
+        'Activation de votre compte',
+        'register',
+        compact('user', 'token')
+      );
+
+      $this->addFlash('success', 'Email de vérification envoyé');
+      return $this->redirectToRoute('profile_index');
     }
 }

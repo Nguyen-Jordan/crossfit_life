@@ -3,22 +3,27 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <section class="container">
+    <div class="container my-4 p-3">
+        <h1 class="texte"> Ajout de structure</h1>
+        {{ form_start(registrationForm) }}
         <div class="row">
-            <div class="col">
-                <h1>Inscription</h1>
-
-                {{ form_start(registrtionForm) }}
-                    <fielset>
-                        <legend>Mon identité</legend>
-                        {{ form_row(registrationForm.email) }}
-                        {{ form_row(registrationForm.status) }}
-                    </fielset>
-
-                {{  form_row(registrationForm.plainPassword, {
-                    label: 'password'
-                }) }}
+            <div class="col-md-12 my-2">
+                {{ form_label(registrationForm.status, 'Status: ') }}<br>
+                {{ form_widget(registrationForm.status, {attr:{'class':'form-select'}}) }}
             </div>
+            <div class="col-md-12 my-2">
+                {{ form_label(registrationForm.email, 'E-mail: ') }}<br>
+                {{ form_widget(registrationForm.email, {attr:{'class':'form-control'}}) }}
+            </div>
+            <div class="col-md-12 my-2">
+                {{ form_label(registrationForm.plainPassword, 'Mot de passe: ') }}<br>
+                {{ form_widget(registrationForm.plainPassword, {attr:{'class':'form-control'}}) }}
+            </div>
+            <div class="col-md-12 my-2">
+                {{ form_widget(registrationForm.submit, {attr:{'class':'btn btn-warning btn-lg'}}) }}
+            </div>
+
+            {{ form_end(registrationForm) }}
         </div>
-    </section>
+    </div>
 {% endblock %}

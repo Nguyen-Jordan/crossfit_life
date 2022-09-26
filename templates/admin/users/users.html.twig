@@ -3,11 +3,12 @@
 {% block title %}Liste des utilisateurs{% endblock %}
 
 {% block body %}
-    <div class="text">Franchises</div>
     <main class="container text-center">
+        <div class="texte">Franchises</div>
         <section class="row justify-content-md-center">
             <div class="col-10">
-                <table class="table table-bordered table-hover">
+                <a href="{{ path("app_register") }}" class="btn btn-warning">Ajouter utilisateur</a>
+                <table id="datatable" class="table table-hover">
                     <thead class="table-dark">
                         <tr>
                             <th scope="col">ID</th>
@@ -37,14 +38,14 @@
                             </td>
                             <td>{{ user.structure|length }}</td>
                             <td>{{ user.franchise|length }}</td>
-                            <td>{#
-                                {% for statut in user.status %}
-                                    {% if statut == 1 %}
- input type="checkbox"><i class="bi bi-toggle-on"></i><input>
-                                    <input type="checkbox"><i class="bi bi-toggle-off"></i><input>
-                                {% endif %}
-                                {% endfor %} #}
-                            </td>
+                                <td>
+                                    <div class="form-switch text-center">
+                                        <input class="form-check-input" type="checkbox"
+                                          {{ (user.status) ? 'checked' : ''}}
+                                               id="flexSwitchCheckDefault">
+                                        <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                                    </div>
+                                </td>
                             <td><a href="{{ path('admin_modifier_utilisateur', {'id': user.id}) }}" class="btn btn-warning">Modifier</a></td>
                         </tr>
                     {% else %}

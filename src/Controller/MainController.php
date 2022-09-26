@@ -13,6 +13,6 @@ class MainController extends AbstractController
   public function index(): Response
   {
       
-      return $this->render('_partials/_nav.html.twig');
+      return $this->render('main/index.html.twig');
   }
 }

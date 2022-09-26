@@ -34,8 +34,10 @@ class Structures
     #[ORM\OneToOne(mappedBy: 'structure', cascade: ['persist', 'remove'])]
     private ?Users $user_id = null;
 
-    public function __construct()
+    public function __construct($address = null, $status = null)
     {
+        $this->address = $address;
+        $this->status = $status;
         $this->structuresDroits = new ArrayCollection();
     }
 
