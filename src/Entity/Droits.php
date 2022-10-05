@@ -21,13 +21,9 @@ class Droits
     #[ORM\OneToMany(mappedBy: 'droits', targetEntity: StructuresDroits::class)]
     private Collection $structuresDroits;
 
-    #[ORM\OneToMany(mappedBy: 'droit_id', targetEntity: FranchisesDroits::class)]
-    private Collection $franchisesDroits;
-
     public function __construct()
     {
         $this->structuresDroits = new ArrayCollection();
-        $this->franchisesDroits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,36 +67,6 @@ class Droits
             // set the owning side to null (unless already changed)
             if ($structuresDroit->getDroits() === $this) {
                 $structuresDroit->setDroits(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, FranchisesDroits>
-     */
-    public function getFranchisesDroits(): Collection
-    {
-        return $this->franchisesDroits;
-    }
-
-    public function addFranchisesDroit(FranchisesDroits $franchisesDroit): self
-    {
-        if (!$this->franchisesDroits->contains($franchisesDroit)) {
-            $this->franchisesDroits->add($franchisesDroit);
-            $franchisesDroit->setDroitId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFranchisesDroit(FranchisesDroits $franchisesDroit): self
-    {
-        if ($this->franchisesDroits->removeElement($franchisesDroit)) {
-            // set the owning side to null (unless already changed)
-            if ($franchisesDroit->getDroitId() === $this) {
-                $franchisesDroit->setDroitId(null);
             }
         }
 

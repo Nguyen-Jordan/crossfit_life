@@ -9,20 +9,20 @@
     <section class="rang">
         <article class="carte">
             <div class="en-têteCarte">
-                <h1>{{ structure.address }}</h1>
+                <h1 class="en-tête">{{ structure.address }}</h1>
             </div>
             <div class="titre">
-                <h2>Les droits</h2>
+                <h2 class="les-droits">Les droits</h2>
             </div>
             <div class="corpsCarte">
                 <table class="table table-borderless">
                     <tbody>
                     {% for droit in result %}
                         <tr>
-                            <td>
+                            <td class="detail">
                                 {{ droit.name }}
                             </td>
-                            <td>
+                            <td class="detail">
                                 <div class="form-switch text-center">
                                     <input class="form-check-input" type="checkbox"
                                             {{ (droit.status) ? 'checked' : ''}}

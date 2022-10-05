@@ -33,7 +33,12 @@ class StructureType extends AbstractType
               },
               'choice_label' => 'name',
             ])
-          ->add('submit', SubmitType::class)
+          ->add('submit', SubmitType::class, [
+            'attr' => [
+              'class' => 'btn btn-warning btn-lg'
+            ],
+            'label' => 'Ajouter'
+          ])
         ;
     }
 

@@ -22,6 +22,7 @@ class FranchiseType extends AbstractType
               ]
             ])
             ->add('slug')
+            ->add('structuresDroits')
             ->add('submit', SubmitType::class)
         ;
     }

@@ -29,10 +29,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
    */
   #[ORM\Column]
   private ?string $password = null;
-  
-  #[ORM\Column(type: 'boolean')]
-  private $isVerified = false;
-  
+
   #[ORM\Column]
   private ?bool $status = null;
 
@@ -41,6 +38,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
   #[ORM\OneToOne(inversedBy: 'user_id', cascade: ['persist', 'remove'])]
   private ?Structures $structure = null;
+
+  #[ORM\Column(type: 'boolean')]
+  private $is_verified = false;
   
   public function getId(): ?int
   {
@@ -111,19 +111,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     // If you store any temporary, sensitive data on the user, clear it here
     // $this->plainPassword = null;
   }
-  
-  public function getIsVerified(): bool
-  {
-    return $this->isVerified;
-  }
-  
-  public function setIsVerified(bool $isVerified): self
-  {
-    $this->isVerified = $isVerified;
-    
-    return $this;
-  }
-  
+
   public function isStatus(): ?bool
   {
     return $this->status;
@@ -133,6 +121,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
   {
     $this->status = $status;
     
+    return $this;
+  }
+
+  public function getIsVerified(): ?bool
+  {
+    return $this->is_verified;
+  }
+
+  public function setIsVerified(bool $is_verified): self
+  {
+    $this->is_verified = $is_verified;
+
     return $this;
   }
 

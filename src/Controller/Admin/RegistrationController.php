@@ -96,12 +96,12 @@ class RegistrationController extends AbstractController
           $user->setIsVerified(true);
           $em->flush($user);
           $this->addFlash('success', 'Utilisateur activé');
-          return $this->redirectToRoute('profile_index');
+          return $this->redirectToRoute('main');
         }
       }
       // Ici un problème se pose dans le token
       $this->addFlash('danger', 'Le token est invalide ou expiré');
-      return $this->redirectToRoute('app_login');
+      return $this->redirectToRoute('main');
     }
 
     #[Route('/renvoiverif', name: 'resend_verif')]
@@ -115,7 +115,7 @@ class RegistrationController extends AbstractController
 
       if ($user->getIsVerified()){
         $this->addFlash('warning', 'Cet utilisateur est déjà activé');
-        return $this->redirectToRoute('profile_index');
+        return $this->redirectToRoute('main');
       }
 
       // On génère le JWT de l'utilisateur
@@ -143,6 +143,6 @@ class RegistrationController extends AbstractController
       );
 
       $this->addFlash('success', 'Email de vérification envoyé');
-      return $this->redirectToRoute('profile_index');
+      return $this->redirectToRoute('main');
     }
 }

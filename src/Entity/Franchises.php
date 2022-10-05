@@ -27,18 +27,18 @@ class Franchises
     #[ORM\Column]
     private ?bool $status = null;
 
-    #[ORM\OneToMany(mappedBy: 'franchise_id', targetEntity: FranchisesDroits::class, orphanRemoval: true)]
-    private Collection $franchisesDroits;
-
     #[ORM\OneToOne(mappedBy: 'franchise', cascade: ['persist', 'remove'])]
     private ?Users $user_id = null;
+
+    #[ORM\OneToMany(mappedBy: 'franchise', targetEntity: StructuresDroits::class)]
+    private Collection $structuresDroits;
 
     public function __construct($name = null, $status = null)
     {
         $this->name = $name;
         $this->status = $status;
         $this->structures = new ArrayCollection();
-        $this->franchisesDroits = new ArrayCollection();
+        $this->structuresDroits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,35 +100,6 @@ class Franchises
         return $this;
     }
 
-    /**
-     * @return Collection<int, FranchisesDroits>
-     */
-    public function getFranchisesDroits(): Collection
-    {
-        return $this->franchisesDroits;
-    }
-
-    public function addFranchisesDroit(FranchisesDroits $franchisesDroit): self
-    {
-        if (!$this->franchisesDroits->contains($franchisesDroit)) {
-            $this->franchisesDroits->add($franchisesDroit);
-            $franchisesDroit->setFranchiseId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFranchisesDroit(FranchisesDroits $franchisesDroit): self
-    {
-        if ($this->franchisesDroits->removeElement($franchisesDroit)) {
-            // set the owning side to null (unless already changed)
-            if ($franchisesDroit->getFranchiseId() === $this) {
-                $franchisesDroit->setFranchiseId(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getUserId(): ?Users
     {
@@ -148,6 +119,36 @@ class Franchises
         }
 
         $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, StructuresDroits>
+     */
+    public function getStructuresDroits(): Collection
+    {
+        return $this->structuresDroits;
+    }
+
+    public function addStructuresDroit(StructuresDroits $structuresDroit): self
+    {
+        if (!$this->structuresDroits->contains($structuresDroit)) {
+            $this->structuresDroits->add($structuresDroit);
+            $structuresDroit->setFranchise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStructuresDroit(StructuresDroits $structuresDroit): self
+    {
+        if ($this->structuresDroits->removeElement($structuresDroit)) {
+            // set the owning side to null (unless already changed)
+            if ($structuresDroit->getFranchise() === $this) {
+                $structuresDroit->setFranchise(null);
+            }
+        }
 
         return $this;
     }

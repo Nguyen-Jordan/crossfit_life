@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Franchises;
+use App\Entity\StructuresDroits;
 use App\Form\FranchiseType;
 use App\Repository\FranchisesRepository;
 use App\Repository\StructuresDroitsRepository;
@@ -41,12 +42,12 @@ class FranchisesController extends AbstractController
     #[Route('/ajout', name: 'ajout')]
     public function ajoutFranchise(Request $request): Response
     {
-      $post = new Franchises();
-      $form = $this->createForm(FranchiseType::class, $post);
+      $franchiseForm = new Franchises();
+      $form = $this->createForm(FranchiseType::class, $franchiseForm);
       $form->handleRequest($request);
 
       if ( $form->isSubmitted() && $form->isValid()) {
-        $this->em->persist($post);
+        $this->em->persist($franchiseForm);
         $this->em->flush();
         return $this->redirectToRoute('franchises_ajout');
 
