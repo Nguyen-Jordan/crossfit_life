@@ -16,7 +16,7 @@ class Franchises
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -124,6 +124,7 @@ class Franchises
     }
 
     /**
+     * @param StructuresDroits $structuresDroit
      * @return Collection<int, StructuresDroits>
      */
     public function getStructuresDroits(): Collection
@@ -133,10 +134,11 @@ class Franchises
 
     public function addStructuresDroit(StructuresDroits $structuresDroit): self
     {
-        if (!$this->structuresDroits->contains($structuresDroit)) {
+        /*if (!$this->structuresDroits->contains($structuresDroit)) {
             $this->structuresDroits->add($structuresDroit);
             $structuresDroit->setFranchise($this);
-        }
+        }*/
+        $this->structuresDroits[] = $structuresDroit;
 
         return $this;
     }
@@ -152,4 +154,9 @@ class Franchises
 
         return $this;
     }
+
+  public function __toString(): string
+  {
+    return $this->name;
+  }
 }

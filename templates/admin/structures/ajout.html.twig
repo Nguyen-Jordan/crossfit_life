@@ -23,6 +23,9 @@
           {{ form_label(form_add_structure.status, 'Status: ') }}<br>
           {{ form_widget(form_add_structure.status, {attr:{'class':'form-select'}}) }}
         </div>
+        <div class="col-md-12 my-2">
+          {{ form_widget(form_add_structure.submit) }}
+        </div>
 
         {{ form_end(form_add_structure) }}
       </div>

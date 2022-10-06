@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Franchises;
 use App\Entity\StructuresDroits;
 use App\Form\FranchiseType;
+use App\Form\GlobalPermissionType;
 use App\Repository\FranchisesRepository;
 use App\Repository\StructuresDroitsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -44,16 +45,45 @@ class FranchisesController extends AbstractController
     {
       $franchiseForm = new Franchises();
       $form = $this->createForm(FranchiseType::class, $franchiseForm);
+
+      $franchiseForm->setName('Pinto');
+
+      $droits = new StructuresDroits();
+      $droits->setDroits(NULL);
+      $droits->setStatus(1);
+      $droits->setFranchise($franchiseForm);
+
+      $franchiseForm->addStructuresDroit($droits);
+
+      dump($franchiseForm);
+
       $form->handleRequest($request);
 
-      if ( $form->isSubmitted() && $form->isValid()) {
-        $this->em->persist($franchiseForm);
-        $this->em->flush();
-        return $this->redirectToRoute('franchises_ajout');
-
+      if ($form->isSubmitted()) {
+        dump($franchiseForm);
       }
+
+
       return $this->render('admin/franchises/ajout.html.twig', [
         'form_add_franchise' => $form->createView()
+      ]);
+    }
+
+    #[Route('/ajout/droits', name: 'droits')]
+    public function droitsFranchise(Request $request): Response
+    {
+      $globalPermission = new StructuresDroits();
+      $form = $this->createForm(GlobalPermissionType::class, $globalPermission);
+      $form->handleRequest($request);
+
+      if ($form->isSubmitted() && $form->isValid()) {
+        $this->em->persist($globalPermission);
+        $this->em->flush();
+
+        return $this->redirectToRoute('franchises_droits');
+      }
+      return $this->render('admin/franchises/global.html.twig', [
+        'form_add_global_permission' => $form->createView()
       ]);
     }
 

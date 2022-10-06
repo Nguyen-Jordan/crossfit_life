@@ -19,10 +19,28 @@
         {{ form_label(form_add_franchise.status, 'Status: ') }}<br>
         {{ form_widget(form_add_franchise.status, {attr:{'class':'form-select'}}) }}
       </div>
-      <div class="col-md-12 my-2">
-        {{ form_widget(form_add_franchise.submit, {attr:{'class':'btn btn-warning btn-lg'}}) }}
-      </div>
+      {% for row in form_add_franchise.structuresDroits %}
+      <div class="carte">
+        <div class="en-têteCarte">
+          {{ row.elements.0.droits }}
+        </div>
+        <div class="titre">
+          <h2 class="les-droits">Les droits</h2>
+        </div>
+        <div class="corpsCarte">
+          <table class="table table-borderless">
+            <tbody>
+              <tr>
+                <div class="detail">
+                  {{ form_row(row) }}
+                </div>
+              </tr>
 
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endfor %}
       {{ form_end(form_add_franchise) }}
     </div>
   </div>

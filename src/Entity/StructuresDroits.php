@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\StructuresDroitsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StructuresDroitsRepository::class)]
@@ -80,10 +81,5 @@ class StructuresDroits
         $this->franchise = $franchise;
 
         return $this;
-    }
-
-    public function  __toString(): string
-    {
-      return $this->setDroits();
     }
 }

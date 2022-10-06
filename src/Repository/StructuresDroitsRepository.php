@@ -39,9 +39,19 @@ class StructuresDroitsRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    
-    
-    
+
+
+  public function findRightsFranchise($value)
+  {
+    return $this
+      ->createQueryBuilder('sd')
+      ->select('d.name')
+      ->join("sd.droits", "d")
+      ->andWhere('sd.franchise in (:value)')
+      ->setParameter('value', $value)
+      ->getQuery()
+      ->getArrayResult();
+  }
     
     
 //    /**
