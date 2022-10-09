@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\Droits;
 use App\Entity\Franchises;
 use App\Entity\StructuresDroits;
-use App\Repository\DroitsRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -23,45 +22,28 @@ class GlobalPermissionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
       $builder
-        ->add('franchise', EntityType::class, [
-          'class' => Franchises::class,
-          'query_builder' => function (EntityRepository $er) {
-            return $er->createQueryBuilder('f')
-              ->orderBy('f.name', 'ASC');
+        ->add('droits', EntityType::class, [
+          'class' => Droits::class,
+          'query_builder' => function(EntityRepository $repository) {
+            return $repository->createQueryBuilder('d')
+              ->orderBy('d.name', 'ASC');
           },
           'choice_label' => 'name',
+          'constraints' => new NotBlank(['message' => 'veuillez choisir une permission']),
+          'label' => 'Permission: '
         ])
         ->add('status', ChoiceType::class, [
           'choices' => [
             'Actif' => 1,
             'Inactif' => 0
-          ]
-        ])
-        ->add('droits', EntityType::class, [
-          'class' => Droits::class,
-          'choice_label' => 'name',
-          'query_builder' => function(DroitsRepository $repository) {
-          return $repository->createQueryBuilder('d')->orderBy('d.id', 'ASC');
-          },
-          'constraints' => new NotBlank(['message' => 'veuillez choisir une permission'])
-        ])
-        ->add('submit', SubmitType::class, [
-          'attr' => [
-            'class' => 'btn btn-warning btn-lg'
           ],
-          'label' => 'Ajouter'
+          'label' => 'statut: '
         ])
+
       ;
     }
 
-/*->add('submit', SubmitType::class)
 
-if ( $form->isSubmitted() && $form->isValid()) {
-$this->em->persist($franchiseForm);
-$this->em->flush();
-
-return $this->redirectToRoute('franchises_droits');
-}*/
 
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -70,3 +52,4 @@ return $this->redirectToRoute('franchises_droits');
         ]);
     }
 }
+

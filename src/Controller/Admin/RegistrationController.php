@@ -104,7 +104,7 @@ class RegistrationController extends AbstractController
       return $this->redirectToRoute('main');
     }
 
-    #[Route('/renvoiverif', name: 'resend_verif')]
+    #[Route('/renvoiVerif', name: 'resend_verif')]
     public function resendVerif(JWTService $jwt, SendMailService $mail, UsersRepository $usersRepository): Response {
       $user = $this->getUser();
 

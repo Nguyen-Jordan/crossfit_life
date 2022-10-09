@@ -3,9 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Franchises;
-use App\Entity\StructuresDroits;
-use Doctrine\ORM\EntityRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Form\GlobalPermissionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -28,6 +26,7 @@ class FranchiseType extends AbstractType
             ->add('slug')
             ->add('structuresDroits', CollectionType::class, [
               'entry_type' => GlobalPermissionType::class,
+              'label' => 'Permission: ',
               'mapped' => false,
               'entry_options' => [
                 'label' => false
@@ -36,24 +35,12 @@ class FranchiseType extends AbstractType
               'allow_add' => true,
               'allow_delete' => true
             ])
-            /*->add('structuresDroits', EntityType::class, [
-              'class' => StructuresDroits::class,
-              'mapped' =>false,
-              'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('sd')
-                  ->select('d.name, sd.status')
-                  ->join('sd.droits', 'd')
-                  ->where('sd.droits = d.id')
-                  ->orderBy('d.id', 'ASC');
-              },
-              'choice_label' => 'name',
-            ])*/
             ->add('save', SubmitType::class, [
+              'label' => 'Soumettre',
               'attr' => [
-                'class' => 'btn btn-success'
+                'class' => 'btn btn-warning'
               ]
             ])
-
         ;
     }
 

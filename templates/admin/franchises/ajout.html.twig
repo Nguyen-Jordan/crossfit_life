@@ -2,46 +2,88 @@
 
 {% block title %}Ajout de franchise{% endblock %}
 
+
+{% macro niceFrom(form_add_franchise) %}
+
+{% endmacro niceFrom %}
+
+{% import _self as formMacros %}
+
 {% block body %}
   <div class="container my-4 p-3">
     <h1 class="texte"> Ajout de franchise</h1>
     {{ form_start(form_add_franchise) }}
-    <div class="row">
-      <div class="col-md-12 my-2">
         {{ form_label(form_add_franchise.name, 'Ville: ') }}<br>
-        {{ form_widget(form_add_franchise.name, {attr:{'class':'form-control'}}) }}
-      </div>
-      <div class="col-md-12 my-2">
+        {{ form_widget(form_add_franchise.name, {attr:{'class':'form-control col-md-12 my-2'}}) }}
         {{ form_label(form_add_franchise.slug, 'Adresse dans onglet: ') }}<br>
-        {{ form_widget(form_add_franchise.slug, {attr:{'class':'form-control'}} ) }}
-      </div>
-      <div class="col-md-12 my-2">
+        {{ form_widget(form_add_franchise.slug, {attr:{'class':'form-control col-md-12 my-2'}} ) }}
         {{ form_label(form_add_franchise.status, 'Status: ') }}<br>
-        {{ form_widget(form_add_franchise.status, {attr:{'class':'form-select'}}) }}
+        {{ form_widget(form_add_franchise.status, {attr:{'class':'form-select col-md-12 my-2'}}) }}
+      <div class="col-md-12 my-2" id="franchise_structuresDroits" data-prototype="{{ form_widget(form_add_franchise.structuresDroits.vars.prototype)|e('html_attr') }}">
+        {% for row in form_add_franchise.structuresDroits %}
+        <div class="card">
+          <div class="card-header">
+            <strong></strong>
+          </div>
+          <div class="card-body">
+            {{ formMacros.niceFrom(row) }}
+            <span></span>
+          </div>
+        </div>
+        {% endfor %}
       </div>
-      {% for row in form_add_franchise.structuresDroits %}
-      <div class="carte">
-        <div class="en-têteCarte">
-          {{ row.elements.0.droits }}
-        </div>
-        <div class="titre">
-          <h2 class="les-droits">Les droits</h2>
-        </div>
-        <div class="corpsCarte">
-          <table class="table table-borderless">
-            <tbody>
-              <tr>
-                <div class="detail">
-                  {{ form_row(row) }}
-                </div>
-              </tr>
-
-            </tbody>
-          </table>
-        </div>
-      </div>
-      {% endfor %}
       {{ form_end(form_add_franchise) }}
-    </div>
   </div>
+{% endblock %}
+
+{% block javascripts %}
+   <script>
+      let collection, boutonAjout, span;
+      window.onload = () => {
+        collection = document.querySelector("#franchise_structuresDroits");
+        span = collection.querySelector("span");
+
+        boutonAjout = document.createElement("button");
+        boutonAjout.className = "ajout-droit btn btn-success";
+        boutonAjout.innerText = "Ajouter une permission";
+
+        let nouveauBouton = span.append(boutonAjout);
+
+        collection.dataset.index = collection.querySelectorAll("input").length;
+
+        boutonAjout.addEventListener("click", function(){
+          addButton(collection, nouveauBouton);
+        });
+      }
+
+      function addButton(collection, nouveauBouton){
+        let prototype = collection.dataset.prototype;
+
+        let index = collection.dataset.index;
+
+        prototype = prototype.replace(/__name__/g, index);
+
+        let content = document.createElement("html");
+        content.innerHTML = prototype;
+        let newForm = content.querySelector("div");
+
+        let boutonSuppr = document.createElement("button");
+        boutonSuppr.type = "button";
+        boutonSuppr.className = "btn btn-danger";
+        boutonSuppr.id = "delete-droit-" + index;
+        boutonSuppr.innerText = "Supprimer cette permission"
+
+        newForm.append(boutonSuppr);
+
+        collection.dataset.index++;
+
+        let boutonAjout = collection.querySelector(".ajout-droit");
+
+        span.insertBefore(newForm, boutonAjout);
+
+        boutonSuppr.addEventListener("click", function (){
+          this.previousElementSibling.parentElement.remove();
+        })
+      }
+  </script>
 {% endblock %}

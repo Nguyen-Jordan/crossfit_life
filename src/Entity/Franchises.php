@@ -134,11 +134,10 @@ class Franchises
 
     public function addStructuresDroit(StructuresDroits $structuresDroit): self
     {
-        /*if (!$this->structuresDroits->contains($structuresDroit)) {
-            $this->structuresDroits->add($structuresDroit);
+        if (!$this->structuresDroits->contains($structuresDroit)) {
+            $this->structuresDroits[] = $structuresDroit;
             $structuresDroit->setFranchise($this);
-        }*/
-        $this->structuresDroits[] = $structuresDroit;
+        }
 
         return $this;
     }
