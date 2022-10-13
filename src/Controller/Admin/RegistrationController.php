@@ -5,22 +5,16 @@ namespace App\Controller\Admin;
 use App\Entity\Users;
 use App\Form\RegistrationFormType;
 use App\Repository\UsersRepository;
-use App\Security\EmailVerifier;
 use App\Security\UserAuthentificatorAuthenticator;
 use App\Service\JWTService;
 use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
-
 class RegistrationController extends AbstractController
 {
     #[Route('/inscription', name: 'app_register')]
@@ -88,7 +82,7 @@ class RegistrationController extends AbstractController
         // On récupère le payload
         $payload = $jwt->getPayload($token);
 
-        // On récupère le user du token
+        // On récupère le token de l'utilisateur
         $user = $usersRepository->find($payload['user_id']);
 
         // On vérifie que l'utilisateur existe et n'a pas encore activé son compte

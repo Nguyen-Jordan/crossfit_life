@@ -43,11 +43,8 @@ class FranchisesRepository extends ServiceEntityRepository
     {
       $test = $this
       ->createQueryBuilder('f')
-      ->select('d.name')
-      ->join("f.structures", "s")
-      ->andWhere('s.address in (:value)')
-      ->join("s.structuresDroits", "sd")
-      ->join("sd.droits", "d")
+      ->select('f.structuresDroits')
+      ->andWhere('sd.franchise_id in (:value)')
       ->setParameter('value', $value)
       ->getQuery()
       ->getArrayResult();

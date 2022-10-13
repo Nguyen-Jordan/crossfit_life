@@ -23,7 +23,7 @@ class StructuresController extends AbstractController
         ]);
     }
 
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
      * @param $em
@@ -45,6 +45,11 @@ class StructuresController extends AbstractController
       $form->handleRequest($request);
 
       if ( $form->isSubmitted() && $form->isValid()) {
+        // il faut importerter les fichier repository franchiseRepository
+        // getter l'id franchise dans le formulaire , form get datda + get('franchise')
+        // annotation var $franchise pour dir ec'est une entite franchise
+        // cette entite franchise on fait getter droit sur getStructuresDroits et on bouche dessue pour setter dans structure et on persist
+        
         $this->em->persist($post);
         $this->em->flush();
         return $this->redirectToRoute('structures_ajout');
@@ -55,22 +60,22 @@ class StructuresController extends AbstractController
       ]);
     }
 
-  #[Route('/modifier', name: 'modifier')]
-  public function modifierStructure(Structures $structures, Request $request): Response
-  {
-    $form = $this->createForm(StructureType::class, $structures);
-    $form->handleRequest($request);
+    #[Route('/modifier', name: 'modifier')]
+    public function modifierStructure(Structures $structures, Request $request): Response
+    {
+      $form = $this->createForm(StructureType::class, $structures);
+      $form->handleRequest($request);
 
-    if ( $form->isSubmitted() && $form->isValid()) {
-      $this->em->persist($structures);
-      $this->em->flush();
-      return $this->redirectToRoute('structures_ajout');
+      if ( $form->isSubmitted() && $form->isValid()) {
+        $this->em->persist($structures);
+        $this->em->flush();
+        return $this->redirectToRoute('structures_ajout');
 
+      }
+      return $this->render('admin/structures/ajout.html.twig', [
+        'form_add_structure' => $form->createView()
+      ]);
     }
-    return $this->render('admin/structures/ajout.html.twig', [
-      'form_add_structure' => $form->createView()
-    ]);
-  }
 
     #[Route('/{slug}', name: 'details')]
     public function details(
@@ -80,7 +85,7 @@ class StructuresController extends AbstractController
     {
       //On va chercher la liste des droits
       $result = $structure->findRights([$structures],['id' => 'asc']);
-      
+
       return $this->render('admin/structures/details.html.twig', [
         'result' => $result,
         'structure' => $structures

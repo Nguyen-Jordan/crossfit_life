@@ -15,7 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class UsersController extends AbstractController
 {
   #[Route('/', name: 'index')]
-public function index(): Response
+  public function index(): Response
   {
     return $this->render('admin/users/index.html.twig');
   }
