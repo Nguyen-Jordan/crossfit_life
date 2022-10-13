@@ -16,9 +16,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class GlobalPermissionType extends AbstractType
 {
-  /**
-   * {@inheritDoc}
-   */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
       $builder
@@ -28,6 +25,8 @@ class GlobalPermissionType extends AbstractType
             return $repository->createQueryBuilder('d')
               ->orderBy('d.name', 'ASC');
           },
+          'multiple' => true,
+          'expanded' => true,
           'choice_label' => 'name',
           'constraints' => new NotBlank(['message' => 'veuillez choisir une permission']),
           'label' => 'Permission: '
@@ -36,14 +35,14 @@ class GlobalPermissionType extends AbstractType
           'choices' => [
             'Actif' => 1,
             'Inactif' => 0
+          ], 'attr' => [
+            'class' => 'form-control'
           ],
           'label' => 'statut: '
         ])
 
       ;
     }
-
-
 
     public function configureOptions(OptionsResolver $resolver): void
     {

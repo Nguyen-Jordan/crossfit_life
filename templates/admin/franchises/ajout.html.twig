@@ -2,13 +2,6 @@
 
 {% block title %}Ajout de franchise{% endblock %}
 
-
-{% macro niceFrom(form_add_franchise) %}
-
-{% endmacro niceFrom %}
-
-{% import _self as formMacros %}
-
 {% block body %}
   <div class="container my-4 p-3">
     <h1 class="texte"> Ajout de franchise</h1>
@@ -19,18 +12,13 @@
         {{ form_widget(form_add_franchise.slug, {attr:{'class':'form-control col-md-12 my-2'}} ) }}
         {{ form_label(form_add_franchise.status, 'Status: ') }}<br>
         {{ form_widget(form_add_franchise.status, {attr:{'class':'form-select col-md-12 my-2'}}) }}
-      <div class="col-md-12 my-2" id="franchise_structuresDroits" data-prototype="{{ form_widget(form_add_franchise.structuresDroits.vars.prototype)|e('html_attr') }}">
-        {% for row in form_add_franchise.structuresDroits %}
+      <div class="col-md-12 my-2" id="structuresDroits" data-prototype="{{ form_row(form_add_franchise.structuresDroits.vars.prototype)|e('html_attr') }}">
         <div class="card">
-          <div class="card-header">
-            <strong></strong>
-          </div>
           <div class="card-body">
-            {{ formMacros.niceFrom(row) }}
+            {{ form_row(form_add_franchise.structuresDroits) }}
             <span></span>
           </div>
         </div>
-        {% endfor %}
       </div>
       {{ form_end(form_add_franchise) }}
   </div>
@@ -40,11 +28,11 @@
    <script>
       let collection, boutonAjout, span;
       window.onload = () => {
-        collection = document.querySelector("#franchise_structuresDroits");
+        collection = document.querySelector('#structuresDroits');
         span = collection.querySelector("span");
 
         boutonAjout = document.createElement("button");
-        boutonAjout.className = "ajout-droit btn btn-success";
+        boutonAjout.className = "ajout-droit btn btn-success my-2";
         boutonAjout.innerText = "Ajouter une permission";
 
         let nouveauBouton = span.append(boutonAjout);
@@ -69,7 +57,7 @@
 
         let boutonSuppr = document.createElement("button");
         boutonSuppr.type = "button";
-        boutonSuppr.className = "btn btn-danger";
+        boutonSuppr.className = "btn btn-danger my-2";
         boutonSuppr.id = "delete-droit-" + index;
         boutonSuppr.innerText = "Supprimer cette permission"
 

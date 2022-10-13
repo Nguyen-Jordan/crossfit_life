@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/franchises', name: 'franchises_')]
 class FranchisesController extends AbstractController
@@ -48,8 +49,9 @@ class FranchisesController extends AbstractController
       $form->handleRequest($request);
 
       if ( $form->isSubmitted() && $form->isValid()) {
-        $this->em->persist($franchiseForm);
-        $this->em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($franchiseForm);
+        $em->flush();
 
         return $this->redirectToRoute('franchises_index');
       }
@@ -69,13 +71,15 @@ class FranchisesController extends AbstractController
       if ( $form->isSubmitted() && $form->isValid()) {
         $this->em->persist($franchises);
         $this->em->flush();
-        return $this->redirectToRoute('franchises_ajout');
+        return $this->redirectToRoute('franchises_index');
 
       }
+
       return $this->render('admin/franchises/ajout.html.twig', [
         'form_add_franchise' => $form->createView()
       ]);
     }
+
 
     #[Route('/{slug}', name: 'details')]
     public function details(StructuresDroitsRepository $repository, Franchises $franchises): Response
