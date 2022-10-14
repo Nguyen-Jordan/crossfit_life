@@ -1,11 +1,5 @@
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 .en-tête{
-  font-size: 27px;
+  font-size: 20px;
 }
 
 .les-droits{
@@ -77,7 +71,7 @@
   }
 
   .en-têteCarte {
-    padding: 10px;
+    padding: 20px;
     font-size: 20px;
 
     height: 100px;

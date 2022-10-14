@@ -8,7 +8,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <! -- Feuilles de styles -->
-
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
         <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
@@ -51,6 +53,12 @@
                         <span class="links_name">Dashboard</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ path('profile_index') }}">
+                        <span class="icon"><i class='bx bx-user' ></i></span>
+                        <span class="links_name">Profil</span>
+                    </a>
+                </li>
                 {% elseif is_granted('ROLE_MANAGER') %}
                 <li>
                     <a href="{{ path('manager_index') }}">
@@ -58,15 +66,15 @@
                         <span class="links_name">Dashboard</span>
                     </a>
                 </li>
-                {% endif %}
-
-                {% if is_granted('ROLE_ADMIN') %}
                 <li>
                     <a href="{{ path('profile_index') }}">
                         <span class="icon"><i class='bx bx-user' ></i></span>
                         <span class="links_name">Profil</span>
                     </a>
                 </li>
+                {% endif %}
+
+                {% if is_granted('ROLE_ADMIN') %}
                 <li>
                     <a href="{{ path('franchises_index') }}">
                         <span class="icon"><i class='bx bx-sitemap'></i></span>

@@ -40,8 +40,10 @@ security:
          - { path: ^/partenaire, roles: ROLE_PARTNER }
          - { path: ^/manager, roles: ROLE_MANAGER }
 
-
-
+    role_hierarchy:
+        ROLE_ADMIN: ["ROLE_ADMIN"]
+        ROLE_PARTNER: ["ROLE_PARTNER"]
+        ROLE_MANAGER: ["ROLE_MANAGER"]
 when@test:
     security:
         password_hashers:

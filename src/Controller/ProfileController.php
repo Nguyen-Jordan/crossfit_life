@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\FranchisesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,13 +18,4 @@ class ProfileController extends AbstractController
         ]);
         
     }
-  
-    #[Route('/{slug}', name: 'structures')]
-    public function structures(): Response
-    {
-      return $this->render('profile/index.html.twig', [
-        'controller_name' => 'Structures de l\'utilisateur',
-      ]);
-    
-  }
 }
