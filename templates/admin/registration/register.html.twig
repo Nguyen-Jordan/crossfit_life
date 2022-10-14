@@ -4,20 +4,25 @@
 
 {% block body %}
     <div class="container my-4 p-3">
-        <h1 class="texte"> Ajout de structure</h1>
+        <h1 class="texte"> Ajout d'un utilisateur</h1>
         {{ form_start(registrationForm) }}
-        <div class="row">
-            <div class="col-md-12 my-2">
-                {{ form_label(registrationForm.status, 'Status: ') }}<br>
+        <div class="row row-cols-1">
+            <div class="col-lg-2 col-sm-5 my-2">
+                {{ form_label(registrationForm.status, 'Status') }}<br>
                 {{ form_widget(registrationForm.status, {attr:{'class':'form-select'}}) }}
             </div>
             <div class="col-md-12 my-2">
-                {{ form_label(registrationForm.email, 'E-mail: ') }}<br>
-                {{ form_widget(registrationForm.email, {attr:{'class':'form-control'}}) }}
+                {{ form_row(registrationForm.firstname) }}
             </div>
             <div class="col-md-12 my-2">
-                {{ form_label(registrationForm.plainPassword, 'Mot de passe: ') }}<br>
-                {{ form_widget(registrationForm.plainPassword, {attr:{'class':'form-control'}}) }}
+                {{ form_row(registrationForm.lastname) }}
+            </div>
+            <div class="col-md-12 my-2">
+                {{ form_row(registrationForm.email) }}
+            </div>
+            <div class="col-md-12 my-2">
+                {{ form_label(registrationForm.plainPassword, 'Mot de passe') }}<br>
+                {{ form_widget(registrationForm.plainPassword) }}
             </div>
             <div class="col-md-12 my-2">
                 {{ form_widget(registrationForm.submit, {attr:{'class':'btn btn-warning btn-lg'}}) }}

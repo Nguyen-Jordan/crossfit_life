@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
 
 </head>
+<body>
     <section class="container">
         <div class="row">
             <div class="col align-content-center mt-5">
@@ -36,8 +37,10 @@
 
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                    <button class="btn btn-lg btn-primary mt-3" type="submit">Me connecter</button>
+                    <button class="btn btn-lg btn-primary" type="submit">Me connecter</button>
+                    <a href="{{ path('change_password') }}" class="btn btn-lg btn-success m-3">Mot de passe oublié</a>
                 </form>
             </div>
         </div>
     </section>
+</body>

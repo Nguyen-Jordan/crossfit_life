@@ -41,6 +41,15 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
   #[ORM\Column(type: 'boolean')]
   private $is_verified = false;
+
+  #[ORM\Column(type: 'string', length: 100)]
+  private $resetToken = null;
+
+  #[ORM\Column(length: 100)]
+  private ?string $firstname = null;
+
+  #[ORM\Column(length: 100)]
+  private ?string $lastname = null;
   
   public function getId(): ?int
   {
@@ -136,6 +145,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     return $this;
   }
 
+  public function getResetToken(): ?string
+  {
+    return $this->resetToken;
+  }
+
+  public function setResetToken(?string $resetToken): self
+  {
+    $this->resetToken = $resetToken;
+
+    return $this;
+  }
+
   public function getFranchise(): ?Franchises
   {
       return $this->franchise;
@@ -200,6 +221,30 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
   public function setStructureId(?Structures $structure): self
   {
       $this->structure = $structure;
+
+      return $this;
+  }
+
+  public function getFirstname(): ?string
+  {
+      return $this->firstname;
+  }
+
+  public function setFirstname(string $firstname): self
+  {
+      $this->firstname = $firstname;
+
+      return $this;
+  }
+
+  public function getLastname(): ?string
+  {
+      return $this->lastname;
+  }
+
+  public function setLastname(string $lastname): self
+  {
+      $this->lastname = $lastname;
 
       return $this;
   }

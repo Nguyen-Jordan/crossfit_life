@@ -29,14 +29,27 @@ class StructureType extends AbstractType
             'Inactif' => 0
           ]
         ])
-        ->add('address', TextType::class, ['label' => 'Adresse de la structure: '])
-        ->add('slug', TextType::class, ['label' => 'Adresse dans l\'onglet: '] )
+        ->add('address', TextType::class, [
+          'attr' => [
+            'class' => 'form-control'
+          ],
+          'label' => 'Adresse de la structure: '
+        ])
+        ->add('slug', TextType::class, [
+          'attr' => [
+            'class' => 'form-control'
+          ],
+          'label' => 'Adresse dans l\'onglet: '
+        ] )
         ->add('franchise', EntityType::class, [
           'class' => Franchises::class,
           'query_builder' => function (EntityRepository $er) {
             return $er->createQueryBuilder('f')
               ->orderBy('f.name', 'ASC');
           },
+          'attr' => [
+            'class' => 'form-select'
+          ],
           'choice_label' => 'name',
           'label' => 'Franchise liée: '
         ])

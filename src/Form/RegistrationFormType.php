@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -32,23 +33,32 @@ class RegistrationFormType extends AbstractType
               ],
               'label' => 'E-mail'
             ])
-     
+            ->add('firstname', TextType::class, [
+              'attr' => [
+                'class' => 'form-control'
+              ],
+              'label' => 'Prénom'
+            ])
+            ->add('lastname', TextType::class, [
+              'attr' => [
+                'class' => 'form-control'
+              ],
+              'label' => 'Nom'
+            ])
             ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
                 'mapped' => false,
+                'label' => 'Mot de passe: ',
                 'attr' => [
                   'autocomplete' => 'new-password',
                   'class' => 'form-control'
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Veuillez entrer un mot de passe',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
+                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
                         'max' => 4096,
                     ]),
                 ],

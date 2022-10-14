@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -25,7 +26,20 @@ class EditUserType extends AbstractType
           'required' => true,
           'attr' => [
             'class' => 'form-control'
-          ]
+          ],
+          'label' => 'Email'
+        ])
+        ->add('firstname', TextType::class, [
+          'attr' => [
+            'class' => 'form-control'
+          ],
+          'label' => 'Prénom'
+        ])
+        ->add('lastname', TextType::class, [
+          'attr' => [
+            'class' => 'form-control'
+          ],
+          'label' => 'Nom'
         ])
         ->add('roles', ChoiceType::class, [
           'choices' => [
@@ -50,7 +64,8 @@ class EditUserType extends AbstractType
             'Actif' => 1,
             'Inactif' => 0
           ],
-          'expanded' => true
+          'expanded' => true,
+          'label' => 'Statut'
         ])
         ->add('Valider', SubmitType::class)
         ;
