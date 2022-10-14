@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Franchises;
 use App\Entity\Structures;
 use App\Form\StructureType;
+use App\Repository\FranchisesRepository;
 use App\Repository\StructuresRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,13 +40,23 @@ class StructuresController extends AbstractController
      * @return Response
      */
     #[Route('/ajout', name: 'ajout')]
-    public function ajoutStructure(Request $request): Response
+    public function ajoutStructure(
+      Request $request,
+      FranchisesRepository $repository
+    ): Response
     {
       $post = new Structures();
       $form = $this->createForm(StructureType::class, $post);
       $form->handleRequest($request);
 
       if ( $form->isSubmitted() && $form->isValid()) {
+        // $franchise = $repository->findOneBy($form->get('franchise')->getData());
+        // /**
+        // * @var Franchises
+        // */
+
+        // $droit = $franchise->getStructuresDroits();
+
         // il faut importerter les fichier repository franchiseRepository
         // getter l'id franchise dans le formulaire , form get datda + get('franchise')
         // annotation var $franchise pour dir ec'est une entite franchise

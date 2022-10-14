@@ -112,14 +112,14 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('main');
       }
 
-      // On génère le JWT de l'utilisateur
-      // On crée le Header
+      // Je génère le JWT de l'utilisateur
+      // Je crée le Header
       $header = [
         'typ' => 'JWT',
         'alg' => 'HS256'
       ];
 
-      // On crée le Payload
+      // Je crée le Payload
       $payload = [
         'user_id' => $user->getId()
       ];
@@ -127,7 +127,7 @@ class RegistrationController extends AbstractController
       // On crée le Payload
       $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
-      // On envoie un mail de confirmation
+      // J'envoie un mail de confirmation
       $mail->send(
         'no-reply@crossfit.net',
         $user->getEmail(),
@@ -139,4 +139,5 @@ class RegistrationController extends AbstractController
       $this->addFlash('success', 'Email de vérification envoyé');
       return $this->redirectToRoute('main');
     }
+
 }
