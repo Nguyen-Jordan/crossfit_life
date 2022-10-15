@@ -63,11 +63,7 @@ class RegistrationController extends AbstractController
               compact('user', 'token')
             );
 
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+            return $this->redirectToRoute('admin_index');
         }
 
         return $this->render('admin/registration/register.html.twig', [

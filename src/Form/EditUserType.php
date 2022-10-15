@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Users;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -41,16 +42,16 @@ class EditUserType extends AbstractType
           ],
           'label' => 'Nom'
         ])
-        ->add('roles', ChoiceType::class, [
-          'choices' => [
-            'Manager' => 'ROLE_MANAGER',
-            'Partenaire' => 'ROLE_PARTNER',
-            'Admin' => 'ROLE_ADMIN'
-          ],
-          'expanded' => true,
-          'multiple' => true,
-          'label' => 'Rôles'
-        ])
+          ->add('roles', ChoiceType::class, [
+            'required' => true,
+            'multiple' => false,
+            'expanded' => false,
+            'choices' => [
+              'Admin' => 'ROLE_ADMIN',
+              'Partner' => 'ROLE_PARTNER',
+              'Manager' => 'ROLE_MANAGER'
+            ]
+          ])
         ->add('isVerified', ChoiceType::class, [
           'choices' => [
             'Oui' => 1,
@@ -67,8 +68,18 @@ class EditUserType extends AbstractType
           'expanded' => true,
           'label' => 'Statut'
         ])
-        ->add('Valider', SubmitType::class)
         ;
+        $builder->get('roles')
+          ->addModelTransformer(new CallbackTransformer(
+            function ($rolesArray) {
+              // transform the array to a string
+              return count($rolesArray)? $rolesArray[0]: null;
+            },
+            function ($rolesString) {
+              // transform the string back to an array
+              return [$rolesString];
+            }
+          ));
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -3,7 +3,36 @@
 {% block title %}Modifier l'utilisateur{% endblock %}
 
 {% block body %}
-    <div class="text">Modifier l'utilisateur</div>
-    {{ form(userForm) }}
+    <div class="container my-4 p-3">
+        <h1 class="texte"> Ajout d'un utilisateur</h1>
+        {{ form_start(userForm) }}
+        <div class="row row-cols-1">
+            <div class="col-lg-2 col-sm-5 my-2">
+                {{ form_label(userForm.status, 'Status') }}<br>
+                {{ form_widget(userForm.status, {attr:{'class':'form-select'}}) }}
+            </div>
+            <div class="col-lg-3 col-sm-5 my-2">
+                {{ form_label(userForm.roles, 'Rôle') }}<br>
+                {{ form_widget(userForm.roles, {attr:{'class':'form-select'}}) }}
+            </div>
+            <div class="col-md-12 my-2">
+                {{ form_row(userForm.firstname) }}
+            </div>
+            <div class="col-md-12 my-2">
+                {{ form_row(userForm.lastname) }}
+            </div>
+            <div class="col-md-12 my-2">
+                {{ form_row(userForm.email) }}
+            </div>
+            <div class="col-md-12 my-2">
+                {{ form_label(userForm.plainPassword, 'Mot de passe') }}<br>
+                {{ form_widget(userForm.plainPassword) }}
+            </div>
+            <div class="col-md-8 my-2">
+                <button type="submit" class="btn btn-lg btn-warning my-2">Inscrire</button>
+            </div>
 
+            {{ form_end(userForm) }}
+        </div>
+    </div>
 {% endblock %}

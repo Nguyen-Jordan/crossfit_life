@@ -11,6 +11,10 @@
                 {{ form_label(registrationForm.status, 'Status') }}<br>
                 {{ form_widget(registrationForm.status, {attr:{'class':'form-select'}}) }}
             </div>
+            <div class="col-lg-3 col-sm-5 my-2">
+                {{ form_label(registrationForm.roles, 'Rôle') }}<br>
+                {{ form_widget(registrationForm.roles, {attr:{'class':'form-select'}}) }}
+            </div>
             <div class="col-md-12 my-2">
                 {{ form_row(registrationForm.firstname) }}
             </div>
@@ -24,8 +28,8 @@
                 {{ form_label(registrationForm.plainPassword, 'Mot de passe') }}<br>
                 {{ form_widget(registrationForm.plainPassword) }}
             </div>
-            <div class="col-md-12 my-2">
-                {{ form_widget(registrationForm.submit, {attr:{'class':'btn btn-warning btn-lg'}}) }}
+            <div class="col-md-8 my-2">
+                <button type="submit" class="btn btn-lg btn-warning my-2">Inscrire</button>
             </div>
 
             {{ form_end(registrationForm) }}
