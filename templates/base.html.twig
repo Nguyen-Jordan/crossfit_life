@@ -38,9 +38,21 @@
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}
                 <li>
-                    <a href="{{ path('admin_index') }}">
-                        <span class="icon"><i class='bx bx-grid-alt' ></i></span>
-                        <span class="links_name">Dashboard</span>
+                    <a href="{{ path('franchises_index') }}">
+                        <span class="icon"><i class='bx bx-sitemap'></i></span>
+                        <span class="links_name">Franchises</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('structures_index') }}">
+                        <span class="icon"><i class='bx bxs-home-heart' ></i></span>
+                        <span class="links_name">Structures</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_utilisateurs') }}">
+                        <span class="icon"><i class='bx bx-user' ></i></span>
+                        <span class="links_name">Utilisateurs</span>
                     </a>
                 </li>
                 {% elseif is_granted('ROLE_PARTNER') %}
@@ -67,27 +79,6 @@
                     <a href="{{ path('profile_index') }}">
                         <span class="icon"><i class='bx bx-user' ></i></span>
                         <span class="links_name">Profil</span>
-                    </a>
-                </li>
-                {% endif %}
-
-                {% if is_granted('ROLE_ADMIN') %}
-                <li>
-                    <a href="{{ path('franchises_index') }}">
-                        <span class="icon"><i class='bx bx-sitemap'></i></span>
-                        <span class="links_name">Franchises</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('structures_index') }}">
-                        <span class="icon"><i class='bx bxs-home-heart' ></i></span>
-                        <span class="links_name">Structures</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('admin_utilisateurs') }}">
-                        <span class="icon"><i class='bx bx-user' ></i></span>
-                        <span class="links_name">Utilisateurs</span>
                     </a>
                 </li>
                 {% endif %}

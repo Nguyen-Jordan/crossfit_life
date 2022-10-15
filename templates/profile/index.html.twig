@@ -17,7 +17,7 @@
           <p class="fs-4">{{ app.user.email }}</p>
           <h2 style="color: #06255b;">Franchise: </h2>
           <p class="fs-4">{{ app.user.franchise.name }}</p>
-          <a href="{{ path('reset_password') }}" class="btn btn-success">Modifier le mot de passe</a>
+          <a href="{{ path('change_password') }}" class="btn btn-success">Modifier le mot de passe</a>
         </div>
         <div class="col">
           <h2 style="color: #06255b;">Structures liées:</h2>
@@ -70,6 +70,8 @@
 
         <h2 style="color: #06255b;">Structure: </h2>
         <p class="fs-4">{{ app.user.structure.address }}</p>
+
+        <a href="{{ path('change_password') }}" class="btn btn-success my-3">Modifier le mot de passe</a>
       {% endif %}
       </div>
     </div>

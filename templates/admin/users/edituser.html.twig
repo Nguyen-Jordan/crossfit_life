@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container my-4 p-3">
-        <h1 class="texte"> Ajout d'un utilisateur</h1>
+        <h1 class="texte"> Modifier l'utilisateur </h1>
         {{ form_start(userForm) }}
         <div class="row row-cols-1">
             <div class="col-lg-2 col-sm-5 my-2">
@@ -23,10 +23,6 @@
             </div>
             <div class="col-md-12 my-2">
                 {{ form_row(userForm.email) }}
-            </div>
-            <div class="col-md-12 my-2">
-                {{ form_label(userForm.plainPassword, 'Mot de passe') }}<br>
-                {{ form_widget(userForm.plainPassword) }}
             </div>
             <div class="col-md-8 my-2">
                 <button type="submit" class="btn btn-lg btn-warning my-2">Inscrire</button>

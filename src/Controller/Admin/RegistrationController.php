@@ -39,22 +39,22 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
 
-            // On génère le JWT de l'utilisateur
-            // On crée le Header
+            // Je génère le JWT de l'utilisateur
+            // Je crée le Header
             $header = [
               'typ' => 'JWT',
               'alg' => 'HS256'
             ];
 
-            // On crée le Payload
+            // Je crée le Payload
             $payload = [
               'user_id' => $user->getId()
             ];
 
-            // On crée le Payload
+            // Je crée le Payload
             $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
-            // On envoie un mail de confirmation
+            // J'envoie un mail de confirmation
             $mail->send(
               'no-reply@crossfit.net',
               $user->getEmail(),
@@ -63,9 +63,9 @@ class RegistrationController extends AbstractController
               compact('user', 'token')
             );
 
-            return $this->redirectToRoute('admin_index');
+            return $this->redirectToRoute('admin_utilisateurs');
         }
-
+        $this->addFlash('success', 'Utilisateur inscrit avec succès');
         return $this->render('admin/registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
@@ -73,15 +73,15 @@ class RegistrationController extends AbstractController
 
     #[Route('/Verif/{token}', name: 'verify_user')]
     public function verifyUser($token, JWTService $jwt, UsersRepository $usersRepository, EntityManagerInterface $em): Response {
-      // On vérifie si le token est valide, n'a pas expiré et n'a pas été modifié
+      // Je vérifie si le token est valide, n'a pas expiré et n'a pas été modifié
       if ($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))){
-        // On récupère le payload
+        // Je récupère le payload
         $payload = $jwt->getPayload($token);
 
-        // On récupère le token de l'utilisateur
+        // Je récupère le token de l'utilisateur
         $user = $usersRepository->find($payload['user_id']);
 
-        // On vérifie que l'utilisateur existe et n'a pas encore activé son compte
+        // Je vérifie que l'utilisateur existe et n'a pas encore activé son compte
         if ($user && !$user->getIsVerified()){
           $user->setIsVerified(true);
           $em->flush($user);

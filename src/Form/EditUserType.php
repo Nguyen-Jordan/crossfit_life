@@ -18,17 +18,21 @@ class EditUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('email', EmailType::class, [
-          'constraints' => [
-            new NotBlank([
-              'message' => 'Merci de saisir une adresse email'
-            ])
-          ],
+        ->add('status', ChoiceType::class, [
+          'choices' => [
+            'Actif' => 1,
+            'Inactif' => 0
+          ]
+        ])
+        ->add('roles', ChoiceType::class, [
           'required' => true,
-          'attr' => [
-            'class' => 'form-control'
-          ],
-          'label' => 'Email'
+          'multiple' => false,
+          'expanded' => false,
+          'choices' => [
+            'Admin' => 'ROLE_ADMIN',
+            'Partner' => 'ROLE_PARTNER',
+            'Manager' => 'ROLE_MANAGER'
+          ]
         ])
         ->add('firstname', TextType::class, [
           'attr' => [
@@ -42,31 +46,17 @@ class EditUserType extends AbstractType
           ],
           'label' => 'Nom'
         ])
-          ->add('roles', ChoiceType::class, [
-            'required' => true,
-            'multiple' => false,
-            'expanded' => false,
-            'choices' => [
-              'Admin' => 'ROLE_ADMIN',
-              'Partner' => 'ROLE_PARTNER',
-              'Manager' => 'ROLE_MANAGER'
-            ]
-          ])
-        ->add('isVerified', ChoiceType::class, [
-          'choices' => [
-            'Oui' => 1,
-            'Non' => 0
+        ->add('email', EmailType::class, [
+          'constraints' => [
+            new NotBlank([
+              'message' => 'Merci de saisir une adresse email'
+            ])
           ],
-          'expanded' => true,
-          'label' => 'Utilisateur verifier ?'
-        ])
-        ->add('status', ChoiceType::class, [
-          'choices' => [
-            'Actif' => 1,
-            'Inactif' => 0
+          'required' => true,
+          'attr' => [
+            'class' => 'form-control'
           ],
-          'expanded' => true,
-          'label' => 'Statut'
+          'label' => 'Email'
         ])
         ;
         $builder->get('roles')
