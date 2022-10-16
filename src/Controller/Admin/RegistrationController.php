@@ -63,9 +63,9 @@ class RegistrationController extends AbstractController
               compact('user', 'token')
             );
 
+            $this->addFlash('success', 'Utilisateur inscrit avec succès');
             return $this->redirectToRoute('admin_utilisateurs');
         }
-        $this->addFlash('success', 'Utilisateur inscrit avec succès');
         return $this->render('admin/registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);

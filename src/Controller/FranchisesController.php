@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Franchises;
+use App\Entity\StructuresDroits;
 use App\Form\FranchiseType;
 use App\Repository\FranchisesRepository;
 use App\Repository\StructuresDroitsRepository;
@@ -40,7 +41,7 @@ class FranchisesController extends AbstractController
    * @return Response
    */
     #[Route('/ajout', name: 'ajout')]
-    public function ajoutFranchise(Request $request): Response
+    public function ajoutFranchise(Request $request, EntityManagerInterface $em): Response
     {
       $franchiseForm = new Franchises();
 
@@ -49,7 +50,12 @@ class FranchisesController extends AbstractController
       $form->handleRequest($request);
 
       if ( $form->isSubmitted() && $form->isValid()) {
-        $em = $this->getDoctrine()->getManager();
+        $permissions = $form->get('structuresDroits')->getData();
+
+        foreach ($permissions as $permission){
+          $franchiseForm->addStructuresDroit($permission);
+        }
+
         $em->persist($franchiseForm);
         $em->flush();
 

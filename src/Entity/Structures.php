@@ -32,7 +32,9 @@ class Structures
     private Collection $structuresDroits;
 
     #[ORM\OneToOne(mappedBy: 'structure', cascade: ['persist', 'remove'])]
-    private ?Users $user_id = null;
+    private ?Users $user = null;
+
+
 
     public function __construct($address = null, $status = null)
     {
@@ -112,24 +114,24 @@ class Structures
         return $this;
     }
 
-    public function getUserId(): ?Users
+    public function getUser(): ?Users
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?Users $user_id): self
+    public function setUser(?Users $user): self
     {
         // unset the owning side of the relation if necessary
-        if ($user_id === null && $this->user_id !== null) {
-            $this->user_id->setStructureId(null);
+        if ($user === null && $this->user !== null) {
+            $this->user->setStructure(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($user_id !== null && $user_id->getStructureId() !== $this) {
-            $user_id->setStructureId($this);
+        if ($user !== null && $user->getStructure() !== $this) {
+            $user->setStructure($this);
         }
 
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }

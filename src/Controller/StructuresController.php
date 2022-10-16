@@ -42,7 +42,7 @@ class StructuresController extends AbstractController
     #[Route('/ajout', name: 'ajout')]
     public function ajoutStructure(
       Request $request,
-      FranchisesRepository $repository
+      EntityManagerInterface $em
     ): Response
     {
       $post = new Structures();
@@ -50,21 +50,19 @@ class StructuresController extends AbstractController
       $form->handleRequest($request);
 
       if ( $form->isSubmitted() && $form->isValid()) {
-        // $franchise = $repository->findOneBy($form->get('franchise')->getData());
-        // /**
-        // * @var Franchises
-        // */
+        // On ajoute les droits de la franchise associe à la structure
+        /**
+         * @var Franchises $franchise
+         */
+         $franchise = $form->get('franchise')->getData();
+         $droits = $franchise->getStructuresDroits();
+         foreach ($droits as $droit){
+           $post->addStructuresDroit($droit);
+         }
 
-        // $droit = $franchise->getStructuresDroits();
-
-        // il faut importerter les fichier repository franchiseRepository
-        // getter l'id franchise dans le formulaire , form get datda + get('franchise')
-        // annotation var $franchise pour dir ec'est une entite franchise
-        // cette entite franchise on fait getter droit sur getStructuresDroits et on bouche dessue pour setter dans structure et on persist
-        
-        $this->em->persist($post);
-        $this->em->flush();
-        return $this->redirectToRoute('structures_ajout');
+        $em->persist($post);
+        $em->flush();
+        return $this->redirectToRoute('structures_index');
 
       }
       return $this->render('admin/structures/ajout.html.twig', [

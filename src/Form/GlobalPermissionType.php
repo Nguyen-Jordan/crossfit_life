@@ -24,9 +24,11 @@ class GlobalPermissionType extends AbstractType
           'query_builder' => function(EntityRepository $repository) {
             return $repository->createQueryBuilder('d')
               ->orderBy('d.name', 'ASC');
-          },
-          'multiple' => true,
-          'expanded' => true,
+          }, 'attr' => [
+            'class' => 'form-select'
+          ],
+          'multiple' => false,
+          'expanded' => false,
           'choice_label' => 'name',
           'constraints' => new NotBlank(['message' => 'veuillez choisir une permission']),
           'label' => 'Permission: '
@@ -40,7 +42,6 @@ class GlobalPermissionType extends AbstractType
           ],
           'label' => 'statut: '
         ])
-
       ;
     }
 

@@ -32,7 +32,12 @@ class FranchiseType extends AbstractType
               ],
               'label' => 'Statut: '
             ])
-
+            ->add('slug', TextType::class, [
+              'attr' => [
+                'class' => 'form-control'
+              ],
+              'label' => 'slug: '
+            ])
             ->add('structuresDroits', CollectionType::class, [
               'entry_type' => GlobalPermissionType::class,
               'mapped' => false,
@@ -42,12 +47,6 @@ class FranchiseType extends AbstractType
               'by_reference' => false,
               'allow_add' => true,
               'allow_delete' => true
-            ])
-            ->add('save', SubmitType::class, [
-              'label' => 'Soumettre',
-              'attr' => [
-                'class' => 'btn btn-warning'
-              ]
             ])
         ;
     }

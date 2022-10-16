@@ -8,8 +8,8 @@
     {{ form_start(form_add_franchise) }}
         {{ form_label(form_add_franchise.name, 'Ville: ') }}<br>
         {{ form_widget(form_add_franchise.name, {attr:{'class':'form-control col-md-12 my-2'}}) }}
-        {{ form_label(form_add_franchise.slug, 'Adresse dans onglet: ') }}<br>
-        {{ form_widget(form_add_franchise.slug, {attr:{'class':'form-control col-md-12 my-2'}} ) }}
+      {{ form_label(form_add_franchise.slug, 'Slug: ') }}<br>
+      {{ form_widget(form_add_franchise.slug, {attr:{'class':'form-control col-md-12 my-2'}}) }}
         {{ form_label(form_add_franchise.status, 'Status: ') }}<br>
         {{ form_widget(form_add_franchise.status, {attr:{'class':'form-select col-md-12 my-2'}}) }}
       <div class="col-md-12 my-2" id="structuresDroits" data-prototype="{{ form_row(form_add_franchise.structuresDroits.vars.prototype)|e('html_attr') }}">

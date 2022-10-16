@@ -15,9 +15,6 @@
           {{ form_row(form_add_structure.address) }}
         </div>
         <div class="col-md-12 my-2">
-          {{ form_row(form_add_structure.slug) }}
-        </div>
-        <div class="col-md-12 my-2">
           {{ form_row(form_add_structure.franchise) }}
         </div>
         <div class="col-md-8 my-2">
@@ -27,36 +24,4 @@
         {{ form_end(form_add_structure) }}
       </div>
   </div>
-{% endblock %}
-
-{% block javascripts %}
-  <script>
-    window.onload = () => {
-      // On va chercher la franchise
-      let franchise = document.querySelector('#structure_franchise');
-
-      franchise.addEventListener("change", function (){
-        let form = this.closest("form");
-        let data = this.name + "=" + this.value;
-
-        fetch(form.action, {
-          method: form.getAttribute("method"),
-          body: data,
-          headers: {
-            "Content-type": "application/x-www-form-urlencoded; charset:utf-8"
-          }
-        })
-          .then(response => response.text())
-          .then(html => {
-            let content = document.createElement('html');
-            content.innerHTML = html;
-            let newSelect = content.querySelector('#structure_franchise');
-            document.querySelector('#structure_franchise').replaceWith(newSelect);
-          })
-          .catch(error => {
-            console.log(error);
-          })
-      });
-    }
-  </script>
 {% endblock %}

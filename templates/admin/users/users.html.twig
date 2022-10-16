@@ -11,20 +11,27 @@
                 <table id="datatable" class="table table-hover">
                     <thead class="table-dark">
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Email</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Rôles</th>
+                            <th scope="col">Prénom</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Email</th>
                             <th scope="col">Structure</th>
                             <th scope="col">Franchise</th>
-                            <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for user in users %}
                         <tr>
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.email }}</td>
+                            <td>
+                                <div class="form-switch text-center">
+                                    <input class="form-check-input" type="checkbox"
+                                      {{ (user.status) ? 'checked' : ''}}
+                                           id="flexSwitchCheckDefault">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                                </div>
+                            </td>
                             <td>
                                 {% for role in user.roles %}
                                     {% if role == "ROLE_MANAGER"  %}
@@ -36,16 +43,12 @@
                                     {% endif %}
                                 {% endfor %}
                             </td>
+                            <td>{{ user.firstname }}</td>
+                            <td>{{ user.lastname }}</td>
+                            <td>{{ user.email }}</td>
                             <td>{{ user.structure|length }}</td>
                             <td>{{ user.franchise|length }}</td>
-                                <td>
-                                    <div class="form-switch text-center">
-                                        <input class="form-check-input" type="checkbox"
-                                          {{ (user.status) ? 'checked' : ''}}
-                                               id="flexSwitchCheckDefault">
-                                        <label class="form-check-label" for="flexSwitchCheckDefault"></label>
-                                    </div>
-                                </td>
+
                             <td><a href="{{ path('admin_modifier_utilisateur', {'id': user.id}) }}" class="btn btn-warning">Modifier</a></td>
                         </tr>
                     {% else %}
@@ -58,9 +61,4 @@
             </div>
         </section>
     </main>
-
-
-
-   <h1></h1>
-
 {% endblock %}

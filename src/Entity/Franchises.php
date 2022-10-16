@@ -27,11 +27,12 @@ class Franchises
     #[ORM\Column]
     private ?bool $status = null;
 
-    #[ORM\OneToOne(mappedBy: 'franchise', cascade: ['persist', 'remove'])]
-    private ?Users $user_id = null;
-
-    #[ORM\OneToMany(mappedBy: 'franchise', targetEntity: StructuresDroits::class)]
+    #[ORM\OneToMany(mappedBy: 'franchise', targetEntity: StructuresDroits::class, cascade: ['persist'])]
     private Collection $structuresDroits;
+
+    #[ORM\OneToOne(mappedBy: 'franchise', cascade: ['persist', 'remove'])]
+    private ?Users $user = null;
+
 
     public function __construct($name = null, $status = null)
     {
@@ -100,29 +101,6 @@ class Franchises
         return $this;
     }
 
-
-    public function getUserId(): ?Users
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(?Users $user_id): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($user_id === null && $this->user_id !== null) {
-            $this->user_id->setFranchiseId(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($user_id !== null && $user_id->getFranchiseId() !== $this) {
-            $user_id->setFranchiseId($this);
-        }
-
-        $this->user_id = $user_id;
-
-        return $this;
-    }
-
     /**
      * @param StructuresDroits $structuresDroit
      * @return Collection<int, StructuresDroits>
@@ -158,4 +136,27 @@ class Franchises
   {
     return $this->name;
   }
+
+  public function getUser(): ?Users
+  {
+      return $this->user;
+  }
+
+  public function setUser(?Users $user): self
+  {
+      // unset the owning side of the relation if necessary
+      if ($user === null && $this->user !== null) {
+          $this->user->setFranchise(null);
+      }
+
+      // set the owning side of the relation if necessary
+      if ($user !== null && $user->getFranchise() !== $this) {
+          $user->setFranchise($this);
+      }
+
+      $this->user = $user;
+
+      return $this;
+  }
+
 }
