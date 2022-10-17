@@ -28,7 +28,7 @@ class Structures
     #[ORM\Column]
     private ?bool $status = null;
 
-    #[ORM\OneToMany(mappedBy: 'structures', targetEntity: StructuresDroits::class)]
+    #[ORM\OneToMany(mappedBy: 'structures', targetEntity: StructuresDroits::class, cascade: ['persist', 'remove'])]
     private Collection $structuresDroits;
 
     #[ORM\OneToOne(mappedBy: 'structure', cascade: ['persist', 'remove'])]

@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Droits;
 use App\Entity\Franchises;
 use App\Entity\Structures;
+use App\Entity\StructuresDroits;
 use App\Form\StructureType;
 use App\Repository\StructuresRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -48,10 +50,18 @@ class StructuresController extends AbstractController
          * @var Franchises $franchise
          */
          $franchise = $form->get('franchise')->getData();
-         $droits = $franchise->getStructuresDroits();
 
-         foreach ($droits as $droit){
-           $post->addStructuresDroit($droit);
+         $structureDroits = $franchise->getStructuresDroits();
+
+         foreach ($structureDroits as $structureDroit){
+           /**
+            * @var StructuresDroits $structureDroit
+            */
+           $sd = new StructuresDroits();
+           $sd->setDroits($structureDroit->getDroits());
+           $sd->setStatus($structureDroit->isStatus());
+           $sd->setStructures($form->getData());
+           $post->addStructuresDroit($sd);
          }
 
         $post->setSlug($this->slugger->slug($post->getAddress())->lower());
