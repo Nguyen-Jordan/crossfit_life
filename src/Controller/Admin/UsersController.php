@@ -23,7 +23,7 @@ class UsersController extends AbstractController
     ]);
   }
   
-  #[Route('/utilisateurs/modifier/{id}', name: 'modifier_utilisateur')]
+  #[Route('/utilisateurs/modifier/{lastname}', name: 'modifier_utilisateur')]
   public function editUser(Users $user, Request $request, ManagerRegistry $doctrine)
   {
     $form = $this->createForm(EditUserType::class, $user);

@@ -28,6 +28,7 @@ class StructuresDroits
     private ?bool $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'structuresDroits')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Franchises $franchise = null;
 
     public function getId(): ?int

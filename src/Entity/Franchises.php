@@ -27,7 +27,7 @@ class Franchises
     #[ORM\Column]
     private ?bool $status = null;
 
-    #[ORM\OneToMany(mappedBy: 'franchise', targetEntity: StructuresDroits::class, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'franchise', targetEntity: StructuresDroits::class, cascade: ['persist', 'remove'])]
     private Collection $structuresDroits;
 
     #[ORM\OneToOne(mappedBy: 'franchise', cascade: ['persist', 'remove'])]

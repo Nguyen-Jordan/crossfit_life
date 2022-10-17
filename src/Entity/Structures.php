@@ -35,7 +35,6 @@ class Structures
     private ?Users $user = null;
 
 
-
     public function __construct($address = null, $status = null)
     {
         $this->address = $address;

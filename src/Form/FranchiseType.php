@@ -3,11 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Franchises;
-use App\Form\GlobalPermissionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,12 +29,6 @@ class FranchiseType extends AbstractType
                 'form-control'
               ],
               'label' => 'Statut: '
-            ])
-            ->add('slug', TextType::class, [
-              'attr' => [
-                'class' => 'form-control'
-              ],
-              'label' => 'slug: '
             ])
             ->add('structuresDroits', CollectionType::class, [
               'entry_type' => GlobalPermissionType::class,
