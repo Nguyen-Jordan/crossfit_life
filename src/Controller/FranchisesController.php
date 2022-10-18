@@ -26,15 +26,7 @@ class FranchisesController extends AbstractController
         ]);
     }
 
-    private $em;
-
-    /**
-     * @param $em
-     */
-    public function __construct(EntityManagerInterface $em)
-    {
-      $this->em = $em;
-    }
+  public function __construct(private SluggerInterface $slugger){}
 
   /**
    * @param Request $request
@@ -55,6 +47,7 @@ class FranchisesController extends AbstractController
         foreach ($permissions as $permission){
           $franchiseForm->addStructuresDroit($permission);
         }
+        $franchiseForm->setSlug($this->slugger->slug($franchiseForm->getName())->lower());
 
         $em->persist($franchiseForm);
         $em->flush();
@@ -69,23 +62,22 @@ class FranchisesController extends AbstractController
 
 
     #[Route('/modifier/{id}', name: 'modifier')]
-    public function modifierFranchise(Franchises $franchises, Request $request): Response
+    public function modifierFranchise(Franchises $franchises, Request $request, EntityManagerInterface $em): Response
     {
       $form = $this->createForm(FranchiseType::class, $franchises);
       $form->handleRequest($request);
 
       if ( $form->isSubmitted() && $form->isValid()) {
-        $this->em->persist($franchises);
-        $this->em->flush();
-        return $this->redirectToRoute('franchises_index');
+        $em->persist($franchises);
+        $em->flush();
 
+        return $this->redirectToRoute('franchises_index');
       }
 
       return $this->render('admin/franchises/ajout.html.twig', [
         'form_add_franchise' => $form->createView()
       ]);
     }
-
 
     #[Route('/{slug}', name: 'details')]
     public function details(StructuresDroitsRepository $repository, Franchises $franchises): Response
@@ -98,4 +90,24 @@ class FranchisesController extends AbstractController
         'franchise' => $franchises
       ]);
     }
+
+    #[Route('/activer/{id}', name: 'activate')]
+    public function activate(Franchises $franchise, EntityManagerInterface $em)
+    {
+      $franchise->setStatus(($franchise->isStatus())?false:true);
+      $em->persist($franchise);
+      $em->flush();
+
+      return new Response("true");
+    }
+
+  #[Route('/supprimer/{id}', name: 'delete')]
+  public function delete(Franchises $franchise, EntityManagerInterface $em)
+  {
+    $em->remove($franchise);
+    $em->flush();
+
+    $this->addFlash('success', 'Franchise supprimée avec succès');
+    return $this->redirectToRoute('franchises_index');
+  }
 }
