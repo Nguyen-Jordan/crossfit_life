@@ -6,6 +6,7 @@ use App\Entity\Franchises;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -38,7 +39,14 @@ class FranchiseType extends AbstractType
               ],
               'by_reference' => false,
               'allow_add' => true,
-              'allow_delete' => true
+              'allow_delete' => true,
+              'label' => 'Permissions globales'
+            ])
+            ->add('submit', SubmitType::class, [
+              'attr' => [
+                'class' => 'btn btn-lg btn-warning my-2'
+              ],
+            'label' => 'Ajouter'
             ])
         ;
     }

@@ -43,14 +43,12 @@ class StructuresController extends AbstractController
       $form = $this->createForm(StructureType::class, $post);
       $form->handleRequest($request);
 
-
       if ( $form->isSubmitted() && $form->isValid()) {
         // On ajoute les droits de la franchise associe à la structure
         /**
          * @var Franchises $franchise
          */
          $franchise = $form->get('franchise')->getData();
-
          $structureDroits = $franchise->getStructuresDroits();
 
          foreach ($structureDroits as $structureDroit){
@@ -63,7 +61,6 @@ class StructuresController extends AbstractController
            $sd->setStructures($form->getData());
            $post->addStructuresDroit($sd);
          }
-
         $post->setSlug($this->slugger->slug($post->getAddress())->lower());
 
         $em->persist($post);
@@ -71,7 +68,6 @@ class StructuresController extends AbstractController
 
         $this->addFlash('success', 'Structure ajouté avec succès');
         return $this->redirectToRoute('structures_index');
-
       }
       return $this->render('admin/structures/ajout.html.twig', [
         'form_add_structure' => $form->createView()
