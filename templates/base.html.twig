@@ -19,13 +19,13 @@
         <link rel="stylesheet" href="{{ asset('assets/css/card/styleCard.css') }}">
 
         <! -- Fichiers JS -->
-        <script src="{{ asset('../assets/app.js') }} defer"></script>
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
         <script src="{{ asset('assets/js/globalPermissions.js') }}" defer></script>
         <script src="{{ asset('assets/js/switchToggle.js') }}" defer></script>
+        <script src="{{ asset('assets/js/modal.js') }}" defer></script>
 
     </head>
     <body>
