@@ -8,29 +8,16 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FranchiseType extends AbstractType
+class EditFranchiseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('user', EntityType::class, [
-              'class' => Users::class,
-              'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('u')
-                  ->orderBy('u.email', 'ASC');
-              },
-              'attr' => [
-                'class' => 'form-select'
-              ],
-              'choice_label' => 'email',
-              'label' => 'Utilisateur propriétaire: '
-            ])
             ->add('name', TextType::class, [
               'attr' => [
                 'class' => 'form-control'
@@ -46,22 +33,23 @@ class FranchiseType extends AbstractType
               ],
               'label' => 'Statut: '
             ])
-            ->add('structuresDroits', CollectionType::class, [
-              'entry_type' => GlobalPermissionType::class,
-              'mapped' => false,
-              'entry_options' => [
-                'label' => false
+            ->add('user', EntityType::class, [
+              'class' => Users::class,
+              'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('u')
+                  ->orderBy('u.email', 'ASC');
+              },
+              'attr' => [
+                'class' => 'form-select'
               ],
-              'by_reference' => false,
-              'allow_add' => true,
-              'allow_delete' => true,
-              'label' => 'Permissions globales'
+              'choice_label' => 'email',
+              'label' => 'Utilisateur propriétaire: '
             ])
             ->add('submit', SubmitType::class, [
               'attr' => [
                 'class' => 'btn btn-lg btn-warning my-2'
               ],
-            'label' => 'Ajouter'
+              'label' => 'Modifier'
             ])
         ;
     }

@@ -1,5 +1,5 @@
 window.onload = () => {
-  let activate = document.querySelectorAll("[type=checkbox]")             // Je declare la checkbox
+  let activate = document.querySelectorAll(".switch-franchise")             // Je declare la checkbox
   for (let button of activate){
     button.addEventListener("click", function (){                     // je crée l'événement pour activer ou désactiver apres le click
       let xmlhttp = new XMLHttpRequest;

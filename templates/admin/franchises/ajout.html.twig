@@ -6,6 +6,7 @@
   <div class="container my-4 p-3">
     <h1 class="texte"> Ajout de franchise</h1>
     {{ form_start(form_add_franchise) }}
+      {{ form_row(form_add_franchise.user) }}
       {{ form_label(form_add_franchise.name, 'Franchise') }}<br>
       {{ form_widget(form_add_franchise.name, {attr:{'class':'form-control col-md-12 my-2'}}) }}
       {{ form_label(form_add_franchise.status, 'Statut') }}<br>
@@ -20,4 +21,9 @@
         </div>
       {{ form_end(form_add_franchise) }}
   </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('assets/js/globalPermissions.js') }}" defer></script>
 {% endblock %}
