@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Franchises;
 use App\Entity\StructuresDroits;
+use App\Form\EditFranchiseType;
 use App\Form\FranchiseType;
 use App\Repository\FranchisesRepository;
 use App\Repository\StructuresDroitsRepository;
@@ -64,7 +65,7 @@ class FranchisesController extends AbstractController
     #[Route('/modifier/{id}', name: 'modifier')]
     public function modifierFranchise(Franchises $franchises, Request $request, EntityManagerInterface $em): Response
     {
-      $form = $this->createForm(FranchiseType::class, $franchises);
+      $form = $this->createForm(EditFranchiseType::class, $franchises);
       $form->handleRequest($request);
 
       if ( $form->isSubmitted() && $form->isValid()) {
@@ -74,8 +75,9 @@ class FranchisesController extends AbstractController
         return $this->redirectToRoute('franchises_index');
       }
 
-      return $this->render('admin/franchises/ajout.html.twig', [
-        'form_add_franchise' => $form->createView()
+      return $this->render('admin/franchises/global.html.twig', [
+        'form_edit_franchise' => $form->createView(),
+        'franchises' => $franchises
       ]);
     }
 
@@ -101,13 +103,17 @@ class FranchisesController extends AbstractController
       return new Response("true");
     }
 
-  #[Route('/supprimer/{id}', name: 'delete')]
-  public function delete(Franchises $franchise, EntityManagerInterface $em)
-  {
-    $em->remove($franchise);
-    $em->flush();
+    #[Route('/permissions/activer/{id}', name: 'activate_status')]
+    public function activateStatus(Franchises $franchises, EntityManagerInterface $em)
+    {
+      $structuresDroits = $franchises->getStructuresDroits();
+      foreach ($structuresDroits as $structuresDroit){
+        $structuresDroit->setStatus(($structuresDroit->isStatus())?false:true);
 
-    $this->addFlash('success', 'Franchise supprimée avec succès');
-    return $this->redirectToRoute('franchises_index');
-  }
+        $em->persist($structuresDroit);
+        $em->flush();
+      }
+
+      return new Response("true");
+    }
 }

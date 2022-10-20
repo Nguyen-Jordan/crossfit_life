@@ -23,7 +23,7 @@
                             <th scope="row" class="align-middle">{{ structure.id }}</th>
                             <td>
                                 <div class="form-switch text-center">
-                                    <input class="form-check-input" type="checkbox"
+                                    <input class="form-check-input switch-structure" type="checkbox"
                                             {{ (structure.status) ? 'checked' : ''}}
                                            id="flexSwitchCheckDefault" data-id="{{ structure.id }}">
                                     <label class="form-check-label" for="flexSwitchCheckDefault"></label>
@@ -33,7 +33,6 @@
                             <td class="align-middle">
                                 <a href="{{ path('structures_details', {slug: structure.slug}) }}" class="btn btn-warning">Voir la structures</a>
                                 <a href="{{ path('structures_modifier', {'id': structure.id}) }}" class="btn btn-warning">Modifier</a>
-                                <a href="#"></a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -42,4 +41,9 @@
             </div>
         </section>
     </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/structureScript.js') }}" defer></script>
 {% endblock %}

@@ -1,29 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajout de franchise{% endblock %}
+{% block title %}Modification de la franchise{% endblock %}
 
 {% block body %}
   <div class="container my-4 p-3">
     <h1 class="texte"> Ajout de droits global au franchise</h1>
-    {{ form_start(form_add_global_permission) }}
+    {{ form_start(form_edit_franchise) }}
     <div class="row">
-      <div class="col-md-12 my-2">
-        {{ form_label(form_add_global_permission.franchise, 'Franchise liée: ') }}<br>
-        {{ form_widget(form_add_global_permission.franchise, {attr:{'class':'form-select'}}) }}
+      <div class="col-lg-2 col-sm-5 my-2">
+        {{ form_label(form_edit_franchise.status, 'Statut ') }}<br>
+        {{ form_widget(form_edit_franchise.status, {attr:{'class':'form-select'}} ) }}
       </div>
       <div class="col-md-12 my-2">
-        {{ form_label(form_add_global_permission.droits, 'Droit à ajouter: ') }}<br>
-        {{ form_widget(form_add_global_permission.droits, {attr:{'class':'form-select'}}) }}
+        {{ form_row(form_edit_franchise.user) }}
       </div>
       <div class="col-md-12 my-2">
-        {{ form_label(form_add_global_permission.status, 'État du droit: ') }}<br>
-        {{ form_widget(form_add_global_permission.status, {attr:{'class':'form-select'}} ) }}
+        {{ form_row(form_edit_franchise.name) }}
       </div>
       <div class="col-md-12 my-2">
-        {{ form_widget(form_add_global_permission.submit) }}
+        {{ form_widget(form_edit_franchise.submit) }}
       </div>
-
-      {{ form_end(form_add_global_permission) }}
+      {{ form_end(form_edit_franchise) }}
     </div>
+      <article class="carte">
+        <div class="en-têteCarte">
+          <h1 class="en-tête">Permissions globales</h1>
+        </div>
+        <div class="titre">
+          <h2 class="les-droits">Les droits</h2>
+        </div>
+        <div class="corpsCarte">
+          <table class="table table-borderless">
+            <tbody>
+            {% for droit in franchises.structuresDroits %}
+              <tr>
+                <td class="detail">
+                  {{ droit.droits.name }}
+                </td>
+                <td class="detail">
+                  <div class="form-switch text-center">
+                    <input class="form-check-input switch" type="checkbox"
+                      {{ (droit.status) ? 'checked' : ''}}
+                           id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </article>
+
   </div>
 {% endblock %}

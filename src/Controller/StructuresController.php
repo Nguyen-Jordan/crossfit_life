@@ -74,7 +74,7 @@ class StructuresController extends AbstractController
       ]);
     }
 
-    #[Route('/modifier', name: 'modifier')]
+    #[Route('/modifier/{id}', name: 'modifier')]
     public function modifierStructure(
       Structures $structures,
       Request $request,
@@ -106,6 +106,7 @@ class StructuresController extends AbstractController
         return new Response("true");
     }
 
+
     #[Route('/{slug}', name: 'details')]
     public function details(
       StructuresRepository $structure,
@@ -119,5 +120,15 @@ class StructuresController extends AbstractController
         'result' => $result,
         'structure' => $structures
       ]);
+    }
+
+    #[Route('/activer/{id}', name: 'activate')]
+    public function activate(Structures $structure, EntityManagerInterface $em)
+    {
+      $structure->setStatus(($structure->isStatus())?false:true);
+      $em->persist($structure);
+      $em->flush();
+
+      return new Response("true");
     }
 }
