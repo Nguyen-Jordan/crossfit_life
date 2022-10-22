@@ -116,4 +116,14 @@ class FranchisesController extends AbstractController
 
       return new Response("true");
     }
+
+    #[Route('/supprimer/{id}', name: 'delete')]
+    public function delete(Franchises $franchise, EntityManagerInterface $em)
+    {
+      $em->remove($franchise);
+      $em->flush();
+
+      $this->addFlash('success', 'Franchise supprimée avec succès');
+      return $this->redirectToRoute('franchises_index');
+    }
 }

@@ -39,7 +39,7 @@
                 </td>
                 <td class="detail">
                   <div class="form-switch text-center">
-                    <input class="form-check-input switch" type="checkbox"
+                    <input class="form-check-input switch-franchise" type="checkbox"
                       {{ (droit.status) ? 'checked' : ''}}
                            id="flexSwitchCheckDefault">
                     <label class="form-check-label" for="flexSwitchCheckDefault"></label>
@@ -53,4 +53,8 @@
       </article>
 
   </div>
+{% endblock %}
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('assets/js/franchiseScript.js') }}" defer></script>
 {% endblock %}

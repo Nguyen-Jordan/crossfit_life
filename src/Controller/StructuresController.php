@@ -122,13 +122,13 @@ class StructuresController extends AbstractController
       ]);
     }
 
-    #[Route('/activer/{id}', name: 'activate')]
-    public function activate(Structures $structure, EntityManagerInterface $em)
+    #[Route('/supprimer/{id}', name: 'delete')]
+    public function delete(Structures $structure, EntityManagerInterface $em)
     {
-      $structure->setStatus(($structure->isStatus())?false:true);
-      $em->persist($structure);
+      $em->remove($structure);
       $em->flush();
 
-      return new Response("true");
+      $this->addFlash('success', 'Structure supprimée avec succès');
+      return $this->redirectToRoute('structures_index');
     }
 }

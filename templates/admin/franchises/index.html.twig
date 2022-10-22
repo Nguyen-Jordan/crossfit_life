@@ -7,7 +7,7 @@
     <main class="container text-center">
         <section class="row justify-content-md-center">
             <div class="col-10">
-                <a href="{{ path("franchises_ajout") }}" class="btn btn-warning">Ajouter une franchise</a>
+                <a href="{{ path("franchises_ajout") }}" class="btn btn-sm btn-warning m-2">Ajouter une franchise</a>
                 <table id="datatable" class="table">
                     <thead class="table-dark">
                         <tr>
@@ -32,10 +32,31 @@
                             </td>
                             <td class="align-middle">{{ franchise.name }}</td>
                             <td class="align-middle">
-                                <a href="{{ path('franchises_details', {slug: franchise.slug}) }}" class="btn btn-warning">Voir les structures</a>
-                                <a href="{{ path('franchises_modifier', {'id': franchise.id}) }}" class="btn btn-warning">Modifier</a>
+                                <a href="{{ path('franchises_details', {slug: franchise.slug}) }}" class="btn btn-sm btn-warning m-2">Voir les structures</a>
+                                <a href="{{ path('franchises_modifier', {'id': franchise.id}) }}" class="btn btn-sm btn-warning m-2">Modifier</a>
+                                <button type="button" class="btn btn-sm btn-danger m-2" data-bs-toggle="modal" data-bs-target="#delete{{ franchise.id }}">
+                                    Supprimer
+                                </button>
                             </td>
                         </tr>
+                        <!-- Modal -->
+                        <div class="modal fade" id="delete{{ franchise.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 class="modal-title fs-5" id="exampleModalLabel">Confirmation de suppression</h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Êtes-vous sûr(e) de vouloir supprimer la franchise?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ path ('franchises_delete', {'id': franchise.id}) }}" class="btn btn-danger">Confirmer</a>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     {% endfor %}
                     </tbody>
                 </table>
