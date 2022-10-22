@@ -2,9 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Franchises;
 use App\Entity\Users;
 use App\Form\EditUserType;
 use App\Repository\UsersRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,5 +42,15 @@ class UsersController extends AbstractController
     return $this->render('admin/users/edituser.html.twig', [
       'userForm' => $form->createView()
     ]);
+  }
+
+  #[Route('/supprimer/{id}', name: 'delete')]
+  public function delete(Users $user, EntityManagerInterface $em)
+  {
+    $em->remove($user);
+    $em->flush();
+
+    $this->addFlash('success', 'Utilisateur supprimée avec succès');
+    return $this->redirectToRoute('franchises_index');
   }
 }

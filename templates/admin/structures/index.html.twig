@@ -7,7 +7,7 @@
     <main class="container text-center">
         <section class="row justify-content-md-center">
             <div class="col-10">
-                <a href="{{ path("structures_ajout") }}" class="btn btn-warning">Ajouter une structure</a>
+                <a href="{{ path("structures_ajout") }}" class="btn btn-warning m-2">Ajouter une structure</a>
                 <table id="datatable" class="table">
                     <thead class="table-dark">
                     <tr>
@@ -31,10 +31,31 @@
                             </td>
                             <td class="align-middle">{{ structure.address }}</td>
                             <td class="align-middle">
-                                <a href="{{ path('structures_details', {slug: structure.slug}) }}" class="btn btn-warning">Voir la structures</a>
-                                <a href="{{ path('structures_modifier', {'id': structure.id}) }}" class="btn btn-warning">Modifier</a>
+                                <a href="{{ path('structures_details', {slug: structure.slug}) }}" class="btn btn-sm btn-warning m-2">Voir la structures</a>
+                                <a href="{{ path('structures_modifier', {'id': structure.id}) }}" class="btn btn-sm btn-warning m-2">Modifier</a>
+                                <button type="button" class="btn btn-danger btn-sm m-2" data-bs-toggle="modal" data-bs-target="#delete{{ structure.id }}">
+                                    Supprimer
+                                </button>
                             </td>
                         </tr>
+                        <!-- Modal -->
+                        <div class="modal fade" id="delete{{ structure.id }}" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 class="modal-title fs-5" id="modal-delete">Confirmation de suppression</h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Êtes-vous sûr(e) de vouloir supprimer la structure?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ path ('structures_delete', {'id': structure.id}) }}" class="btn btn-danger">Confirmer</a>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     {% endfor %}
                     </tbody>
                 </table>

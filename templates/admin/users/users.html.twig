@@ -7,17 +7,13 @@
         <div class="texte">Utilisateurs</div>
         <section class="row justify-content-md-center">
             <div class="col-10">
-                <a href="{{ path("app_register") }}" class="btn btn-warning">Ajouter utilisateur</a>
+                <a href="{{ path("app_register") }}" class="btn btn-warning btn-sm m-2">Ajouter utilisateur</a>
                 <table id="datatable" class="table table-hover">
                     <thead class="table-dark">
                         <tr>
                             <th scope="col">Status</th>
                             <th scope="col">Rôles</th>
-                            <th scope="col">Prénom</th>
-                            <th scope="col">Nom</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Structure</th>
-                            <th scope="col">Franchise</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -43,14 +39,35 @@
                                     {% endif %}
                                 {% endfor %}
                             </td>
-                            <td>{{ user.firstname }}</td>
-                            <td>{{ user.lastname }}</td>
                             <td>{{ user.email }}</td>
-                            <td>{{ user.structure|length }}</td>
-                            <td>{{ user.franchise|length }}</td>
 
-                            <td><a href="{{ path('admin_modifier_utilisateur', {'lastname': user.lastname}) }}" class="btn btn-warning">Modifier</a></td>
+                            <td>
+                                <a href="{{ path('admin_modifier_utilisateur', {'lastname': user.lastname}) }}"
+                                   class="btn btn-sm m-2 btn-warning">Modifier</a>
+                                <button type="button" class="btn btn-danger btn-sm m-2" data-bs-toggle="modal"
+                                        data-bs-target="#delete{{ user.id }}">
+                                    Supprimer
+                                </button>
+                            </td>
                         </tr>
+                        <!-- Modal -->
+                        <div class="modal fade" id="delete{{ user.id }}" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 class="modal-title fs-5" id="modal-delete">Confirmation de suppression</h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Êtes-vous sûr(e) de vouloir supprimer la structure?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ path ('admin_delete', {'id': user.id}) }}" class="btn btn-danger">Confirmer</a>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     {% else %}
                         <tr>
                             <td colspan="5">Il n'y a pas d'utilisateur inscrit</td>
