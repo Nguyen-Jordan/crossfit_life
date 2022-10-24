@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Droits;
 use App\Entity\Franchises;
 use App\Entity\Structures;
 use App\Entity\StructuresDroits;
@@ -15,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-#[Route('/structures', name: 'structures_')]
+#[Route('/admin/structures', name: 'structures_')]
 class StructuresController extends AbstractController
 {
     #[Route('/', name: 'index')]

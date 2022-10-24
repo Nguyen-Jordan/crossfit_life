@@ -13,10 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 
-#[Route('/admin', name: 'admin_')]
+#[Route('/admin/utilisateurs', name: 'admin_')]
 class UsersController extends AbstractController
 {
-  #[Route('/utilisateurs', name: 'utilisateurs')]
+  #[Route('/', name: 'utilisateurs')]
   public function usersList(UsersRepository $users)
   {
 
@@ -25,7 +25,7 @@ class UsersController extends AbstractController
     ]);
   }
   
-  #[Route('/utilisateurs/modifier/{lastname}', name: 'modifier_utilisateur')]
+  #[Route('/modifier/{lastname}', name: 'modifier_utilisateur')]
   public function editUser(Users $user, Request $request, ManagerRegistry $doctrine)
   {
     $form = $this->createForm(EditUserType::class, $user);

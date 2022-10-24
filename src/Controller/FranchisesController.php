@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-#[Route('/franchises', name: 'franchises_')]
+#[Route('/admin/franchises', name: 'franchises_')]
 class FranchisesController extends AbstractController
 {
     #[Route('/', name: 'index')]
