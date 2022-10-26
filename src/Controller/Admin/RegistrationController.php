@@ -56,7 +56,7 @@ class RegistrationController extends AbstractController
 
             // J'envoie un mail de confirmation
             $mail->send(
-              'no-reply@crossfit.net',
+              'no-reply@crossfitlife.com',
               $user->getEmail(),
               'Activation de votre compte',
               'register',
@@ -86,7 +86,7 @@ class RegistrationController extends AbstractController
           $user->setIsVerified(true);
           $em->flush($user);
           $this->addFlash('success', 'Utilisateur activé');
-          return $this->redirectToRoute('main');
+          return $this->redirectToRoute('app_login');
         }
       }
       // Ici un problème se pose dans le token

@@ -13,7 +13,7 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Franchise</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -21,7 +21,7 @@
                     {% for franchise in franchises %}
                         <tr>
                             <th scope="row" class="align-middle">{{ franchise.id }}</th>
-                            <td>
+                            <td class="align-middle">
                                 <div class="form-switch text-center">
                                     <input class="form-check-input switch-franchise" type="checkbox"
                                             {{ (franchise.status) ? 'checked' : ''}} data-id="{{ franchise.id }}"

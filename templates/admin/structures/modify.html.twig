@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification de la structure{% endblock %}
+
+{% block body %}
+  <div class="container my-4 p-3">
+    <h1 class="texte"> Modifier la structure</h1>
+    {{ form_start(form_add_structure) }}
+      <div class="row row-cols-1">
+        <div class="col-lg-2 col-sm-5 my-2">
+          {{ form_label(form_add_structure.status, 'Status: ') }}<br>
+          {{ form_widget(form_add_structure.status, {attr:{'class':'form-select'}}) }}
+        </div>
+        <div class="col-md-12 my-2">
+          {{ form_row(form_add_structure.user) }}
+        </div>
+        <div class="col-md-12 my-2">
+          {{ form_row(form_add_structure.address) }}
+        </div>
+        <div class="col-md-12 my-2">
+          {{ form_row(form_add_structure.franchise) }}
+        </div>
+        <div class="col-md-8 my-2">
+          <button type="button" class="btn btn-lg btn-warning my-2"
+                  data-bs-toggle="modal" data-bs-target="#modify">
+            Modifier
+          </button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="modify" tabindex="-1" aria-labelledby="modal-modify" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title fs-5" id="modal-modify">Confirmation de modification</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Êtes-vous sûr(e) de vouloir modifier la structure?
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Confirmer</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{ form_end(form_add_structure) }}
+      </div>
+  </div>
+{% endblock %}

@@ -45,12 +45,6 @@ class EditFranchiseType extends AbstractType
               'choice_label' => 'email',
               'label' => 'Utilisateur propriétaire: '
             ])
-            ->add('submit', SubmitType::class, [
-              'attr' => [
-                'class' => 'btn btn-lg btn-warning my-2'
-              ],
-              'label' => 'Modifier'
-            ])
         ;
     }
 

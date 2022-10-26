@@ -25,9 +25,29 @@
                 {{ form_row(userForm.email) }}
             </div>
             <div class="col-md-8 my-2">
-                <button type="submit" class="btn btn-lg btn-warning my-2">Inscrire</button>
+                <button type="button" class="btn btn-lg btn-warning my-2"
+                        data-bs-toggle="modal" data-bs-target="#modify">
+                    Modifier
+                </button>
             </div>
-
+            <!-- Modal -->
+            <div class="modal fade" id="modify" tabindex="-1" aria-labelledby="modal-modify" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title fs-5" id="modal-modify">Confirmation de modification</h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Êtes-vous sûr(e) de vouloir modifier l'utilisateur?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Confirmer</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {{ form_end(userForm) }}
         </div>
     </div>

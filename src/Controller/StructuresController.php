@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Droits;
 use App\Entity\Franchises;
 use App\Entity\Structures;
 use App\Entity\StructuresDroits;
 use App\Form\StructureType;
 use App\Repository\StructuresRepository;
+use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-#[Route('/structures', name: 'structures_')]
+#[Route('/admin/structures', name: 'structures_')]
 class StructuresController extends AbstractController
 {
     #[Route('/', name: 'index')]
@@ -36,11 +36,12 @@ class StructuresController extends AbstractController
     #[Route('/ajout', name: 'ajout')]
     public function ajoutStructure(
       Request $request,
-      EntityManagerInterface $em
+      EntityManagerInterface $em,
+      SendMailService $mail
     ): Response
     {
-      $post = new Structures();
-      $form = $this->createForm(StructureType::class, $post);
+      $structureForm = new Structures();
+      $form = $this->createForm(StructureType::class, $structureForm);
       $form->handleRequest($request);
 
       if ( $form->isSubmitted() && $form->isValid()) {
@@ -50,6 +51,8 @@ class StructuresController extends AbstractController
          */
          $franchise = $form->get('franchise')->getData();
          $structureDroits = $franchise->getStructuresDroits();
+         $userStructure = $form->get('user')->getData();
+         $userFranchise = $franchise->getUser();
 
          foreach ($structureDroits as $structureDroit){
            /**
@@ -59,14 +62,33 @@ class StructuresController extends AbstractController
            $sd->setDroits($structureDroit->getDroits());
            $sd->setStatus($structureDroit->isStatus());
            $sd->setStructures($form->getData());
-           $post->addStructuresDroit($sd);
+           $structureForm->addStructuresDroit($sd);
          }
-        $post->setSlug($this->slugger->slug($post->getAddress())->lower());
+        $structureForm->setSlug($this->slugger->slug($structureForm->getAddress())->lower());
 
-        $em->persist($post);
+        $em->persist($structureForm);
         $em->flush();
 
-        $this->addFlash('success', 'Structure ajouté avec succès');
+
+        // J'envoie un mail de creation au manager
+        $mail->send(
+          'no-reply@crossfitlife.com',
+          $userStructure->getEmail(),
+          'Activation de la Structure',
+          'createStructure',
+          compact('userStructure', 'structureForm')
+        );
+
+        // J'envoie un mail de creation au partenaire
+        $mail->send(
+          'no-reply@crossfitlife.com',
+          $userFranchise->getEmail(),
+          'Activation de la Structure',
+          'createStructure',
+          compact('userStructure', 'structureForm')
+        );
+
+        $this->addFlash('success', 'Structure inscrite avec succès');
         return $this->redirectToRoute('structures_index');
       }
       return $this->render('admin/structures/ajout.html.twig', [
@@ -78,19 +100,44 @@ class StructuresController extends AbstractController
     public function modifierStructure(
       Structures $structures,
       Request $request,
-      EntityManagerInterface $em): Response
+      EntityManagerInterface $em,
+      SendMailService $mail
+    ): Response
     {
       $form = $this->createForm(StructureType::class, $structures);
       $form->handleRequest($request);
 
       if ( $form->isSubmitted() && $form->isValid()) {
+        $franchise = $form->get('franchise')->getData();
+        $userStructure = $form->get('user')->getData();
+        $userFranchise = $franchise->getUser();
+
         $em->persist($structures);
         $em->flush();
 
-        return $this->redirectToRoute('structures_ajout');
+        // J'envoie un mail de modification au manager
+        $mail->send(
+          'no-reply@crossfitlife.com',
+          $userStructure->getEmail(),
+          'Modification de la Structure',
+          'modifyStructure',
+          compact('userStructure', 'structures')
+        );
+
+        // J'envoie un mail de modification au partenaire
+        $mail->send(
+          'no-reply@crossfitlife.com',
+          $userFranchise->getEmail(),
+          'Modification de la Structure',
+          'modifyStructure',
+          compact('userStructure', 'structures')
+        );
+
+        $this->addFlash('success', 'Structure modifiée avec succès');
+        return $this->redirectToRoute('structures_index');
       }
 
-      return $this->render('admin/structures/ajout.html.twig', [
+      return $this->render('admin/structures/modify.html.twig', [
         'form_add_structure' => $form->createView()
       ]);
     }

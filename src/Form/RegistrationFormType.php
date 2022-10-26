@@ -33,9 +33,9 @@ class RegistrationFormType extends AbstractType
               'multiple' => false,
               'expanded' => false,
               'choices' => [
-                'Admin' => "ROLE_ADMIN",
+                'Manager' => "ROLE_MANAGER",
                 'Partner' => "ROLE_PARTNER",
-                'Manager' => "ROLE_MANAGER"
+                'Admin' => "ROLE_ADMIN",
               ]
             ])
             ->add('email', EmailType::class, [

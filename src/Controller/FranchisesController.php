@@ -8,6 +8,7 @@ use App\Form\EditFranchiseType;
 use App\Form\FranchiseType;
 use App\Repository\FranchisesRepository;
 use App\Repository\StructuresDroitsRepository;
+use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-#[Route('/franchises', name: 'franchises_')]
+#[Route('/admin/franchises', name: 'franchises_')]
 class FranchisesController extends AbstractController
 {
     #[Route('/', name: 'index')]
@@ -34,7 +35,11 @@ class FranchisesController extends AbstractController
    * @return Response
    */
     #[Route('/ajout', name: 'ajout')]
-    public function ajoutFranchise(Request $request, EntityManagerInterface $em): Response
+    public function ajoutFranchise(
+      Request $request,
+      EntityManagerInterface $em,
+      SendMailService $mail
+    ): Response
     {
       $franchiseForm = new Franchises();
 
@@ -44,6 +49,7 @@ class FranchisesController extends AbstractController
 
       if ( $form->isSubmitted() && $form->isValid()) {
         $permissions = $form->get('structuresDroits')->getData();
+        $user = $form->get('user')->getData();
 
         foreach ($permissions as $permission){
           $franchiseForm->addStructuresDroit($permission);
@@ -53,6 +59,16 @@ class FranchisesController extends AbstractController
         $em->persist($franchiseForm);
         $em->flush();
 
+        // J'envoie un mail de creation
+        $mail->send(
+          'no-reply@crossfitlife.com',
+          $user->getEmail(),
+          'Activation de la franchise',
+          'createFranchise',
+          compact('user', 'franchiseForm')
+        );
+
+        $this->addFlash('success', 'Franchise inscrite avec succès');
         return $this->redirectToRoute('franchises_index');
       }
 
@@ -63,15 +79,32 @@ class FranchisesController extends AbstractController
 
 
     #[Route('/modifier/{id}', name: 'modifier')]
-    public function modifierFranchise(Franchises $franchises, Request $request, EntityManagerInterface $em): Response
+    public function modifierFranchise(
+      Franchises $franchises,
+      Request $request,
+      EntityManagerInterface $em,
+      SendMailService $mail
+    ): Response
     {
       $form = $this->createForm(EditFranchiseType::class, $franchises);
       $form->handleRequest($request);
 
       if ( $form->isSubmitted() && $form->isValid()) {
+        $user = $form->get('user')->getData();
+
         $em->persist($franchises);
         $em->flush();
 
+        // J'envoie un mail de modification
+        $mail->send(
+          'no-reply@crossfitlife.com',
+          $user->getEmail(),
+          'Modification de la franchise',
+          'modifyFranchise',
+          compact('user', 'franchises')
+        );
+
+        $this->addFlash('success', 'Franchise modifiée avec succès');
         return $this->redirectToRoute('franchises_index');
       }
 
