@@ -42,6 +42,7 @@ security:
         ROLE_ADMIN: [ROLE_ADMIN]
         ROLE_PARTNER: [ROLE_PARTNER]
         ROLE_MANAGER: [ROLE_MANAGER]
+
 when@test:
     security:
         password_hashers:

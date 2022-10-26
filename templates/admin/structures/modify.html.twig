@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification de la structure{% endblock %}
+
+{% block body %}
+  <div class="container my-4 p-3">
+    <h1 class="texte"> Modifier la structure</h1>
+    {{ form_start(form_add_structure) }}
+      <div class="row row-cols-1">
+        <div class="col-lg-2 col-sm-5 my-2">
+          {{ form_label(form_add_structure.status, 'Status: ') }}<br>
+          {{ form_widget(form_add_structure.status, {attr:{'class':'form-select'}}) }}
+        </div>
+        <div class="col-md-12 my-2">
+          {{ form_row(form_add_structure.user) }}
+        </div>
+        <div class="col-md-12 my-2">
+          {{ form_row(form_add_structure.address) }}
+        </div>
+        <div class="col-md-12 my-2">
+          {{ form_row(form_add_structure.franchise) }}
+        </div>
+        <div class="col-md-8 my-2">
+          <button type="submit" class="btn btn-lg btn-warning my-2">Modifier</button>
+        </div>
+
+        {{ form_end(form_add_structure) }}
+      </div>
+  </div>
+{% endblock %}

@@ -29,9 +29,9 @@ class EditUserType extends AbstractType
           'multiple' => false,
           'expanded' => false,
           'choices' => [
-            'Admin' => 'ROLE_ADMIN',
-            'Partner' => 'ROLE_PARTNER',
-            'Manager' => 'ROLE_MANAGER'
+            'Admin' => "ROLE_ADMIN",
+            'Partner' => "ROLE_PARTNER",
+            'Manager' => "ROLE_MANAGER"
           ]
         ])
         ->add('firstname', TextType::class, [

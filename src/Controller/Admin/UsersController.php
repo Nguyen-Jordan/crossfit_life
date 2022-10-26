@@ -36,7 +36,7 @@ class UsersController extends AbstractController
       $entityManager->persist($user);
       $entityManager->flush();
       
-      $this->addFlash('message', 'Utilisateur modifié avec succès');
+      $this->addFlash('success', 'Utilisateur modifié avec succès');
       return $this->redirectToRoute('admin_utilisateurs');
     }
     return $this->render('admin/users/edituser.html.twig', [
@@ -51,6 +51,6 @@ class UsersController extends AbstractController
     $em->flush();
 
     $this->addFlash('success', 'Utilisateur supprimée avec succès');
-    return $this->redirectToRoute('franchises_index');
+    return $this->redirectToRoute('admin_utilisateurs');
   }
 }
