@@ -25,6 +25,7 @@
         "bootstrap": "^5.2.1",
         "datatables.net": "^1.12.1",
         "datatables.net-bs4": "^1.12.1",
-        "debug": "^4.3.4"
+        "debug": "^4.3.4",
+        "express-sslify": "^1.2.0"
     }
 }
