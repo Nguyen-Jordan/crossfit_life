@@ -133,7 +133,7 @@ class RegistrationController extends AbstractController
       );
 
       $this->addFlash('success', 'Email de vérification envoyé');
-      return $this->redirectToRoute('main');
+      return $this->redirectToRoute('change_password');
     }
 
 }
