@@ -86,7 +86,7 @@ class RegistrationController extends AbstractController
           $user->setIsVerified(true);
           $em->flush($user);
           $this->addFlash('success', 'Utilisateur activé');
-          return $this->redirectToRoute('app_login');
+          return $this->redirectToRoute('change_password');
         }
       }
       // Ici un problème se pose dans le token
