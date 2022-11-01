@@ -14,21 +14,21 @@ class FranchisesFixtures extends Fixture
   
   public function load(ObjectManager $manager): void
   {
-      $franchise = $this->createFranchise('Paris', 'partenaire_01@crossfit.com', 1, $manager);
+      $franchise = $this->createFranchise(1,'Paris', 1, $manager);
 
-      $this->createFranchise('Lyon', 'partenaire_02@crossfit.com', 1, $manager);
-      $this->createFranchise('Marseille', 'partenaire_03@crossfit.com', 0, $manager);
-      $this->createFranchise('Bordeaux', 'partenaire_04@crossfit.com', 1, $manager);
-      $this->createFranchise('Annecy', 'partenaire_05@crossfit.com', 1, $manager);
+      $this->createFranchise(2,'Lyon', 1, $manager);
+      $this->createFranchise(3,'Marseille', 0, $manager);
+      $this->createFranchise(4,'Bordeaux', 1, $manager);
+      $this->createFranchise(5,'Annecy', 1, $manager);
       
       $manager->flush();
   }
   
-  public function createFranchise(string $name, string $email, bool $status, ObjectManager $manager)
+  public function createFranchise(int $id, string $name, bool $status, ObjectManager $manager)
   {
     $franchise = new Franchises();
+    $franchise->setId($id);
     $franchise->setName($name);
-    $franchise->setEmail($email);
     $franchise->setSlug($this->slugger->slug($franchise->getName())->lower());
     $franchise->setStatus($status);
     $manager->persist($franchise);
