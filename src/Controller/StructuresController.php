@@ -153,9 +153,33 @@ class StructuresController extends AbstractController
         return new Response("true");
     }
 
+    #[Route('/activer/permission/{id}/{slug}', name: 'activer_permission')]
+    public function activerPermission(
+      string $slug,
+      Request $request,
+      StructuresDroits $structuresDroits,
+      EntityManagerInterface $em
+    )
+    {
+      $submittedToken = $request->request->get('token');
+
+      if ($this->isCsrfTokenValid('modify_item', $submittedToken)) {
+        $newDroit = !$structuresDroits->isStatus();
+        $structuresDroits->setStatus($newDroit);
+
+        $em->persist($structuresDroits);
+        $em->flush();
+      }
+
+
+      return $this->redirectToRoute('structures_details', [
+        'slug' => $slug
+      ]);
+    }
 
     #[Route('/{slug}', name: 'details')]
     public function details(
+      string $slug,
       StructuresRepository $structure,
       Structures $structures
     ): Response
@@ -165,6 +189,7 @@ class StructuresController extends AbstractController
 
       return $this->render('admin/structures/details.html.twig', [
         'result' => $result,
+        'slug' => $slug,
         'structure' => $structures
       ]);
     }

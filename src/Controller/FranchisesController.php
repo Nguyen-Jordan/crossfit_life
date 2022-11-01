@@ -78,8 +78,9 @@ class FranchisesController extends AbstractController
     }
 
 
-    #[Route('/modifier/{id}', name: 'modifier')]
+    #[Route('/modifier/{slug}', name: 'modifier')]
     public function modifierFranchise(
+      string $slug,
       Franchises $franchises,
       Request $request,
       EntityManagerInterface $em,
@@ -110,17 +111,23 @@ class FranchisesController extends AbstractController
 
       return $this->render('admin/franchises/global.html.twig', [
         'form_edit_franchise' => $form->createView(),
+        'slug' => $slug,
         'franchises' => $franchises
       ]);
     }
 
     #[Route('/{slug}', name: 'details')]
-    public function details(StructuresDroitsRepository $repository, Franchises $franchises): Response
+    public function details(
+      string $slug,
+      StructuresDroitsRepository $repository,
+      Franchises $franchises
+    ): Response
     {
       //On va chercher la liste des structures de la franchise et les droits
 
 
       return $this->render('admin/franchises/details.html.twig', [
+        'slug' => $slug,
         'result' => $repository->findAll(),
         'franchise' => $franchises
       ]);
@@ -134,6 +141,52 @@ class FranchisesController extends AbstractController
       $em->flush();
 
       return new Response("true");
+    }
+
+    #[Route('/activer/permission/{id}/{slug}', name: 'activer_permission')]
+    public function activerPermission(
+      string $slug,
+      Request $request,
+      StructuresDroits $structuresDroits,
+      EntityManagerInterface $em
+    )
+    {
+      $submittedToken = $request->request->get('token');
+
+      if ($this->isCsrfTokenValid('modify_item', $submittedToken)) {
+        $newDroit = !$structuresDroits->isStatus();
+        $structuresDroits->setStatus($newDroit);
+
+        $em->persist($structuresDroits);
+        $em->flush();
+      }
+
+      return $this->redirectToRoute('franchises_details', [
+        'slug' => $slug
+      ]);
+    }
+
+    #[Route('/activer/globalPermission/{id}/{slug}', name: 'activer_global_permission')]
+    public function activerGlobalPermission(
+      string $slug,
+      Request $request,
+      StructuresDroits $structuresDroits,
+      EntityManagerInterface $em
+    )
+    {
+      $submittedToken = $request->request->get('token');
+
+      if ($this->isCsrfTokenValid('modify_item', $submittedToken)) {
+        $newDroit = !$structuresDroits->isStatus();
+        $structuresDroits->setStatus($newDroit);
+
+        $em->persist($structuresDroits);
+        $em->flush();
+      }
+
+      return $this->redirectToRoute('franchises_modifier', [
+        'slug' => $slug
+      ]);
     }
 
     #[Route('/permissions/activer/{id}', name: 'activate_status')]

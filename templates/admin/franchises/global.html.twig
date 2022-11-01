@@ -59,12 +59,15 @@
                   {{ droit.droits.name }}
                 </td>
                 <td class="detail">
-                  <div class="form-switch text-center">
-                    <input class="form-check-input switch-franchise" type="checkbox"
-                      {{ (droit.status) ? 'checked' : ''}}
-                           id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault"></label>
-                  </div>
+                  <form class="form-switch text-center" action="{{ url('franchises_activer_global_permission', { slug: franchises.slug, id: droit.id }) }}" method="post">
+                    <input type="hidden" name="token" value="{{ csrf_token('modify_item') }}"/>
+                    <button type="submit">
+                      <input class="form-check-input switch-franchise" type="checkbox"
+                        {{ (droit.status) ? 'checked' : ''}}
+                             id="flexSwitchCheckDefault" data-id="{{ droit.id }}">
+                      <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                    </button>
+                  </form>
                 </td>
               </tr>
             {% endfor %}
@@ -72,10 +75,5 @@
           </table>
         </div>
       </article>
-
   </div>
-{% endblock %}
-{% block javascripts %}
-  {{ parent() }}
-  <script src="{{ asset('assets/js/franchiseScript.js') }}" defer></script>
 {% endblock %}

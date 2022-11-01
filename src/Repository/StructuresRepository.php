@@ -43,7 +43,7 @@ class StructuresRepository extends ServiceEntityRepository
   {
     return $this
       ->createQueryBuilder('s')
-      ->select('sd.status, d.name')
+      ->select('sd.status, d.name, sd.id')
       ->join("s.structuresDroits", "sd")
       ->andWhere('sd.structures in (:value)')
       ->join("sd.droits", "d")

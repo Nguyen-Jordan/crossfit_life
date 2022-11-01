@@ -24,12 +24,15 @@
                                         {{ droit.droits.name }}
                                     </td>
                                     <td class="detail">
-                                        <div class="form-switch text-center">
-                                            <input class="form-check-input" type="checkbox"
-                                                    {{ (droit.status) ? 'checked' : ''}} data-id="{{ franchise.id }}"
-                                                   id="flexSwitchCheckDefault">
-                                            <label class="form-check-label" for="flexSwitchCheckDefault"></label>
-                                        </div>
+                                        <form class="form-switch text-center" action="{{ url('franchises_activer_permission', { slug: franchise.slug ,id: droit.id }) }}" method="post">
+                                            <input type="hidden" name="token" value="{{ csrf_token('modify_item') }}"/>
+                                            <button type="submit">
+                                                <input class="form-check-input" type="checkbox"
+                                                        {{ (droit.status) ? 'checked' : ''}} data-id="{{ droit.id }}"
+                                                       id="flexSwitchCheckDefault">
+                                                <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             {% endfor %}
