@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\DroitsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,6 +17,8 @@ class Droits
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, minMessage: "Veuillez avoir au moins 3 caractères")]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'droits', targetEntity: StructuresDroits::class)]

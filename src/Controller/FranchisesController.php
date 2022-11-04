@@ -123,8 +123,6 @@ class FranchisesController extends AbstractController
       Franchises $franchises
     ): Response
     {
-      //On va chercher la liste des structures de la franchise et les droits
-
 
       return $this->render('admin/franchises/details.html.twig', [
         'slug' => $slug,
@@ -204,12 +202,21 @@ class FranchisesController extends AbstractController
     }
 
     #[Route('/supprimer/{id}', name: 'delete')]
-    public function delete(Franchises $franchise, EntityManagerInterface $em)
+    public function delete(
+      Request $request,
+      Franchises $franchise,
+      EntityManagerInterface $em
+    ): Response
     {
-      $em->remove($franchise);
-      $em->flush();
+      $submittedToken = $request->request->get('token');
 
-      $this->addFlash('success', 'Franchise supprimée avec succès');
+      if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
+        $em->remove($franchise);
+        $em->flush();
+
+        $this->addFlash('success', 'Franchise supprimée avec succès');
+      }
+
       return $this->redirectToRoute('franchises_index');
     }
 }

@@ -195,12 +195,21 @@ class StructuresController extends AbstractController
     }
 
     #[Route('/supprimer/{id}', name: 'delete')]
-    public function delete(Structures $structure, EntityManagerInterface $em)
+    public function delete(
+      Request $request,
+      Structures $structure,
+      EntityManagerInterface $em
+    ): Response
     {
-      $em->remove($structure);
-      $em->flush();
+      $submittedToken = $request->request->get('token');
+      if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
 
-      $this->addFlash('success', 'Structure supprimée avec succès');
+        $em->remove($structure);
+        $em->flush();
+
+        $this->addFlash('success', 'Structure supprimée avec succès');
+      }
+
       return $this->redirectToRoute('structures_index');
     }
 }

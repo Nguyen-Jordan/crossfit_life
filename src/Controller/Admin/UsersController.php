@@ -26,7 +26,11 @@ class UsersController extends AbstractController
   }
   
   #[Route('/modifier/{lastname}', name: 'modifier_utilisateur')]
-  public function editUser(Users $user, Request $request, ManagerRegistry $doctrine)
+  public function editUser(
+    Users $user,
+    Request $request,
+    ManagerRegistry $doctrine
+  )
   {
     $form = $this->createForm(EditUserType::class, $user);
     $form->handleRequest($request);
@@ -45,12 +49,22 @@ class UsersController extends AbstractController
   }
 
   #[Route('/supprimer/{id}', name: 'delete')]
-  public function delete(Users $user, EntityManagerInterface $em)
+  public function delete(
+    Request $request,
+    Users $user,
+    EntityManagerInterface $em
+  ): Response
   {
-    $em->remove($user);
-    $em->flush();
+    $submittedToken = $request->request->get('token');
 
-    $this->addFlash('success', 'Utilisateur supprimée avec succès');
+    if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
+
+      $em->remove($user);
+      $em->flush();
+
+      $this->addFlash('success', 'Utilisateur supprimée avec succès');
+    }
+
     return $this->redirectToRoute('admin_utilisateurs');
   }
 }

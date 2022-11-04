@@ -1,15 +1,15 @@
 let collection, boutonAjout, span;                                                // Je declare les variable
-window.onload = () => {                                                           // attender que le dom soit charger
+window.onload = () => {                                                           // attender que le DOM soit charger
   collection = document.querySelector('#structuresDroits');               // Je vais charger la collection du formulaire(la div complete).
   span = collection.querySelector("span");                                // Je vais chercher le span dans la collection
 
-  boutonAjout = document.createElement("button");                         //cree le button Ajout
-  boutonAjout.className = "ajout-droit btn btn-success my-2";                     // class du button
-  boutonAjout.innerText = "Ajouter une permission";                               // Je declare le texte
+  boutonAjout = document.createElement("button");                         // je crée le button Ajout
+  boutonAjout.className = "ajout-droit btn btn-success my-2";                     // je déclare la class du button
+  boutonAjout.innerText = "Ajouter une permission";                               // Je déclare le texte
 
 let nouveauBouton = span.append(boutonAjout);                                     // Je l'intègre dans le span
 
-  collection.dataset.index = collection.querySelectorAll("input").length; // il va nous dire combien de formulaire il y à l'intérieur
+  collection.dataset.index = collection.querySelectorAll("input").length; // il va nous dire combien de formulaire il y a dedans
 
   boutonAjout.addEventListener("click", function(){                     // j'attends le click, et je fais une function
     addButton(collection, nouveauBouton);                                           // Je lui passe le button
