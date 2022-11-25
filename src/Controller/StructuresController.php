@@ -29,11 +29,7 @@ class StructuresController extends AbstractController
 
     public function __construct(private SluggerInterface $slugger){}
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
-    #[Route('/ajout', name: 'ajout')]
+   #[Route('/ajout', name: 'ajout')]
     public function ajoutStructure(
       Request $request,
       EntityManagerInterface $em,
@@ -64,11 +60,12 @@ class StructuresController extends AbstractController
            $sd->setStructures($form->getData());
            $structureForm->addStructuresDroit($sd);
          }
-        $structureForm->setSlug($this->slugger->slug($structureForm->getAddress())->lower());
+        $structureForm->setSlug(
+          $this->slugger->slug($structureForm->getAddress())->lower()
+        );
 
         $em->persist($structureForm);
         $em->flush();
-
 
         // J'envoie un mail de creation au manager
         $mail->send(
@@ -170,7 +167,6 @@ class StructuresController extends AbstractController
         $em->persist($structuresDroits);
         $em->flush();
       }
-
 
       return $this->redirectToRoute('structures_details', [
         'slug' => $slug

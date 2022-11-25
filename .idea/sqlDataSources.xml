@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="369b76a1-ec98-4ea3-b799-a03d28dbe46b" name="ECF Mapping">
+      <data-sources db="30fecd68-7d05-4928-9771-34186c45605f" />
+      <scope>
+        <node kind="schema" qname="heroku_a0800526ef16c2c" />
+      </scope>
+    </mapping>
+  </component>
+</project>

@@ -28,12 +28,8 @@ class FranchisesController extends AbstractController
         ]);
     }
 
-  public function __construct(private SluggerInterface $slugger){}
+    public function __construct(private SluggerInterface $slugger){}
 
-  /**
-   * @param Request $request
-   * @return Response
-   */
     #[Route('/ajout', name: 'ajout')]
     public function ajoutFranchise(
       Request $request,
@@ -42,9 +38,7 @@ class FranchisesController extends AbstractController
     ): Response
     {
       $franchiseForm = new Franchises();
-
       $form = $this->createForm(FranchiseType::class, $franchiseForm);
-
       $form->handleRequest($request);
 
       if ( $form->isSubmitted() && $form->isValid()) {
@@ -54,7 +48,9 @@ class FranchisesController extends AbstractController
         foreach ($permissions as $permission){
           $franchiseForm->addStructuresDroit($permission);
         }
-        $franchiseForm->setSlug($this->slugger->slug($franchiseForm->getName())->lower());
+        $franchiseForm->setSlug(
+          $this->slugger->slug($franchiseForm->getName())->lower()
+        );
 
         $em->persist($franchiseForm);
         $em->flush();
@@ -67,16 +63,13 @@ class FranchisesController extends AbstractController
           'createFranchise',
           compact('user', 'franchiseForm')
         );
-
         $this->addFlash('success', 'Franchise inscrite avec succès');
         return $this->redirectToRoute('franchises_index');
       }
-
       return $this->render('admin/franchises/ajout.html.twig', [
         'form_add_franchise' => $form->createView()
       ]);
     }
-
 
     #[Route('/modifier/{slug}', name: 'modifier')]
     public function modifierFranchise(

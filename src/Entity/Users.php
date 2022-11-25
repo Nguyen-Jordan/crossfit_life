@@ -45,6 +45,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
    * @var string The hashed password
    */
   #[ORM\Column]
+  #[Assert\Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$")]
   private ?string $password = null;
 
   #[ORM\Column(type: 'boolean')]
@@ -58,8 +59,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
   #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
   private ?Structures $structure = null;
-
-
 
   public function getId(): ?Uuid
   {

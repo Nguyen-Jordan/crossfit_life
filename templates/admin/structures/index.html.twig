@@ -53,7 +53,7 @@
                                         Êtes-vous sûr(e) de vouloir supprimer la structure?
                                     </div>
                                     <div class="modal-footer">
-                                        <form action="{{ path ('structures_delete', {'id': structure.id}) }}" method="post">
+                                        <form action="{{ path ('structures_delete', {'id': structure.id}) }}" method="post">r
                                             <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
 
                                             <button type="submit" class="btn btn-danger">Confirmer</button>
