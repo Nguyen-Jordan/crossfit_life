@@ -102,7 +102,7 @@ class FranchisesController extends AbstractController
         return $this->redirectToRoute('franchises_index');
       }
 
-      return $this->render('admin/franchises/modify.html.twig', [
+      return $this->render('admin/franchises/global.html.twig', [
         'form_edit_franchise' => $form->createView(),
         'slug' => $slug,
         'franchises' => $franchises

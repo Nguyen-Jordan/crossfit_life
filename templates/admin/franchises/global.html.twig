@@ -61,7 +61,7 @@
                 <td class="detail">
                   <form class="form-switch text-center" action="{{ url('franchises_activer_global_permission', { slug: franchises.slug, id: droit.id }) }}" method="post">
                     <input type="hidden" name="token" value="{{ csrf_token('modify_item') }}"/>
-                    <button type="submit">
+                    <button type="submit" class="btn">
                       <input class="form-check-input switch-franchise" type="checkbox"
                         {{ (droit.status) ? 'checked' : ''}}
                              id="flexSwitchCheckDefault" data-id="{{ droit.id }}">
