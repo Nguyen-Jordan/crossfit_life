@@ -53,7 +53,6 @@
                                     <div class="modal-footer">
                                         <form action="{{ path ('franchises_delete', {'id': franchise.id}) }}" method="post">
                                             <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
-
                                             <button type="submit" class="btn btn-danger">Confirmer</button>
                                         </form>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>

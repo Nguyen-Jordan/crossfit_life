@@ -55,9 +55,11 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
   private $resetToken = null;
 
   #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+  #[ORM\JoinColumn(onDelete: 'CASCADE')]
   private ?Franchises $franchise = null;
 
   #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+  #[ORM\JoinColumn(onDelete: 'CASCADE')]
   private ?Structures $structure = null;
 
   public function getId(): ?Uuid
