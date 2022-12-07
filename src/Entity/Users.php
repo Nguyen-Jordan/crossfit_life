@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UsersRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
@@ -18,6 +19,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
   #[ORM\Column(type: 'uuid', unique: true)]
   #[ORM\GeneratedValue(strategy: 'CUSTOM')]
   #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+  #[Assert\Uuid]
   private ?Uuid $id;
 
   #[ORM\Column]
@@ -27,9 +29,13 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
   private ?bool $status = null;
 
   #[ORM\Column(length: 100)]
+  #[Assert\NotBlank]
+  #[Assert\Length(min: 3, minMessage: "Veuillez avoir au moins 3 caractères")]
   private ?string $firstname = null;
 
   #[ORM\Column(length: 100)]
+  #[Assert\NotBlank]
+  #[Assert\Length(min: 3, minMessage: "Veuillez avoir au moins 3 caractères")]
   private ?string $lastname = null;
 
   #[ORM\Column(length: 180, unique: true)]
@@ -39,6 +45,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
    * @var string The hashed password
    */
   #[ORM\Column]
+  #[Assert\Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$")]
   private ?string $password = null;
 
   #[ORM\Column(type: 'boolean')]
@@ -52,8 +59,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
   #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
   private ?Structures $structure = null;
-
-
 
   public function getId(): ?Uuid
   {

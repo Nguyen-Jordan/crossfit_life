@@ -8,5 +8,4 @@ window.onload = () => {
       xmlhttp.send()
     })
   }
-
 }

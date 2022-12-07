@@ -11,10 +11,10 @@
                 <table id="datatable" class="table">
                     <thead class="table-dark">
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Franchise</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col" class="text-center">ID</th>
+                            <th scope="col" class="text-center">Statut</th>
+                            <th scope="col" class="text-center">Franchise</th>
+                            <th scope="col" class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,7 +33,7 @@
                             <td class="align-middle">{{ franchise.name }}</td>
                             <td class="align-middle">
                                 <a href="{{ path('franchises_details', {slug: franchise.slug}) }}" class="btn btn-sm btn-warning m-2">Voir les structures</a>
-                                <a href="{{ path('franchises_modifier', {'id': franchise.id}) }}" class="btn btn-sm btn-warning m-2">Modifier</a>
+                                <a href="{{ path('franchises_modifier', {slug: franchise.slug}) }}" class="btn btn-sm btn-warning m-2">Modifier</a>
                                 <button type="button" class="btn btn-sm btn-danger m-2" data-bs-toggle="modal" data-bs-target="#delete{{ franchise.id }}">
                                     Supprimer
                                 </button>
@@ -51,7 +51,11 @@
                                         Êtes-vous sûr(e) de vouloir supprimer la franchise?
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="{{ path ('franchises_delete', {'id': franchise.id}) }}" class="btn btn-danger">Confirmer</a>
+                                        <form action="{{ path ('franchises_delete', {'id': franchise.id}) }}" method="post">
+                                            <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+
+                                            <button type="submit" class="btn btn-danger">Confirmer</button>
+                                        </form>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                     </div>
                                 </div>

@@ -11,10 +11,10 @@
                 <table id="datatable" class="table table-hover">
                     <thead class="table-dark">
                         <tr>
-                            <th scope="col">Status</th>
-                            <th scope="col">Rôles</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Action</th>
+                            <th scope="col" class="text-center">Statut</th>
+                            <th scope="col" class="text-center">Rôle</th>
+                            <th scope="col" class="text-center">Email</th>
+                            <th scope="col" class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,7 +61,11 @@
                                         Êtes-vous sûr(e) de vouloir supprimer la structure?
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="{{ path ('admin_delete', {'id': user.id}) }}" class="btn btn-danger">Confirmer</a>
+                                        <form action="{{ path ('admin_delete', {'id': user.id}) }}" method="post">
+                                            <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+
+                                            <button type="submit" class="btn btn-danger">Confirmer</button>
+                                        </form>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                     </div>
                                 </div>

@@ -23,12 +23,17 @@
                                 {{ droit.name }}
                             </td>
                             <td class="detail">
-                                <div class="form-switch text-center">
-                                    <input class="form-check-input" type="checkbox"
-                                            {{ (droit.status) ? 'checked' : ''}}
-                                           id="flexSwitchCheckDefault">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault"></label>
-                                </div>
+                                <form class="form-switch text-center"
+                                      action="{{ url('structures_activer_permission', { slug: structure.slug , id: droit.id }) }}"
+                                      method="post">
+                                    <input type="hidden" name="token" value="{{ csrf_token('modify_item') }}"/>
+                                    <button type="submit" class="btn">
+                                        <input class="form-check-input" type="checkbox"
+                                                {{ (droit.status) ? 'checked' : ''}}
+                                               id="flexSwitchCheckDefault" data-id="{{ droit.id }}">
+                                        <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     {% endfor %}

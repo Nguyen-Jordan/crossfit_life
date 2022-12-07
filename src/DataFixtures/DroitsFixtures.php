@@ -10,18 +10,19 @@ class DroitsFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $rights = $this->createRights('Gérer les planning', $manager);
+        $rights = $this->createRights(1,'Gérer les planning', $manager);
   
-        $this->createRights('Envoyer newsletter', $manager);
-        $this->createRights('Vente de boissons et barres protéinées', $manager);
-        $this->createRights('Entraîneur personnel', $manager);
+        $this->createRights(2,'Envoyer newsletter', $manager);
+        $this->createRights(3,'Vente de boissons et barres protéinées', $manager);
+        $this->createRights(3,'Entraîneur personnel', $manager);
     
         $manager->flush();
     }
   
-    public function createRights(string $name, ObjectManager $manager)
+    public function createRights(int $id, string $name, ObjectManager $manager)
     {
         $rights = new Droits();
+        $rights->setId($id);
         $rights->setName($name);
         $manager->persist($rights);
         

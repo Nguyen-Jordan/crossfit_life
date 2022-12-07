@@ -13,26 +13,27 @@ class StructuresFixtures extends Fixture
   
     public function load(ObjectManager $manager): void
     {
-        $structures = $this->createStructures('72 Rue de Romainville, 75019 Paris', 'manager_01@crossfitlife.com', 1, $manager);
+        $structures = $this->createStructures(1,'72 Rue de Romainville', 1, 1, $manager);
         
-        $this->createStructures('64 Bd de Bercy, 75012 Paris', 'manager_02@crossfitlife.com', 1, $manager);
-        $this->createStructures('65 Rue du Bourbonnais, 69009 Lyon', 'manager_03@crossfitlife.com', 1, $manager);
-        $this->createStructures('134 Cr Charlemagne, 69002 Lyon', 'manager_04@crossfitlife.com', 1, $manager);
-        $this->createStructures('56 Av. de la Madrague de Montredon, 13008 Marseille', 'manager_05@crossfitlife.com', 1, $manager);
-        $this->createStructures('4 Rue St Adrien, 13008 Marseille', 'manager_06@crossfitlife.com', 1, $manager);
-        $this->createStructures('296 Av. Thiers, 33100 Bordeaux', 'manager_07@crossfitlife.com', 1, $manager);
-        $this->createStructures('40 Av. des 40 Journaux, 33000 Bordeaux', 'manager_08@crossfitlife.com', 1, $manager);
-        $this->createStructures('46 Av. de Novel, 74000 Annecy', 'manager_09@crossfitlife.com', 1, $manager);
-        $this->createStructures('1 Chem. de Viré Moulin, 74940 Annecy', 'manager_10@crossfitlife.com', 1, $manager);
+        $this->createStructures(2,'64 Bd de Bercy', 1, 1, $manager);
+        $this->createStructures(3,'65 Rue du Bourbonnais', 2, 1, $manager);
+        $this->createStructures(4,'134 Cr Charlemagne', 2, 1, $manager);
+        $this->createStructures(5,'56 Av. de la Madrague de Montredon', 3, 1, $manager);
+        $this->createStructures(6,'4 Rue St Adrien', 3, 1, $manager);
+        $this->createStructures(7,'296 Av. Thiers', 4, 1, $manager);
+        $this->createStructures(8,'40 Av. des 40 Journaux', 4, 1, $manager);
+        $this->createStructures(9,'46 Av. de Novel', 5, 1, $manager);
+        $this->createStructures(10,'1 Chem. de Viré Moulin', 5, 1, $manager);
         
         $manager->flush();
     }
     
-    public function createStructures(string $address, string $email, bool $status, ObjectManager $manager)
+    public function createStructures(int $id, string $address, int $franchise = null, bool $status, ObjectManager $manager)
     {
         $structures = new Structures();
+        $structures->setId($id);
         $structures->setAddress($address);
-        $structures->setEmail($email);
+        $structures->setFranchise($franchise);
         $structures->setStatus($status);
         $structures->setSlug($this->slugger->slug($structures->getAddress())->lower());
         $manager->persist($structures);

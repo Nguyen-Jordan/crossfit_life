@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\Users;
 use App\Form\RegistrationFormType;
 use App\Repository\UsersRepository;
-use App\Security\UserAuthentificatorAuthenticator;
 use App\Service\JWTService;
 use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,12 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+
 class RegistrationController extends AbstractController
 {
-    #[Route('/inscription', name: 'app_register')]
+    #[Route('/admin/inscription', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher,
-     UserAuthenticatorInterface $userAuthenticator, UserAuthentificatorAuthenticator $authenticator,
      EntityManagerInterface $entityManager, SendMailService $mail, JWTService $jwt): Response
     {
         $user = new Users();
@@ -37,7 +35,6 @@ class RegistrationController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-
 
             // Je génère le JWT de l'utilisateur
             // Je crée le Header
@@ -86,7 +83,7 @@ class RegistrationController extends AbstractController
           $user->setIsVerified(true);
           $em->flush($user);
           $this->addFlash('success', 'Utilisateur activé');
-          return $this->redirectToRoute('app_login');
+          return $this->redirectToRoute('change_password');
         }
       }
       // Ici un problème se pose dans le token
@@ -133,7 +130,7 @@ class RegistrationController extends AbstractController
       );
 
       $this->addFlash('success', 'Email de vérification envoyé');
-      return $this->redirectToRoute('main');
+      return $this->redirectToRoute('change_password');
     }
 
 }

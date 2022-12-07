@@ -3,7 +3,7 @@
 {% block title %}Structures-Crossfit_life{% endblock %}
 
 {% block body %}
-    <div class="texte">Structures</div>
+    <h1 class="texte">Structures</h1>
     <main class="container text-center">
         <section class="row justify-content-md-center">
             <div class="col-10">
@@ -11,10 +11,10 @@
                 <table id="datatable" class="table">
                     <thead class="table-dark">
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Adresse</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col" class="text-center">ID</th>
+                        <th scope="col" class="text-center">Statut</th>
+                        <th scope="col" class="text-center">Adresse</th>
+                        <th scope="col" class="text-center">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -53,7 +53,11 @@
                                         Êtes-vous sûr(e) de vouloir supprimer la structure?
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="{{ path ('structures_delete', {'id': structure.id}) }}" class="btn btn-danger">Confirmer</a>
+                                        <form action="{{ path ('structures_delete', {'id': structure.id}) }}" method="post">r
+                                            <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+
+                                            <button type="submit" class="btn btn-danger">Confirmer</button>
+                                        </form>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                     </div>
                                 </div>

@@ -28,12 +28,8 @@ class FranchisesController extends AbstractController
         ]);
     }
 
-  public function __construct(private SluggerInterface $slugger){}
+    public function __construct(private SluggerInterface $slugger){}
 
-  /**
-   * @param Request $request
-   * @return Response
-   */
     #[Route('/ajout', name: 'ajout')]
     public function ajoutFranchise(
       Request $request,
@@ -42,9 +38,7 @@ class FranchisesController extends AbstractController
     ): Response
     {
       $franchiseForm = new Franchises();
-
       $form = $this->createForm(FranchiseType::class, $franchiseForm);
-
       $form->handleRequest($request);
 
       if ( $form->isSubmitted() && $form->isValid()) {
@@ -54,7 +48,9 @@ class FranchisesController extends AbstractController
         foreach ($permissions as $permission){
           $franchiseForm->addStructuresDroit($permission);
         }
-        $franchiseForm->setSlug($this->slugger->slug($franchiseForm->getName())->lower());
+        $franchiseForm->setSlug(
+          $this->slugger->slug($franchiseForm->getName())->lower()
+        );
 
         $em->persist($franchiseForm);
         $em->flush();
@@ -67,19 +63,17 @@ class FranchisesController extends AbstractController
           'createFranchise',
           compact('user', 'franchiseForm')
         );
-
         $this->addFlash('success', 'Franchise inscrite avec succès');
         return $this->redirectToRoute('franchises_index');
       }
-
       return $this->render('admin/franchises/ajout.html.twig', [
         'form_add_franchise' => $form->createView()
       ]);
     }
 
-
-    #[Route('/modifier/{id}', name: 'modifier')]
+    #[Route('/modifier/{slug}', name: 'modifier')]
     public function modifierFranchise(
+      string $slug,
       Franchises $franchises,
       Request $request,
       EntityManagerInterface $em,
@@ -108,19 +102,23 @@ class FranchisesController extends AbstractController
         return $this->redirectToRoute('franchises_index');
       }
 
-      return $this->render('admin/franchises/global.html.twig', [
+      return $this->render('admin/franchises/modify.html.twig', [
         'form_edit_franchise' => $form->createView(),
+        'slug' => $slug,
         'franchises' => $franchises
       ]);
     }
 
     #[Route('/{slug}', name: 'details')]
-    public function details(StructuresDroitsRepository $repository, Franchises $franchises): Response
+    public function details(
+      string $slug,
+      StructuresDroitsRepository $repository,
+      Franchises $franchises
+    ): Response
     {
-      //On va chercher la liste des structures de la franchise et les droits
-
 
       return $this->render('admin/franchises/details.html.twig', [
+        'slug' => $slug,
         'result' => $repository->findAll(),
         'franchise' => $franchises
       ]);
@@ -134,6 +132,52 @@ class FranchisesController extends AbstractController
       $em->flush();
 
       return new Response("true");
+    }
+
+    #[Route('/activer/permission/{id}/{slug}', name: 'activer_permission')]
+    public function activerPermission(
+      string $slug,
+      Request $request,
+      StructuresDroits $structuresDroits,
+      EntityManagerInterface $em
+    )
+    {
+      $submittedToken = $request->request->get('token');
+
+      if ($this->isCsrfTokenValid('modify_item', $submittedToken)) {
+        $newDroit = !$structuresDroits->isStatus();
+        $structuresDroits->setStatus($newDroit);
+
+        $em->persist($structuresDroits);
+        $em->flush();
+      }
+
+      return $this->redirectToRoute('franchises_details', [
+        'slug' => $slug
+      ]);
+    }
+
+    #[Route('/activer/globalPermission/{id}/{slug}', name: 'activer_global_permission')]
+    public function activerGlobalPermission(
+      string $slug,
+      Request $request,
+      StructuresDroits $structuresDroits,
+      EntityManagerInterface $em
+    )
+    {
+      $submittedToken = $request->request->get('token');
+
+      if ($this->isCsrfTokenValid('modify_item', $submittedToken)) {
+        $newDroit = !$structuresDroits->isStatus();
+        $structuresDroits->setStatus($newDroit);
+
+        $em->persist($structuresDroits);
+        $em->flush();
+      }
+
+      return $this->redirectToRoute('franchises_modifier', [
+        'slug' => $slug
+      ]);
     }
 
     #[Route('/permissions/activer/{id}', name: 'activate_status')]
@@ -151,12 +195,21 @@ class FranchisesController extends AbstractController
     }
 
     #[Route('/supprimer/{id}', name: 'delete')]
-    public function delete(Franchises $franchise, EntityManagerInterface $em)
+    public function delete(
+      Request $request,
+      Franchises $franchise,
+      EntityManagerInterface $em
+    ): Response
     {
-      $em->remove($franchise);
-      $em->flush();
+      $submittedToken = $request->request->get('token');
 
-      $this->addFlash('success', 'Franchise supprimée avec succès');
+      if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
+        $em->remove($franchise);
+        $em->flush();
+
+        $this->addFlash('success', 'Franchise supprimée avec succès');
+      }
+
       return $this->redirectToRoute('franchises_index');
     }
 }

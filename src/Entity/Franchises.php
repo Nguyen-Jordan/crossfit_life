@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Trait\SlugTrait;
 use App\Repository\FranchisesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,6 +20,8 @@ class Franchises
     private ?int $id;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, minMessage: "Veuillez avoir au moins 3 caractères")]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'franchise', targetEntity: Structures::class, orphanRemoval: true)]
@@ -45,6 +48,13 @@ class Franchises
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId($id): self
+    {
+      $this->id = $id;
+
+      return $this;
     }
 
     public function getName(): ?string

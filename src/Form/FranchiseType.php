@@ -49,13 +49,14 @@ class FranchiseType extends AbstractType
             ->add('structuresDroits', CollectionType::class, [
               'entry_type' => GlobalPermissionType::class,
               'mapped' => false,
+              'label' => 'Permissions globales',
               'entry_options' => [
+                'attr' => ['class' => 'form-select'],
                 'label' => false
               ],
               'by_reference' => false,
               'allow_add' => true,
-              'allow_delete' => true,
-              'label' => 'Permissions globales'
+              'allow_delete' => true
             ])
             ->add('submit', SubmitType::class, [
               'attr' => [
