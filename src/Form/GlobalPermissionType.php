@@ -23,7 +23,7 @@ class GlobalPermissionType extends AbstractType
           'class' => Droits::class,
           'query_builder' => function(EntityRepository $repository) {
             return $repository->createQueryBuilder('d')
-              ->orderBy('d.name', 'ASC');
+              ->orderBy('d.id', 'ASC');
           }, 'attr' => [
             'class' => 'form-select'
           ],
