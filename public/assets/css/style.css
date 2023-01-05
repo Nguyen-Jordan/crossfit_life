@@ -1,13 +1,20 @@
 *{
   font-family: 'Montserrat', sans-serif;
   font-family: 'Montserrat Alternates', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 :root{
   --green1: #187566;
+  --green2: #1f9383;
+  --green3: #294e46;
   --blue1: #06255b;
+  --blue2: #152342;
   --white: #fff;
   --gold1: #d39f0f;
+  --gold2: #977c30;
   --grey: #f5f5f5;
   --black: #222;
   --black2: #999;
@@ -22,17 +29,20 @@ body{
   width: 100%;
 }
 
+
+/* navbar */
 .sidebar{
   position: fixed;
-  width: 280px;
   height: 100%;
   background: var(--green1);
   transition: 0.5s;
   overflow: hidden;
+  left: -280px;
 }
 
 .sidebar.active{
-  width: 60px;
+  width: 280px;
+  left: 0;
 }
 
 .sidebar ul{
@@ -153,16 +163,16 @@ font-size: 1.5em;
 
 .main{
   position: absolute;
-  width: calc(100% - 280px);
-  left: 280px;
   min-height: 100vh;
   background: var(--white);
   transition: 0.5s;
+  width: 100%;
+  left: 0;
 }
 
 .main.active{
   width: calc(100% - 60px);
-  left: 60px;
+  left: 280px;
 }
 
 .topbar{
@@ -185,23 +195,106 @@ font-size: 1.5em;
   color: var(--gold1);
 }
 
-@media (max-width: 576px){
-  .sidebar{
-    left: -280px;
-  }
+/* Card permission */
 
-  .sidebar.active{
+.en-tête{
+  font-size: 27px;
+}
+
+.les-droits{
+  font-size: 25px;
+}
+
+.detail{
+  font-size: 20px;
+  color: #fff;
+}
+
+.conteneur{
+  width: 100%;
+  margin: 50px auto;
+}
+
+.texte{
+  text-align: center;
+  font-size: 60px;
+  margin-bottom: 50px;
+  color: var(--blue1);
+}
+
+.carte{
+  width: 80%;
+  margin: 0 40px 40px;
+  transition: 0.3s;
+}
+
+.rang{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-flow: wrap;
+}
+
+.en-têteCarte{
+  height: 100px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 20px;
+  background-color: var(--gold1);
+  color: var(--white);
+  border: 2px solid var(--gold2);
+}
+
+.titre{
+  text-align: center;
+  padding: 10px 10px;
+  background-color: var(--blue1);
+  color: var(--white);
+  border: 3px solid var(--blue2);
+}
+
+.corpsCarte{
+  padding: 30px 20px;
+  background-color: var(--green2);
+  border: 2px solid var(--green3);
+}
+
+.carte:hover{
+  transform: scale(1.02);
+  box-shadow: 0 0 40px -10px rgba(0, 0, 0, 0.25);
+}
+
+@media (min-width: 576px){
+  /* navbar */
+  .sidebar{
     width: 280px;
     left: 0;
   }
 
-  .main{
-    width: 100%;
-    left: 0;
+  .sidebar.active{
+    width: 60px;
+  }
 
+  .main{
+    width: calc(100% - 280px);
+    left: 280px;
   }
 
   .main.active{
-    left: 280px;
+    left: 60px;
+  }
+
+  /* card permission */
+  .conteneur{
+    width: 90%;
+  }
+
+  .en-têteCarte {
+    padding: 20px 10px;
+    height: 80px;
+  }
+
+  .carte{
+    width: 25rem;
   }
 }
