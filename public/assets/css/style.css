@@ -1,6 +1,9 @@
 *{
   font-family: 'Montserrat', sans-serif;
   font-family: 'Montserrat Alternates', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 :root{
@@ -24,15 +27,16 @@ body{
 
 .sidebar{
   position: fixed;
-  width: 280px;
   height: 100%;
   background: var(--green1);
   transition: 0.5s;
   overflow: hidden;
+  left: -280px;
 }
 
 .sidebar.active{
-  width: 60px;
+  width: 280px;
+  left: 0;
 }
 
 .sidebar ul{
@@ -153,16 +157,16 @@ font-size: 1.5em;
 
 .main{
   position: absolute;
-  width: calc(100% - 280px);
-  left: 280px;
   min-height: 100vh;
   background: var(--white);
   transition: 0.5s;
+  width: 100%;
+  left: 0;
 }
 
 .main.active{
   width: calc(100% - 60px);
-  left: 60px;
+  left: 280px;
 }
 
 .topbar{
@@ -185,23 +189,22 @@ font-size: 1.5em;
   color: var(--gold1);
 }
 
-@media (max-width: 576px){
+@media (min-width: 576px){
   .sidebar{
-    left: -280px;
-  }
-
-  .sidebar.active{
     width: 280px;
     left: 0;
   }
 
-  .main{
-    width: 100%;
-    left: 0;
+  .sidebar.active{
+    width: 60px;
+  }
 
+  .main{
+    width: calc(100% - 280px);
+    left: 280px;
   }
 
   .main.active{
-    left: 280px;
+    left: 60px;
   }
 }
