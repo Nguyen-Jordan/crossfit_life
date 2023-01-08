@@ -7,11 +7,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class EditUserType extends AbstractType
 {
@@ -57,6 +59,18 @@ class EditUserType extends AbstractType
             'class' => 'form-control'
           ],
           'label' => 'Email'
+        ])
+        ->add('plainPassword', PasswordType::class, [
+          'mapped' => false,
+          'label' => 'Mot de passe: ',
+          'attr' => [
+            'autocomplete' => 'new-password',
+            'class' => 'form-control'
+          ],
+          'constraints' => [
+            new Regex('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
+              "Le mot de passe doit contenir au minimum 8 caractères avec une minuscule, une majuscule, un caractère spécial et un chiffre.")
+          ],
         ])
         ;
         $builder->get('roles')
