@@ -16,7 +16,7 @@ let nouveauBouton = span.append(boutonAjout);                                   
   });
 }
 
-function addButton(collection, nouveauBouton){                                      // la function declarer declarer
+function addButton(collection, nouveauBouton){                                      // la function declarer
   let prototype = collection.dataset.prototype;                                     // je récupère le prototype, il va dans collection et il récupère prototype
                                                                                     // dans la variable prototype je vais avoir la collection complete qu'il contient l'ensemble de tous les formulaires
   let index = collection.dataset.index;                                             // je récupère l'index
