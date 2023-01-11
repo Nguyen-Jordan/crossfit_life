@@ -37,6 +37,8 @@ class FranchisesController extends AbstractController
       SendMailService $mail
     ): Response
     {
+      $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
       $franchiseForm = new Franchises();
       $form = $this->createForm(FranchiseType::class, $franchiseForm);
       $form->handleRequest($request);

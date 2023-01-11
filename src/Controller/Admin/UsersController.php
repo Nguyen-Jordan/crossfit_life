@@ -32,6 +32,8 @@ class UsersController extends AbstractController
     ManagerRegistry $doctrine
   )
   {
+    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
     $form = $this->createForm(EditUserType::class, $user);
     $form->handleRequest($request);
     
@@ -55,6 +57,8 @@ class UsersController extends AbstractController
     EntityManagerInterface $em
   ): Response
   {
+    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
     $submittedToken = $request->request->get('token');
 
     if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Droits{% endblock %}
+
+{% block body %}
+    <div class="texte">Droits</div>
+    <main class="container text-center">
+        <section class="row justify-content-md-center">
+            <div class="col-10">
+                <a href="{{ path('droits_add') }}" class="btn btn-sm btn-warning m-2">Ajouter un droit</a>
+                <table id="datatable" class="table">
+                    <thead class="table-dark">
+                    <tr>
+                        <th scope="col" class="text-center">ID</th>
+                        <th scope="col" class="text-center">Nom</th>
+                        <th scope="col" class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for droit in droits %}
+                        <tr>
+                            <th scope="row" class="align-middle">{{ droit.id }}</th>
+                            <td class="align-middle">{{ droit.name }}</td>
+                            <td class="align-middle">
+                                <a href="{{ path('droits_modify', {'id': droit.id}) }}" class="btn btn-sm btn-warning m-2">Modifier</a>
+                                <button type="button" class="btn btn-sm btn-danger m-2" data-bs-toggle="modal" data-bs-target="#delete{{ droit.id }}">
+                                    Supprimer
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Modal -->
+                        <div class="modal fade" id="delete{{ droit.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 class="modal-title fs-5" id="exampleModalLabel">Confirmation de suppression</h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Êtes-vous sûr(e) de vouloir supprimer le droit?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="{{ path ('droits_delete', {'id': droit.id}) }}" method="post">
+                                            <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+                                            <button type="submit" class="btn btn-danger">Confirmer</button>
+                                        </form>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+{% endblock %}
