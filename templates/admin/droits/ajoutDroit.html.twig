@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout de droit{% endblock %}
+
+{% block body %}
+    <main class="container my-4 p-3">
+        <section class="row">
+            <div class="col-12">
+                <h1 class="texte">Ajout de droit</h1>
+                {% include "admin/droits/_form.html.twig" %}
+            </div>
+        </section>
+    </main>
+{% endblock %}

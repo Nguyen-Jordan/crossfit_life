@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier droit{% endblock %}
+
+{% block body %}
+    <main class="container my-4 p-3">
+        <section class="row">
+            <div class="col-12">
+                <h1 class="texte">Modifier droit</h1>
+                {% include "admin/droits/_form.html.twig" with {'button_label':'Modifier'} %}
+            </div>
+        </section>
+    </main>
+{% endblock %}

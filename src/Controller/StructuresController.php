@@ -29,7 +29,7 @@ class StructuresController extends AbstractController
 
     public function __construct(private SluggerInterface $slugger){}
 
-   #[Route('/ajout', name: 'ajout')]
+   #[Route('/ajout', name: 'add')]
     public function ajoutStructure(
       Request $request,
       EntityManagerInterface $em,
